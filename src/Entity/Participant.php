@@ -197,6 +197,16 @@ class Participant
         return $this;
     }
 
+    public function getUsername(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->motDePasse;
+    }
+
     /**
      * @return Collection|Sortie[]
      */
