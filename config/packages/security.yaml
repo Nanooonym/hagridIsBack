@@ -1,4 +1,7 @@
 security:
+    encoders:
+        App\Entity\Participant:
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         app_user_provider:
@@ -32,3 +35,4 @@ security:
          - { path: ^/, roles: ROEL_ADMIN }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
