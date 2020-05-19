@@ -7,13 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  * @UniqueEntity(
  *     fields={"pseudo", "mail"})
  */
-class Participant
+class Participant implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -262,5 +263,20 @@ class Participant
         }
 
         return $this;
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_ADMIN'];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+
     }
 }
