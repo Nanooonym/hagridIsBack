@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Sortie;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,8 +43,9 @@ class SortieType extends AbstractType
                 'label' => "Description et infos :"
             ])
 
-            ->add('campus', CampusType::class, [
-                'label' => false
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'nom'
             ])
 
             ->add('lieu', LieuType::class, [
