@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <div class="container">
     <header>
         <div>
             <h1>Logo Sortir.com</h1>
         </div>
     </header>
+    </div>
+    <div class="container">
     <nav>
         {% block nav %}
         {% endblock %}
     </nav>
+    </div>
 
     <main>
         {% block main %}
