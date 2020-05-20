@@ -3,7 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+<<<<<<< HEAD
 use Doctrine\Persistence\ObjectManager;
+=======
+use Doctrine\Common\Persistence\ObjectManager;
+>>>>>>> origin/master
 
 class AppFixtures extends Fixture
 {
