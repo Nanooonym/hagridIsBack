@@ -34,7 +34,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
      */
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator,
+                                CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
@@ -51,8 +52,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'pseudo' => $request->request->get('pseudo'),
-            'password' => $request->request->get('password'),
+            'pseudo' => $request->request->get('_pseudo'),
+            'password' => $request->request->get('_password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -84,6 +85,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         // Check the user's password or other credentials and return true or false
         // If there are no credentials to check, you can just return true
+
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 

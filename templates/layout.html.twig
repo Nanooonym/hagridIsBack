@@ -15,14 +15,6 @@
 <nav>
     {% block nav %}
 
-        {% if app.user %}
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
-                </li>
-            </ul>
-        {% endif %}
-
     {% endblock %}
 </nav>
 
