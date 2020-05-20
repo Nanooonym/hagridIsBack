@@ -7,10 +7,6 @@ use App\Entity\Participant;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ParticipantRepository;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
 
 class ParticipantController extends AbstractController
 {
@@ -34,6 +30,7 @@ class ParticipantController extends AbstractController
      * @param int $id
      * @param EntityManagerInterface $em
      * @return Response
+     * @Route("/participant/{id}", name="profile", requirements={"id": "\d+"})
      */
     public function profile(int $id, EntityManagerInterface $em)
     {
