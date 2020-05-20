@@ -51,12 +51,12 @@ class ParticipantController extends AbstractController
     public function unParticipant(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
         $participant = new Participant();
-        $participant->setPseudo('loulou');
+        $participant->setPseudo('Nanonym');
         $participant->setNom('Lou');
         $participant->setPrenom('loulou');
         $participant->setTelephone('06 02 03 04 05');
         $participant->setMail('loulou@toto.com');
-        $motDePasse = $passwordEncoder->encodePassword($participant, 'loulou');
+        $motDePasse = $passwordEncoder->encodePassword($participant, 'test');
         $participant->setMotDePasse($motDePasse);
         $participant->setAdministrateur(true);
         $participant->setActif(true);

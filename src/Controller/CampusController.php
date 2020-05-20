@@ -63,6 +63,7 @@ class CampusController extends AbstractController
      */
     public function edit(Request $request, Campus $campu): Response
     {
+        $campu = new Campus();
         $form = $this->createForm(CampusType::class, $campu);
         $form->handleRequest($request);
 
