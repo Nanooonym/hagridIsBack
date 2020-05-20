@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+
+
+{% block main %}
+    <div class="container">
+
+
+        <h1>{{ participant.pseudo }}</h1>
+
+        <p><label>Prénom:      </label>{{ participant.prenom }}</p>
+        <p><label>Nom:      </label>{{ participant.nom }}</p>
+        <p><label>Téléphone:      </label>{{ participant.telephone }}</p>
+        <p><label>Email:      </label>{{ participant.mail }}</p>
+
+        <button type="back">Retour</button>
+    </div>
+{% endblock %}
