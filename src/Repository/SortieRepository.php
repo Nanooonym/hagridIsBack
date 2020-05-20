@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\SortieFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +22,20 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findSorties(SortieFilter $filter)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('s');
+        if($filter->getName() || $filter->getName() != null){
+            $qb->andWhere('s.nom LIKE :nom')
+                ->setParameter('nom', $filter->getName());
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if($filter->getName() || $filter->getName() != null){
+            $qb->andWhere('s.nom LIKE :nom')
+                ->setParameter('nom', $filter->getName());
+        }
+
+        $query = $qb->getQuery();
+        return new Paginator($query);
     }
-    */
 }

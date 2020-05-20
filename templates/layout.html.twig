@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<header>
-    <div>
-        <h1>Logo Sortir.com</h1>
+    <div class="container">
+    <header>
+        <div>
+            <h1>Logo Sortir.com</h1>
+        </div>
+    </header>
     </div>
-</header>
-<nav>
-    {% block nav %}
-
-    {% endblock %}
-</nav>
+    <div class="container">
+    <nav>
+        {% block nav %}
+        {% endblock %}
+    </nav>
+    </div>
 
 <main>
     {% block main %}
@@ -27,5 +30,3 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
