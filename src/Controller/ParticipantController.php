@@ -15,45 +15,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ParticipantController extends AbstractController
 {
     /**
-     * @Route("/participant/{id}", name="profile", requirements={"id": "\d+"})
-     */
-    public function profile(int $id, EntityManagerInterface $em)
-    {
-        $repo = $em->getRepository(Participant::class);
-        $participant = $repo->find($id);
-        return $this->render('participant/profile.html.twig', ["participant" => $participant]);
-    }
-
-    /**
-     * @Route("/participant/insertParticipant", name="insertParticipant")
-     */
-    public function insertParticipant(EntityManagerInterface $em)
-    {
-        $campus = new Campus();
-        $campus->setNom("niort");
-        $em->persist($campus);
-
-       $participant = new Participant();
-        $participant->setPseudo("queri");
-        $participant->setNom("Aguirre");
-        $participant->setPrenom("Carlos");
-        $participant->setTelephone("06 56 47 32");
-        $participant->setMail("agicar@mail.com");
-        $participant->setMotDePasse(321);
-        $participant->setAdministrateur(false);
-        $participant->setActif(true);
-        $participant->setCampus($campus);
-
-        $em->persist($participant);
-        $em->flush();
-        return $this->render("participant/add.html.twig", []);
-
-
-
-
-    }
-
-    /**
      * @var ParticipantRepository
      */
     private $repository;
@@ -67,6 +28,20 @@ class ParticipantController extends AbstractController
         $this->repository=$repository;
         $this->em=$em;
     }
+
+    /**
+     * @Route("/participant/{id}", name="profile", requirements={"id": "\d+"})
+     * @param int $id
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function profile(int $id, EntityManagerInterface $em)
+    {
+        $repo = $em->getRepository(Participant::class);
+        $participant = $repo->find($id);
+        return $this->render('participant/profile.html.twig', ["participant" => $participant]);
+    }
+
 
     /**
      * @Route("/unParticipant", name="unParticipant")
