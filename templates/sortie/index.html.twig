@@ -1,0 +1,70 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Les sorties{% endblock %}
+
+{% block main %}
+    <h2>Filtrer les sorties</h2>
+    <div class="jumbotron">
+
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="form-col">
+                    {{ form_row(form.campus) }}
+                    {{ form_row(form.name) }}
+                    <div class="form-row">
+                        {{ form_row(form.dateDebut) }}
+                        {{ form_row(form.dateFin) }}
+                    </div>
+                </div>
+                <div class="form-col">
+                    {{ form_row(form.isOrganisateur) }}
+                    {{ form_row(form.isInscrit) }}
+                    {{ form_row(form.isNotInscrit) }}
+                    {{ form_row(form.passee) }}
+                </div>
+                <button type="submit" method="get">Rechercher</button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrits/places</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sortie in sorties %}
+            <tr>
+                <td>{{ sortie.nom }}
+                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d') : '' }}</td>
+                <td>{{ sortie.nbInscriptionsMax }}</td>
+                <td>{{ sortie.etat.libelle }}</td>
+                <td>X</td>
+                <td>{{ sortie.organisateur.nom}}</td>
+                <td>
+                    <a href="{{ path('sortie_show', {'id': sortie.id}) }}">show</a>
+                    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucune sortie correspondante</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-light" href="{{ path('sortie_new') }}">Créer une sortie</a>
+{% endblock %}
