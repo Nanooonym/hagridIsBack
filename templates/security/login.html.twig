@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+{% block title 'Connexion' %}
+{% block main %}
+    <div class="container mt-4">
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>r
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="post" >
+            <div class="form-group">
+                <label for="pseudo">Identifiant:</label>
+                <input type="text" id="pseudo" name="_pseudo" class="form-control" value="{{ last_username }}" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="_password" class="form-control" required>
+            </div>
+            <div>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="btn btn-primary btn-lg float">Connexion</button>
+            <input class="ml-4" type="checkbox" id="souvenir" name="souvenir" value="souvenir">
+            <label for="souvenir">Se souvenir de moi</label>
+            <a class="ml-4" href="#">Mot de passe oublié</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
