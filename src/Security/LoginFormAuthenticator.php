@@ -45,7 +45,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function supports(Request $request)
     {
-        return self::LOGIN_ROUTE === $request->attributes->get('_route')
+        return $request->attributes->get('_route')==='app_login'
             && $request->isMethod('POST');
     }
 
@@ -78,6 +78,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new CustomUserMessageAuthenticationException('Pseudo non trouvé.');
         }
 
+
         return $user;
     }
 
@@ -91,12 +92,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
+       // if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        //    return new RedirectResponse($targetPath);
+       // }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('user_home'));
     }
 
     protected function getLoginUrl()
