@@ -1,3 +1,13 @@
+.inner-form-col
+{
+
+    justify-content: space-between;
+}
+
+.inner-form-col
+{
+    padding-right: 30px;
+    padding-left: 30px;
 #maRecherche{
     border: 2px solid black;
     border-radius: 15px;

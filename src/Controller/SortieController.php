@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
@@ -15,12 +16,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/sortie")
  */
 class SortieController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
      */
@@ -71,15 +80,21 @@ class SortieController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        dump($request);
 
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            die();
             $entityManager = $this->getDoctrine()->getManager();
+
+            $sortie->setOrganisateur($this->security->getUser());
+            $sortie->addParticipant($this->security->getUser());
+
+            $etat = new Etat();
+            $etat->setLibelle("En cours");
+            $entityManager->persist($etat);
+            $sortie->setEtat($etat);
 
             $entityManager->persist($sortie);
             $entityManager->flush();
