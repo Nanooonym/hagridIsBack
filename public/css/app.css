@@ -1,0 +1,33 @@
+#maRecherche{
+    border: 2px solid black;
+    border-radius: 15px;
+}
+
+th{
+    background-color:#6c757d;
+}
+
+#btn-maRecherche{
+    box-shadow: 5px 5px grey;
+}
+
+main{
+    height: 580px;
+    grid-area: auto;
+    display: block;
+    overflow: auto;
+
+}
+
+footer{
+    text-align: center;
+    font-size: small;
+}
+
+table{
+    border: 2px solid #6c757d;
+}
+
+#navbarNav{
+    background-color: #4e555b;
+}
