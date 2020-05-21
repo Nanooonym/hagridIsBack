@@ -4,11 +4,12 @@
     justify-content: space-between;
 }
 
-.inner-form-col
-{
+.inner-form-col {
     padding-right: 30px;
     padding-left: 30px;
-#maRecherche{
+}
+
+#maRecherche {
     border: 2px solid black;
     border-radius: 15px;
 }
@@ -34,9 +35,7 @@ footer{
     font-size: small;
 }
 
-table{
-    border: 2px solid #6c757d;
-}
+
 
 #navbarNav{
     background-color: #4e555b;
