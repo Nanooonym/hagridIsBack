@@ -21,27 +21,33 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez saisir le nom de la sortie")
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("now", message="Le début de la sortie ne peut pas être avant maintenant")
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\GreaterThanOrEqual(value=1, message="Une sortie ne peut pas durer moins d'une minute")
      */
     private $duree;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\LessThan(propertyPath="dateDebut", message="La date limite des inscriptions ne peut pas être avant la date de début de la sortie")
+     * @Assert\GreaterThan("now", message="Le fin des inscriptions ne peut pas être avant maintenant")
      */
     private $dateCloture;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(value=2, message="Une sortie ne peut pas avoir moins de 2 participants")
      */
     private $nbInscriptionsMax;
 
@@ -81,7 +87,7 @@ class Sortie
     /**
      * @ORM\ManyToOne(targetEntity=Lieu::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Veuillez sélectionner un lieu")
      */
     private $lieu;
 

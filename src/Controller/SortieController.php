@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
-use App\Entity\Lieu;
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
-use App\Entity\Ville;
 use App\Form\SortieFilterType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -47,34 +44,6 @@ class SortieController extends AbstractController
 
     }
 
-
-    /**
-     * @Route("/idea/list", name="idea_list")
-     */
-    public function list(EntityManagerInterface $em, Request $request)
-    {
-
-        //$ideaForm->handleRequest($request);
-
-        $ideaRepo = $this->getDoctrine()->getRepository(Idea::class);
-        $c = $request->get('category');
-
-        $ideas = $ideaRepo->allPublished($c['name']);
-        $category = new Category();
-
-        $ideaForm = $this->createForm(CategoryType::class, $category);
-
-        return $this->render('idea/list.html.twig', [
-            'ideas' => $ideas,
-            'ideaForm' => $ideaForm->createView(),
-        ]);
-    }
-
-
-
-
-
-
     /**
      * @Route("/new", name="sortie_new", methods={"GET","POST"})
      */
@@ -90,6 +59,7 @@ class SortieController extends AbstractController
 
             $sortie->setOrganisateur($this->security->getUser());
             $sortie->addParticipant($this->security->getUser());
+
 
             $etat = new Etat();
             $etat->setLibelle("En cours");

@@ -20,13 +20,16 @@ class LieuType extends AbstractType
                 'label' => "Lieu :"
             ])
             ->add('rue', TextType::class, [
-                'label' => "Rue :"
+                'label' => "Rue :",
+                'required' => false
             ])
             ->add('latitude', IntegerType::class, [
-                'label' => "Latitude :"
+                'label' => "Latitude :",
+                'required' => false
             ])
             ->add('longitude', IntegerType::class, [
-                'label' => "Longitude :"
+                'label' => "Longitude :",
+                'required' => false
             ])
 
             ->add('ville', EntityType::class, [

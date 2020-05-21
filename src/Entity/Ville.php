@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\VilleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -29,6 +30,11 @@ class Ville
      * @ORM\Column(type="string", length=10)
      */
     private $codePostal;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lieu", mappedBy="ville")
+     */
+    private $lieux;
 
     public function getId(): ?int
     {
@@ -57,5 +63,30 @@ class Ville
         $this->codePostal = $codePostal;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLieux()
+    {
+        return $this->lieux;
+    }
+
+    /**
+     * @param mixed $lieux
+     * @return Ville
+     */
+    public function setLieux($lieux)
+    {
+        $this->lieux = $lieux;
+        return $this;
+    }
+
+
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

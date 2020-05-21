@@ -1,0 +1,32 @@
+<!-- Afficher ou Modifier -->
+{% if app.user != sortie.organisateur
+    and sortie.etat.libelle == 'En création' %}
+        <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
+{% else %}
+        <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
+{% endif %}
+
+<!-- Se désister -->
+{% if app.user in sortie.participants
+    and app.user != sortie.organisateur %}
+        -  <a>Se désister</a>
+{% endif %}
+
+<!-- S'inscrire -->
+{% if app.user not in sortie.participants
+    and sortie.participants|length < sortie.nbInscriptionsMax
+    and sortie.dateCloture > "now" %}
+        -  <a>S'inscrire</a>
+{% endif %}
+
+<!-- Publier -->
+{% if app.user != sortie.organisateur
+    and sortie.etat == 'En création'%}
+        -  <a>Publier</a>
+{% endif %}
+
+<!-- Annuler -->
+{% if app.user != sortie.organisateur
+    and sortie.etat.libelle == 'Ouvert' %}
+        -  <a href="{{ path('sortie_delete', {'id': sortie.id}) }}">Annuler</a>
+{% endif %}
