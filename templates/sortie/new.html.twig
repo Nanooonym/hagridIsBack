@@ -1,5 +1,13 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
 {% block title %}Créer une sortie{% endblock %}
 
 {%  block nav %}{% endblock %}
