@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Repository\CampusRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +43,8 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/new", name="campus_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -65,6 +68,8 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/{id}", name="campus_show", methods={"GET"})
+     * @param Campus $campu
+     * @return Response
      */
     public function show(Campus $campu): Response
     {
@@ -75,6 +80,11 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="campus_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param Campus $campu
+     * @param $id
+     * @return Response
      */
     public function edit(Request $request, EntityManagerInterface $em, Campus $campu, $id): Response
     {
@@ -96,6 +106,9 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/{id}", name="campus_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Campus $campu
+     * @return Response
      */
     public function delete(Request $request, Campus $campu): Response
     {
