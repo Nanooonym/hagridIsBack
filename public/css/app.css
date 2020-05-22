@@ -56,6 +56,7 @@ footer{
     vertical-align: center;
 }
 
-.table td{
+.table{
     vertical-align: center !important;
+    align-items: center;
 }

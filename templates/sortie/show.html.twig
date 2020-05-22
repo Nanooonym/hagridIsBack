@@ -3,52 +3,58 @@
 {% block title %}Sortie{% endblock %}
 
 {% block main %}
-    <h3>Afficher une sortie</h3>
+    <h3 class="m-4">Afficher une sortie</h3>
 
-    <div class="row">
-        <div class="col-md-8">
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sortie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr>
-                <th>DateDebut</th>
-                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ sortie.duree }}</td>
-            </tr>
-            <tr>
-                <th>DateCloture</th>
-                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NbInscriptionsMax</th>
-                <td>{{ sortie.nbInscriptionsMax }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionInfos</th>
-                <td>{{ sortie.descriptionInfos }}</td>
-            </tr>
-            <tr>
-                <th>UrlPhoto</th>
-                <td>{{ sortie.urlPhoto }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('sortie_index') }}">back to list</a>
-
-    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">edit</a>
-
-    {{ include('sortie/_delete_form.html.twig') }}
+    <div>
+        <div class="table">
+            <table class="table table-striped table-bordered fixed-center row-cols md-6">
+                <tbody>
+                <tr>
+                    <td>Nom de la sortie:</td>
+                    <td>{{ sortie.nom }}</td>
+                    <td>Campus:</td>
+                    <td>{{ sortie.campus }}</td>
+                </tr>
+                <tr>
+                    <td>Date et heure de la sortie:</td>
+                    <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
+                    <td>Lieu:</td>
+                    <td>{{ sortie.lieu }}</td>
+                </tr>
+                <tr>
+                    <td>Date limite d'inscription:</td>
+                    <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
+                    <td>Rue:</td>
+                    <td>{{ " " }}</td>
+                </tr>
+                <tr>
+                    <td>Nombre de places:</td>
+                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                    <td>Code postal:</td>
+                    <td>{{ " " }}</td>
+                </tr>
+                <tr>
+                    <td>Duree:</td>
+                    <td>{{ sortie.duree }} minutes</td>
+                    <td>Latitude:</td>
+                    <td>{{ " " }}</td>
+                </tr>
+                <tr>
+                    <td>Description et infos:</td>
+                    <td>{{ sortie.descriptionInfos }}</td>
+                    <td>Longitude:</td>
+                    <td>{{ " " }}</td>
+                </tr>
+                <tr>
+                    <td>UrlPhoto</td>
+                    <td>{{ sortie.urlPhoto }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div >
+            <a href="{{ path('sortie_edit', {'id': sortie.id}) }}" class="btn btn-secondary m-4">S'inscrire</a>
+            <a href="{{ path('sortie_index') }}" class="btn btn-secondary m-4">Retourner</a>
+            </div>
         </div>
     </div>
 {% endblock %}
