@@ -29,7 +29,7 @@ th{
 }
 
 main{
-    height: 580px;
+    height: 630px;
     grid-area: auto;
     display: block;
     overflow: auto;
