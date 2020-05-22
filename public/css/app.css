@@ -57,9 +57,7 @@ footer{
 }
 
 .table{
-    vertical-align: center !important;
-    align-items: center;
-    width: auto;
+    justify-content: center!important;
 }
 
 .sortir-attribut{

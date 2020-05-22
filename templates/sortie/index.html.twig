@@ -52,7 +52,7 @@
         <tbody>
         {% for sortie in sorties %}
             <tr>
-                <td>{{ sortie.nom }}
+                <td>{{ sortie.nom }}</td>
                 <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H\\Hi') : '' }}</td>
                 <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                 <td>{{ sortie.participants|length }} / {{ sortie.nbInscriptionsMax }}</td>

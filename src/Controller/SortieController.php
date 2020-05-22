@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
 use App\Entity\Ville;
@@ -95,14 +97,38 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/{id}", name="sortie_show", methods={"GET"})
+     * @param EntityManagerInterface $em
      * @param Sortie $sortie
+     * @param $id
+     * @param Request $request
      * @return Response
      */
-    public function show(Sortie $sortie): Response
+    public function show(EntityManagerInterface $em, Sortie $sortie, $id, Request $request): Response
     {
+
+        $sortie = new Sortie();
+        $lieu = new Lieu();
+        $codePostal = new Ville();
+        $participant = new Participant();
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $participant->getPseudo();
+        $sortie = $sortieRepo->find($id);
+        $lieu->getRue();
+        $codePostal->getCodePostal();
+        $longitude = $lieu->getLongitude();
+        $latitude = $lieu->getLatitude();
+        $em->persist($sortie);
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
+            'form' => $form->createView(),
         ]);
+
     }
 
     /**
