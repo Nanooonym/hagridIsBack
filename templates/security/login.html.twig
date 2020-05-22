@@ -22,8 +22,8 @@
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
             <button type="submit" class="btn btn-primary btn-lg float">Connexion</button>
-            <input class="ml-4" type="checkbox" id="souvenir" name="souvenir" value="souvenir">
-            <label for="souvenir">Se souvenir de moi</label>
+            <input class="ml-4" type="checkbox" id="remember_me" name="_remember_me" checked/>
+            <label for="remember_me">Se souvenir de moi</label>
             <a class="ml-4" href="#">Mot de passe oublié</a>
             </div>
         </form>

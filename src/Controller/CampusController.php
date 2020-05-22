@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Repository\CampusRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,17 +17,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class CampusController extends AbstractController
 {
     /**
-     * @Route("/", name="campus_index", methods={"GET"})
+     * @Route("/", name="campus_index", methods={"GET","POST"})
+     * @param CampusRepository $campusRepository
+     * @param Request $request
+     * @return Response
      */
-    public function index(CampusRepository $campusRepository): Response
+    public function index(CampusRepository $campusRepository, Request $request): Response
     {
+        $campu = new Campus();
+        $form = $this->createForm(CampusType::class, $campu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($campu);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('campus_index');
+        }
         return $this->render('campus/index.html.twig', [
             'campuses' => $campusRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/new", name="campus_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +68,8 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/{id}", name="campus_show", methods={"GET"})
+     * @param Campus $campu
+     * @return Response
      */
     public function show(Campus $campu): Response
     {
@@ -60,15 +80,21 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="campus_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param Campus $campu
+     * @param $id
+     * @return Response
      */
-    public function edit(Request $request, Campus $campu): Response
+    public function edit(Request $request, EntityManagerInterface $em, Campus $campu, $id): Response
     {
+        $campu = $em->getRepository(Campus::class)->find($id);
         $form = $this->createForm(CampusType::class, $campu);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->flush();
+            $this->addFlash('success', 'Bien modifié avec succès');
             return $this->redirectToRoute('campus_index');
         }
 
@@ -80,6 +106,9 @@ class CampusController extends AbstractController
 
     /**
      * @Route("/{id}", name="campus_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Campus $campu
+     * @return Response
      */
     public function delete(Request $request, Campus $campu): Response
     {
@@ -87,6 +116,7 @@ class CampusController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($campu);
             $entityManager->flush();
+            $this->addFlash('success', 'Bien supprimé avec succès');
         }
 
         return $this->redirectToRoute('campus_index');

@@ -41,8 +41,8 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ville::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="lieux")
+     * @ORM\JoinColumn(name="ville_id", referencedColumnName="id")
      */
     private $ville;
 
@@ -109,5 +109,10 @@ class Lieu
         $this->ville = $ville;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

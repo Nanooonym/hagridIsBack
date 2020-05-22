@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Lieu;
-use App\Entity\Participant;
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
 use App\Entity\Ville;
@@ -15,12 +14,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/sortie")
  */
 class SortieController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
      */
@@ -38,48 +45,34 @@ class SortieController extends AbstractController
 
     }
 
-
-    /**
-     * @Route("/idea/list", name="idea_list")
-     */
-    public function list(EntityManagerInterface $em, Request $request)
-    {
-
-        //$ideaForm->handleRequest($request);
-
-        $ideaRepo = $this->getDoctrine()->getRepository(Idea::class);
-        $c = $request->get('category');
-
-        $ideas = $ideaRepo->allPublished($c['name']);
-        $category = new Category();
-
-        $ideaForm = $this->createForm(CategoryType::class, $category);
-
-        return $this->render('idea/list.html.twig', [
-            'ideas' => $ideas,
-            'ideaForm' => $ideaForm->createView(),
-        ]);
-    }
-
-
-
-
-
-
     /**
      * @Route("/new", name="sortie_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        dump($request);
 
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            die();
             $entityManager = $this->getDoctrine()->getManager();
+
+            $sortie->setOrganisateur($this->security->getUser());
+            $sortie->addParticipant($this->security->getUser());
+
+
+            $etat = new Etat();
+            $submit = $_POST['button'];
+
+            if($submit == "enregistrer") {
+                $etat->setLibelle("En création");
+            } else if($submit == "publier"){
+                $etat->setLibelle("Ouvert");
+            }
+
+            $entityManager->persist($etat);
+            $sortie->setEtat($etat);
 
             $entityManager->persist($sortie);
             $entityManager->flush();

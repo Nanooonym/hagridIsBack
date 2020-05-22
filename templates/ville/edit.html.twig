@@ -1,13 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Edit Ville{% endblock %}
+{% block title %}Modifier la Ville{% endblock %}
 
-{% block body %}
-    <h1>Edit Ville</h1>
-
-    {{ include('ville/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('ville_index') }}">back to list</a>
-
-    {{ include('ville/_delete_form.html.twig') }}
+{% block main %}
+    <h3 class="text-center">Modifier la Ville</h3>
+    <div>
+        <div class="row m-4">
+            {{ include('ville/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
+        <div class="m-4">
+            <a href="{{ path('ville_index') }}" class="btn btn-secondary">Retourner</a>
+        </div>
+    </div>
 {% endblock %}

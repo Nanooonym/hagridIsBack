@@ -2,13 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
-use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -26,8 +24,8 @@ class ParticipantController extends AbstractController
 
     public function __construct(ParticipantRepository $repository, EntityManagerInterface $em)
     {
-        $this->repository=$repository;
-        $this->em=$em;
+        $this->repository = $repository;
+        $this->em = $em;
     }
 
     /**
@@ -53,12 +51,12 @@ class ParticipantController extends AbstractController
     public function unParticipant(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
         $participant = new Participant();
-        $participant->setPseudo('loulou');
+        $participant->setPseudo('Nanonym');
         $participant->setNom('Lou');
         $participant->setPrenom('loulou');
         $participant->setTelephone('06 02 03 04 05');
         $participant->setMail('loulou@toto.com');
-        $motDePasse = $passwordEncoder->encodePassword($participant, 'loulou');
+        $motDePasse = $passwordEncoder->encodePassword($participant, 'test');
         $participant->setMotDePasse($motDePasse);
         $participant->setAdministrateur(true);
         $participant->setActif(true);
@@ -70,6 +68,7 @@ class ParticipantController extends AbstractController
         $em->flush();
 
     }
+
     /**
      * @Route("/participant", name="participant.home")
      * @param EntityManagerInterface $em
@@ -78,35 +77,7 @@ class ParticipantController extends AbstractController
     public function home(EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Participant::class);
-        $participants=$repository->findAll();
+        $participants = $repository->findAll();
         return $this->render('user/home.html.twig');
     }
-
-    /**
-     * @Route("/participant/{id}/edit", name="participant_edit", methods={"GET","POST"})
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     */
-    public function edit(EntityManagerInterface $em, Request $request, Participant $participant, $id,UserPasswordEncoderInterface $passwordEncoder): Response
-    {
-        $participant = new Participant();
-
-
-        $participantRepo = $this->getDoctrine()->getRepository(participant::class);
-        $participant = $participantRepo->find($id);
-        $participantForm = $this->createForm(ParticipantType::class, $participant);
-        $participantForm->handleRequest($request);
-
-        if ($participantForm->isSubmitted() && $participantForm->isValid()) {
-            $motDePasse = $passwordEncoder->encodePassword($participant, $participant->getMotDePasse());
-            $participant->setMotDePasse($motDePasse);
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('participant_edit', [
-                'id' => $participant->getId()
-            ]);
-        }
-           return $this->render('participant/edit.html.twig', [
-                "participantForm" => $participantForm->createView(),
-            ]);
-    }
-
 }
