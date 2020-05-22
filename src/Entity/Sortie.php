@@ -93,6 +93,8 @@ class Sortie
 
     public function __construct()
     {
+        $this->dateDebut = new \DateTime("tomorrow");
+        $this->dateCloture = new \DateTime("tomorrow");
         $this->participants = new ArrayCollection();
     }
 
