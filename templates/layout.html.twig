@@ -8,19 +8,18 @@
 </head>
 <body>
 <div class="container">
-    <header>
+    <header class="">
         <div>
             <h1>Logo Sortir.com</h1>
         </div>
+        <div class="container">
+            <nav>
+                {% block nav %}
+                {% endblock %}
+            </nav>
+        </div>
     </header>
 </div>
-<div class="container">
-    <nav>
-        {% block nav %}
-        {% endblock %}
-    </nav>
-</div>
-
 <main>
     {% block main %}
     {% endblock %}

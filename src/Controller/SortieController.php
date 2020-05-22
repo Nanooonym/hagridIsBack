@@ -30,6 +30,10 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/", name="sortie_index", methods={"GET"})
+     * @param EntityManagerInterface $em
+     * @param SortieRepository $sortieRepository
+     * @param Request $request
+     * @return Response
      */
     public function index(EntityManagerInterface $em, SortieRepository $sortieRepository, Request $request): Response
     {
@@ -47,8 +51,11 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/new", name="sortie_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $sortie = new Sortie();
@@ -82,6 +89,8 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/{id}", name="sortie_show", methods={"GET"})
+     * @param Sortie $sortie
+     * @return Response
      */
     public function show(Sortie $sortie): Response
     {
@@ -92,6 +101,9 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="sortie_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Sortie $sortie
+     * @return Response
      */
     public function edit(Request $request, Sortie $sortie): Response
     {

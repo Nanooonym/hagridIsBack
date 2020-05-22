@@ -27,9 +27,17 @@ th{
 #btn-maRecherche{
     box-shadow: 5px 5px grey;
 }
-
+body{
+    height: 100%;
+}
+header{
+    height: 10%;
+}
+nav{
+    height: 5%;
+}
 main{
-    height: 630px;
+    height: 80%;
     grid-area: auto;
     display: block;
     overflow: auto;
@@ -37,6 +45,7 @@ main{
 }
 
 footer{
+    height: 5%;
     text-align: center;
     font-size: small;
 }
