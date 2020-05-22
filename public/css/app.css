@@ -59,4 +59,13 @@ footer{
 .table{
     vertical-align: center !important;
     align-items: center;
+    width: auto;
+}
+
+.sortir-attribut{
+    font-weight: bold;
+}
+
+#photoURL{
+    text-decoration: none;
 }
