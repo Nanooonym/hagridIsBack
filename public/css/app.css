@@ -10,8 +10,43 @@
     padding-left: 30px;
 }
 
-nav > a
-{
-    margin-left:20px;
-    margin-right:20px;
+nav > a {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#maRecherche {
+    border: 2px solid black;
+    border-radius: 15px;
+}
+
+th{
+    background-color:#6c757d;
+}
+
+#btn-maRecherche{
+    box-shadow: 5px 5px grey;
+}
+
+main{
+    height: 580px;
+    grid-area: auto;
+    display: block;
+    overflow: auto;
+
+}
+
+footer{
+    text-align: center;
+    font-size: small;
+}
+
+#form-line, #form-campus, #form-ville, #ville-form-line{
+    height: 1rem;
+    margin: 0;
+    vertical-align: center;
+}
+
+.table td{
+    vertical-align: center !important;
 }

@@ -16,12 +16,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class CampusController extends AbstractController
 {
     /**
-     * @Route("/", name="campus_index", methods={"GET"})
+     * @Route("/", name="campus_index", methods={"GET","POST"})
+     * @param CampusRepository $campusRepository
+     * @param Request $request
+     * @return Response
      */
-    public function index(CampusRepository $campusRepository): Response
+    public function index(CampusRepository $campusRepository, Request $request): Response
     {
+        $campu = new Campus();
+        $form = $this->createForm(CampusType::class, $campu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($campu);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('campus_index');
+        }
         return $this->render('campus/index.html.twig', [
             'campuses' => $campusRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -61,15 +76,15 @@ class CampusController extends AbstractController
     /**
      * @Route("/{id}/edit", name="campus_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Campus $campu): Response
+    public function edit(Request $request, EntityManagerInterface $em, Campus $campu, $id): Response
     {
-        $campu = new Campus();
+        $campu = $em->getRepository(Campus::class)->find($id);
         $form = $this->createForm(CampusType::class, $campu);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->flush();
+            $this->addFlash('success', 'Bien modifié avec succès');
             return $this->redirectToRoute('campus_index');
         }
 
@@ -88,6 +103,7 @@ class CampusController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($campu);
             $entityManager->flush();
+            $this->addFlash('success', 'Bien supprimé avec succès');
         }
 
         return $this->redirectToRoute('campus_index');

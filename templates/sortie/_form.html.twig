@@ -1,7 +1,7 @@
 {{ form_start(form) }}
 <div class="container">
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col">
         {{ form_row(form.nom) }}
         {{ form_row(form.dateDebut) }}
         {{ form_row(form.dateCloture) }}
@@ -19,4 +19,5 @@
         <button class="btn btn-primary btn-lg float">{{ button_label|default('Publier la Sortie') }}</button>
     </div>
 </div>
+
 {{ form_end(form) }}
