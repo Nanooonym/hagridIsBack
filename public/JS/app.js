@@ -1,22 +1,27 @@
-let $sortie_ville = $('#sortie_ville')
-let $token = $('#sortie__token')
 
-$sortie_ville.change(
+let $ville = $('#sortie_ville');
+// When ville selected ...
+$ville.change(function() {
+    console.log("Dans la fonction Change");
 
-    $sortie_ville.change(function () {
+    // ... retrieve the corresponding form.
+    let $form = $(this).closest('form');
+    // Simulate form data, but only include the selected espece value.
+    let data = {};
+    data[$ville.attr('name')] = $ville.val();
 
-        let $form = $(this).closest('form')
-
-        let data = {}
-        data[$token.attr('name')] = $token.val()
-            data[$sortie_ville.attr('name')] = $sortie_ville.val()
-
-       $.post($form.attr('action'), data).then(function()
-       {
+    // Submit data via AJAX to the form's action path.
+    $.ajax({
+        url : $form.attr('action'),
+        type: $form.attr('method'),
+        data : data,
+        success: function(html) {
+            // Replace current race field ...
             $('#sortie_lieu').replaceWith(
-                $(response).find('#sortie_lieu')
-            )
-
-       })
-    })
-)
+                // ... with the returned one from the AJAX response.
+                $(html).find('#sortie_lieu')
+            );
+            // race field now displays the appropriate positions.
+        }
+    });
+});

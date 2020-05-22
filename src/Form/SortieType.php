@@ -29,7 +29,7 @@ class SortieType extends AbstractType
                 'label' => "Nom de la sortie :",
             ])
 
-            ->add('dateDebut', DateTimeType::class, [
+/*            ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie :",
                 'date_widget' => 'single_text',
                 'empty_data' => '',
@@ -38,7 +38,7 @@ class SortieType extends AbstractType
                 'label' => "Date limite d'inscription :",
                 'date_widget' => 'single_text',
                 'empty_data' => '',
-            ])
+            ])*/
 
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => "Nombre de places :"
@@ -97,20 +97,20 @@ class SortieType extends AbstractType
             [
                 'class' => 'App\Entity\Lieu',
                 'placeholder' =>  $ville ? 'Selectionner un lieu' : 'Selectionnez votre ville',
-                'mapped' => false,
+                //'mapped' => false,
                 'required' => false,
                 'choices' => $ville ? $ville->getLieux() : [],
                 'auto_initialize' => false
             ]
         );
-        /*
+
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event){
                 $form = $event->getForm();
             }
         );
-        */
+
         $form->add($builder->getForm());
     }
 

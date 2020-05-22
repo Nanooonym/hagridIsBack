@@ -24,8 +24,8 @@ class ParticipantController extends AbstractController
 
     public function __construct(ParticipantRepository $repository, EntityManagerInterface $em)
     {
-        $this->repository=$repository;
-        $this->em=$em;
+        $this->repository = $repository;
+        $this->em = $em;
     }
 
     /**
@@ -68,6 +68,7 @@ class ParticipantController extends AbstractController
         $em->flush();
 
     }
+
     /**
      * @Route("/participant", name="participant.home")
      * @param EntityManagerInterface $em
@@ -76,8 +77,7 @@ class ParticipantController extends AbstractController
     public function home(EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Participant::class);
-        $participants=$repository->findAll();
+        $participants = $repository->findAll();
         return $this->render('user/home.html.twig');
     }
-
 }
