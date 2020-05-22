@@ -93,6 +93,8 @@ class Sortie
 
     public function __construct()
     {
+        $this->dateDebut = new \DateTime("tomorrow");
+        $this->dateCloture = new \DateTime("tomorrow");
         $this->participants = new ArrayCollection();
     }
 
@@ -118,7 +120,7 @@ class Sortie
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(?\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
@@ -142,7 +144,7 @@ class Sortie
         return $this->dateCloture;
     }
 
-    public function setDateCloture(\DateTimeInterface $dateCloture): self
+    public function setDateCloture(?\DateTimeInterface $dateCloture): self
     {
         $this->dateCloture = $dateCloture;
 

@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Edit Participant{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>Mon profil</h1>
+    </div>
+    <div>
+        {{ form_start(participantForm) }}
+        {{ form_widget(participantForm) }}
+        {{ form_row(participantForm.password.first) }}
+        {{ form_row(participantForm.password.second) }}
+
+            <div>
+                <button type="submit">Enregistré</button>
+                <button type="reset"> Annuler</button>
+            </div>
+        {{ form_end(participantForm) }}
+    </div>
+
+
+{% endblock %}

@@ -32,12 +32,13 @@ class SortieType extends AbstractType
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie :",
                 'date_widget' => 'single_text',
-                'empty_data' => '',
+                'format' => 'yyyy/MM/dd HH:mm',
             ])
             ->add('dateCloture', DateTimeType::class, [
                 'label' => "Date limite d'inscription :",
                 'date_widget' => 'single_text',
                 'empty_data' => '',
+                'format' => 'yyyy/MM/dd HH:mm',
             ])
 
             ->add('nbInscriptionsMax', IntegerType::class, [
@@ -97,20 +98,20 @@ class SortieType extends AbstractType
             [
                 'class' => 'App\Entity\Lieu',
                 'placeholder' =>  $ville ? 'Selectionner un lieu' : 'Selectionnez votre ville',
-                'mapped' => false,
+                //'mapped' => false,
                 'required' => false,
                 'choices' => $ville ? $ville->getLieux() : [],
                 'auto_initialize' => false
             ]
         );
-        /*
+
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event){
                 $form = $event->getForm();
             }
         );
-        */
+
         $form->add($builder->getForm());
     }
 

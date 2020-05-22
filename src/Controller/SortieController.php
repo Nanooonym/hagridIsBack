@@ -63,7 +63,6 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            die();
             $entityManager = $this->getDoctrine()->getManager();
 
             $sortie->setOrganisateur($this->security->getUser());
@@ -71,7 +70,14 @@ class SortieController extends AbstractController
 
 
             $etat = new Etat();
-            $etat->setLibelle("En cours");
+            $submit = $_POST['button'];
+
+            if($submit == "enregistrer") {
+                $etat->setLibelle("En création");
+            } else if($submit == "publier"){
+                $etat->setLibelle("Ouvert");
+            }
+
             $entityManager->persist($etat);
             $sortie->setEtat($etat);
 
