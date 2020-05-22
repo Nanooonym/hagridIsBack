@@ -54,15 +54,24 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $sortie->setOrganisateur($this->security->getUser());
             $sortie->addParticipant($this->security->getUser());
 
-
             $etat = new Etat();
-            $etat->setLibelle("En cours");
+            $submit = $_POST['button'];
+
+            if($submit == "enregistrer") {
+                $etat->setLibelle("En création");
+            } else if($submit == "publier"){
+                $etat->setLibelle("Ouvert");
+            }
+
             $entityManager->persist($etat);
             $sortie->setEtat($etat);
 
