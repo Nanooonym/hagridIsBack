@@ -22,7 +22,7 @@
 
         </div>
 
-        <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm">
+        <table id="table-ville" class="table table-striped table-bordered table-sm">
             <thead>
             <tr>
                 <th class="th-sm">Ville</th>
@@ -35,9 +35,9 @@
                 <tr>
                     <td>{{ ville.nom }}</td>
                     <td>{{ ville.codePostal }}</td>
-                    <td>
-                        <a href="{{ path('ville_edit', {'id': ville.id}) }}">Modifier</a>
-                        <a href="{{ path('ville_delete', {'id': ville.id}) }}">Supprimer</a>
+                    <td class="row ml-0 mr-0">
+                        <a href="{{ path('ville_edit', {'id': ville.id}) }}" class="btn btn-secondary">Modifier</a>
+                        {{ include('ville/_delete_form.html.twig') }}
                     </td>
                 </tr>
             {% else %}
@@ -45,16 +45,10 @@
                     <td colspan="4">no records found</td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td>
-                    <input type="text" id="add-campus">
-                </td>
-                <td>
-                    <input type="text" id="add-campus">
-                </td>
-                <td>
-                    <a href="{{ path('ville_index') }}" class="btn btn-secondary">Ajouter</a>
-                </td>
+            <tr id="form-line">
+                <div id="ville-form-line" class="row">
+                {{ include('ville/_form.html.twig') }}
+                </div>
             </tr>
             </tbody>
         </table>

@@ -35,8 +35,12 @@ footer{
     font-size: small;
 }
 
+#form-line, #form-campus, #form-ville, #ville-form-line{
+    height: 1rem;
+    margin: 0;
+    vertical-align: center;
+}
 
-
-#navbarNav{
-    background-color: #4e555b;
+.table td{
+    vertical-align: center !important;
 }
