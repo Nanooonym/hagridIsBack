@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
-use App\Entity\Ville;
 use App\Form\SortieFilterType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -55,16 +54,24 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            die();
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $sortie->setOrganisateur($this->security->getUser());
             $sortie->addParticipant($this->security->getUser());
 
-
             $etat = new Etat();
-            $etat->setLibelle("En cours");
+            $submit = $_POST['button'];
+
+            if($submit == "enregistrer") {
+                $etat->setLibelle("En création");
+            } else if($submit == "publier"){
+                $etat->setLibelle("Ouvert");
+            }
+
             $entityManager->persist($etat);
             $sortie->setEtat($etat);
 

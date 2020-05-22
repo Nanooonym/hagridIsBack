@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col">
         {{ form_row(form.nom) }}
-{#        {{ form_row(form.dateDebut) }}
-        {{ form_row(form.dateCloture) }}#}
+        {{ form_row(form.dateDebut) }}
+        {{ form_row(form.dateCloture) }}
         {{ form_row(form.nbInscriptionsMax) }}
         {{ form_row(form.duree) }}
         {{ form_row(form.descriptionInfos) }}
@@ -15,8 +15,8 @@
     </div>
 
     <div class="row justify-content-around">
-        <button class="btn btn-primary btn-lg float">{{ button_label|default('Enregistrer') }}</button>
-        <button class="btn btn-primary btn-lg float">{{ button_label|default('Publier la Sortie') }}</button>
+        <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
+        <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
     </div>
 </div>
 
