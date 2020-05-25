@@ -70,6 +70,7 @@ class SortieType extends AbstractType
                     $ville = $event->getForm()->getData();
                     $form = $event->getForm();
                     $this->addLieuField($form->getParent(), $form->getData());
+                    $this->addCodePostal($form->getParent(), $form->getData());
                 }
             );
             $builder->addEventListener(

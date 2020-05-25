@@ -3,48 +3,94 @@
 {% block title %}Sortie{% endblock %}
 
 {% block main %}
-    <h1>Sortie</h1>
+    <h3 class="m-3 text-center">Afficher une sortie</h3>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sortie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr>
-                <th>DateDebut</th>
-                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ sortie.duree }}</td>
-            </tr>
-            <tr>
-                <th>DateCloture</th>
-                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NbInscriptionsMax</th>
-                <td>{{ sortie.nbInscriptionsMax }}</td>
-            </tr>
-            <tr>
-                <th>DescriptionInfos</th>
-                <td>{{ sortie.descriptionInfos }}</td>
-            </tr>
-            <tr>
-                <th>UrlPhoto</th>
-                <td>{{ sortie.urlPhoto }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {% for message in app.flashes('success') %}
 
-    <a href="{{ path('sortie_index') }}">back to list</a>
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
 
-    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">edit</a>
+    {% endfor %}
+    <div class="container">
+        <div class="table" >
+            <table class="table">
+                <tbody>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Nom de la sortie:</td>
+                    <td class="col-3" >{{ sortie.nom }}</td>
+                    <td class="col-2 sortir-attribut">Campus:</td>
+                    <td class="col-3">{{ sortie.campus }}</td>
+                </tr>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Date et heure de la sortie:</td>
+                    <td class="col-3">{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
+                    <td class="col-2 sortir-attribut">Lieu:</td>
+                    <td class="col-3">{{ sortie.lieu }}</td>
+                </tr>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Date limite d'inscription:</td>
+                    <td class="col-3">{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
+                    <td class="col-2 sortir-attribut">Rue:</td>
+                    <td class="col-3">{{ sortie.lieu.rue }}</td>
+                </tr>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Nombre de places:</td>
+                    <td class="col-3">{{ sortie.nbInscriptionsMax }}</td>
+                    <td class="col-2 sortir-attribut">Code postal:</td>
+                    <td class="col-3">{{ sortie.lieu.ville.codePostal }}</td>
+                </tr>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Duree:</td>
+                    <td class="col-3">{{ sortie.duree }} minutes</td>
+                    <td class="col-2 sortir-attribut">Latitude:</td>
+                    <td class="col-3">{{ sortie.lieu.latitude }}</td>
+                </tr>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Description et infos:</td>
+                    <td class="col-3">{{ sortie.descriptionInfos }}</td>
+                    <td class="col-2 sortir-attribut">Longitude:</td>
+                    <td class="col-3">{{ sortie.lieu.longitude }}</td>
+                </tr>
+                <tr class="row">
+                    <td class="col-4 sortir-attribut">Photo:</td>
+                    <td class="col-3 " id="photoURL"><a href="{{ sortie.urlPhoto }}">Voir la photo</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}" class="btn btn-primary btn-lg float">S'inscrire</a>
+            <a href="{{ path('sortie_index') }}" class="btn btn-primary btn-lg float ml-4">Retourner</a>
+        </div>
+    </div>
 
-    {{ include('sortie/_delete_form.html.twig') }}
+    <div>
+        <p class="ml-4">Liste des participants inscrits:</p>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped mb-0 table-scroll-liste-participants ml-4">
+            <thead>
+            <tr>
+                <th scope="col">Pseudo
+                </th>
+                <th scope="col">Nom
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+           {% for participant in sortie.participants %}
+            <tr>
+                <td>{{ participant.pseudo }}</td>
+                <td>{{ participant.nom }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+
+    <div class="m-4">
+        {{ include('sortie/_inscription.html.twig') }}
+    </div>
+
 {% endblock %}

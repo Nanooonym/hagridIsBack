@@ -28,6 +28,13 @@ th{
     box-shadow: 5px 5px grey;
 }
 
+main{
+    height: 630px;
+    grid-area: auto;
+    display: block;
+    overflow: auto;
+
+}
 
 footer{
     text-align: center;
@@ -45,8 +52,16 @@ footer{
     vertical-align: center;
 }
 
-.table td{
-    vertical-align: center !important;
+.table{
+    justify-content: center!important;
+}
+
+.sortir-attribut{
+    font-weight: bold;
+}
+
+#photoURL{
+    text-decoration: none;
 }
 
 main
@@ -56,7 +71,7 @@ main
 
 .my-custom-scrollbar {
     position: relative;
-    height: 300px;          /*50px = une ligne*/
+    height: 200px;
     overflow: auto;
 }
 
@@ -68,3 +83,12 @@ main
 position: sticky; top: 0;
 }
 
+.table-scroll-liste-participants {
+    width: 300px;
+}
+
+
+.table-scroll-liste-participants > thead th {
+    position: sticky; top: 0;
+    width: 300px;
+}

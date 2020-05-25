@@ -24,7 +24,7 @@
                     <div>
                         <span class="glyphicon glyphicon-search"></span>
                         <input type="search" id="maRecherche" class="mt-4">
-                        <button id="btn-maRecherche" class="mt-4">Rechercher</button>
+                        <button id="btn-maRecherche" class="btn btn-primary btn-lg float">Rechercher</button>
                     </div>
                 </form>
 
@@ -44,7 +44,7 @@
                     <tr>
                         <td>{{ campu.nom }}</td>
                         <td class="row ml-0 mr-0">
-                            <a href="{{ path('campus_edit', {'id': campu.id}) }}" class="btn btn-secondary">Modifier</a>
+                            <a href="{{ path('campus_edit', {'id': campu.id}) }}" class="btn btn-primary btn-lg float">Modifier</a>
                             {{ include('campus/_delete_form.html.twig') }}
                         </td>
                     </tr>
