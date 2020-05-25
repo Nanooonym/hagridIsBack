@@ -75,4 +75,10 @@ main
 .table-scroll > thead th {
 position: sticky; top: 0;
 }
-
+.table-scroll-liste-participants {
+    width: 300px;
+}
+.table-scroll-liste-participants > thead th {
+    position: sticky; top: 0;
+    width: 300px;
+}
