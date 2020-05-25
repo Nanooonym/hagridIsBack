@@ -1,0 +1,20 @@
+{% extends 'layout.html.twig' %}
+
+
+
+{% block main %}
+    <div class="container">
+
+
+        <h1>Annuler une sortie</h1>
+
+        <p><label>Nom de la sortie:      </label>{{  }}</p>
+        <p><label>Date de la sortie:      </label>{{  }}</p>
+        <p><label>Campus:      </label>{{  }}</p>
+        <p><label>Lieu:      </label>{{  }}</p>
+        <p type="textarea"><label>Motif:    </label></p>
+
+        <button type="back">Enregistrer</button>
+        <button type="reset">Annuler</button>
+    </div>
+{% endblock %}
