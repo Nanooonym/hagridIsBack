@@ -56,7 +56,7 @@ main
 
 .my-custom-scrollbar {
     position: relative;
-    height: 200px;
+    height: 300px;          /*50px = une ligne*/
     overflow: auto;
 }
 
