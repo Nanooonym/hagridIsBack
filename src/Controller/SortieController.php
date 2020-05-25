@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
-use App\Entity\Ville;
 use App\Form\SortieFilterType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -77,6 +76,12 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
+            if($submit == "enregistrer"){
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant enregistrée');
+            }else if($submit == "publier"){
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
+            }
+
             return $this->redirectToRoute('sortie_index');
         }
 
@@ -108,6 +113,7 @@ class SortieController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('sortie_index');
+            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
         }
 
         return $this->render('sortie/edit.html.twig', [
@@ -125,6 +131,7 @@ class SortieController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($sortie);
             $entityManager->flush();
+            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est a été supprimée');
         }
 
         return $this->redirectToRoute('sortie_index');
@@ -147,9 +154,49 @@ class SortieController extends AbstractController
 
             $sortie->addParticipant($user);
             $em->flush();
+            $this->addFlash('success', 'Vous êtes maintenant inscrit(e) à la sortie "' . $sortie->getNom() . '"');
         }
         return $this->redirectToRoute('sortie_index');
 
+    }
+
+
+    /**
+     * @Route("/{id}/desister", name="sortie_desister", methods={"GET","POST"})
+     */
+    public function desister(EntityManagerInterface $em, Request $request, Sortie $sortie, $id): Response
+    {
+
+        $date = new \DateTime("now");
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+        $user = $this->getUser();
+
+        if ($sortie->getDateCloture() < $date
+            && count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax()
+            && $sortie->getOrganisateur() != $user) {
+
+            $sortie->removeParticipant($user);
+            $em->flush();
+            $this->addFlash('success', 'Vous n\'êtes plus inscrit(e) à la sortie "' . $sortie->getNom() . '"');
+        }
+        return $this->redirectToRoute('sortie_index');
+
+    }
+
+    /**
+     * @Route("/{id}/publier", name="sortie_publier", methods={"GET","POST"})
+     */
+    public function publier(Request $request, Sortie $sortie): Response
+    {
+        $etat = $sortie->getEtat();
+        if($sortie->getEtat()->getLibelle() == 'En création'){
+            $etat->setLibelle('Ouvert');
+            $sortie->setEtat($etat);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
+        }
+            return $this->redirectToRoute('sortie_index');
     }
 
     public function updateEtat (EntityManagerInterface $em, Sortie $sortie) {

@@ -3,7 +3,7 @@
     and sortie.etat.libelle == 'En création' %}
         <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
     -
-        <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Publier</a>
+        <a href="{{ path('sortie_publier', {'id': sortie.id}) }}">Publier</a>
 {% else %}
         <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
 {% endif %}
@@ -11,7 +11,7 @@
 <!-- Se désister -->
 {% if app.user in sortie.participants
     and app.user.id != sortie.organisateur.id %}
-        -  <a>Se désister</a>
+    - <a href="{{ path('sortie_desister', {'id': sortie.id}) }}">Se désister</a>
 {% endif %}
 
 <!-- S'inscrire -->
@@ -19,12 +19,6 @@
     and sortie.participants|length < sortie.nbInscriptionsMax
     and sortie.dateCloture > "now" %}
         - <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}">S'inscrire</a>
-{% endif %}
-
-<!-- Publier -->
-{% if app.user.id != sortie.organisateur.id
-    and sortie.etat == 'En création'%}
-        -  <a>Publier</a>
 {% endif %}
 
 <!-- Annuler -->

@@ -75,6 +75,7 @@ main
 .table-scroll > thead th {
 position: sticky; top: 0;
 }
+
 .table-scroll-liste-participants {
     width: 300px;
 }
