@@ -18,7 +18,7 @@
 {% if app.user not in sortie.participants
     and sortie.participants|length < sortie.nbInscriptionsMax
     and sortie.dateCloture > "now" %}
-        -  <a>S'inscrire</a>
+        - <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}">S'inscrire</a>
 {% endif %}
 
 <!-- Publier -->
