@@ -1,0 +1,11 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Nouveau participant{% endblock %}
+
+{% block main %}
+    <h1>Créer un participant</h1>
+
+    {{ include('participant/_form.html.twig') }}
+
+    <a href="{{ path('sortie_index') }}">back to list</a>
+{% endblock %}
