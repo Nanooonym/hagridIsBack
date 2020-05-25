@@ -2,14 +2,6 @@
 
 {% block title %}Les sorties{% endblock %}
 
-{%  block user %}
-    {{ parent() }}
-    <div class="col">
-        <div>Date du jour : {{ "now"|date("d/m/Y") }}</div>
-        <div>Participant : {{ app.user.prenom }} {{ app.user.nom|upper|first }}.</div>
-    </div>
-{%  endblock %}
-
 {% block main %}
 
     <div class="jumbotron">
@@ -36,7 +28,8 @@
         </div>
     </div>
 
-    <table class="table table-striped table-dark">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0 table-scroll">
         <thead>
         <tr>
             <th scope="col">Nom de la sortie</th>
@@ -57,7 +50,7 @@
                 <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
                 <td>{{ sortie.participants|length }} / {{ sortie.nbInscriptionsMax }}</td>
                 <td>{{ sortie.etat.libelle }}</td>
-                <td>
+                <td style="text-align:center">
                     {% if app.user in sortie.participants %}
                     X
                      {% endif %}
@@ -73,6 +66,8 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
+
 
     <a class="btn btn-primary btn-lg float" href="{{ path('sortie_new') }}">Créer une sortie</a>
 {% endblock %}

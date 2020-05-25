@@ -62,7 +62,7 @@ class SortieType extends AbstractType
                 'class' => 'App\Entity\Ville',
                 'placeholder' => 'Selectionner une ville',
                 'mapped' => false,
-                'required' => false
+                'required' => false,
             ]);
             $builder->get('ville')->addEventListener(
                 FormEvents::POST_SUBMIT,
@@ -70,6 +70,7 @@ class SortieType extends AbstractType
                     $ville = $event->getForm()->getData();
                     $form = $event->getForm();
                     $this->addLieuField($form->getParent(), $form->getData());
+                    $this->addCodePostal($form->getParent(), $form->getData());
                 }
             );
             $builder->addEventListener(
@@ -114,6 +115,8 @@ class SortieType extends AbstractType
 
         $form->add($builder->getForm());
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -108,7 +108,7 @@ class Sortie
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -156,7 +156,7 @@ class Sortie
         return $this->nbInscriptionsMax;
     }
 
-    public function setNbInscriptionsMax(int $nbInscriptionsMax): self
+    public function setNbInscriptionsMax(?int $nbInscriptionsMax): self
     {
         $this->nbInscriptionsMax = $nbInscriptionsMax;
 
@@ -180,7 +180,7 @@ class Sortie
         return $this->urlPhoto;
     }
 
-    public function setUrlPhoto(string $urlPhoto): self
+    public function setUrlPhoto(?string $urlPhoto): self
     {
         $this->urlPhoto = $urlPhoto;
 
