@@ -118,8 +118,6 @@ class ParticipantController extends AbstractController
     public function edit(EntityManagerInterface $em, Request $request, Participant $participant, $id,UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $participant = new Participant();
-
-
         $participantRepo = $this->getDoctrine()->getRepository(participant::class);
         $participant = $participantRepo->find($id);
         $participantForm = $this->createForm(ParticipantType::class, $participant);

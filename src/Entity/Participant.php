@@ -279,4 +279,9 @@ class Participant implements UserInterface
     {
 
     }
+
+    public function __toString()
+    {
+        return $this->getPseudo();
+    }
 }
