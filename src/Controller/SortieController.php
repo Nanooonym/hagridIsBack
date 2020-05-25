@@ -112,8 +112,8 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('sortie_index');
             $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
+            return $this->redirectToRoute('sortie_index');
         }
 
         return $this->render('sortie/edit.html.twig', [

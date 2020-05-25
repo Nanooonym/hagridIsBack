@@ -1,6 +1,5 @@
 .inner-form-col
 {
-
     justify-content: space-between;
 }
 
@@ -28,13 +27,6 @@ th{
     box-shadow: 5px 5px grey;
 }
 
-main{
-    height: 630px;
-    grid-area: auto;
-    display: block;
-    overflow: auto;
-
-}
 
 footer{
     text-align: center;
@@ -62,11 +54,6 @@ footer{
 
 #photoURL{
     text-decoration: none;
-}
-
-main
-{
-    padding-bottom : 30px;
 }
 
 .my-custom-scrollbar {

@@ -7,7 +7,7 @@
 
 
         <h1>{{ participant.pseudo }}</h1>
-
+        {{ include('participant/_image_profil.html.twig') }}
         <p><label>Prénom:      </label>{{ participant.prenom }}</p>
         <p><label>Nom:      </label>{{ participant.nom }}</p>
         <p><label>Téléphone:      </label>{{ participant.telephone }}</p>
