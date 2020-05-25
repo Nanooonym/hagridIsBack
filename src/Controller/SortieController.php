@@ -142,7 +142,7 @@ class SortieController extends AbstractController
         $user = $this->getUser();
 
         if ($sortie->getDateCloture() < $date
-            && $sortie->getParticipants()->length < $sortie->getNbInscriptionsMax()
+            && count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax()
             && $sortie->getOrganisateur() != $user) {
 
             $sortie->addParticipant($user);

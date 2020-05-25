@@ -9,6 +9,7 @@ let $campus = $('#sortie_campus');
 
         // ... retrieve the corresponding form.
         let $form = $(this).closest('form');
+        console.log($form);
         // Simulate form data, but only include the selected espece value.
         let data = {};
         data[$ville.attr('name')] = $ville.val();
@@ -28,7 +29,7 @@ let $campus = $('#sortie_campus');
             }
         });
 
-        // Return Id of selected Ville
+/*        // Return Id of selected Ville
         let e = document.getElementById("sortie_ville");
         let idVille = e.options[e.selectedIndex].value;
 
@@ -54,10 +55,10 @@ let $campus = $('#sortie_campus');
                 }
 
                 document.getElementById("codePostal").innerHTML = html;
-/*                $(document.body).remove('onChangeLieu').append('<script id="onChangeLieu" src="../JS/onChangeLieu.js"></script>')*/
+                $(document.body).remove('onChangeLieu').append('<script id="onChangeLieu" src="../JS/onChangeLieu.js"></script>')*!/
             }
 
-        }
+        }*/
     }
 
 );
