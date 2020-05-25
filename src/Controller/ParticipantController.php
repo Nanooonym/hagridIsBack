@@ -49,18 +49,20 @@ class ParticipantController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $participant = new Participant();
         $participantForm = $this->createForm(ParticipantType::class, $participant);
         $participantForm->handleRequest($request);
 
         if ($participantForm->isSubmitted() && $participantForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $participant->setAdministrateur(false);
             $participant->setActif(true);
-            $entityManager->persist($participant);
-            $entityManager->flush();
+            $motDePasse = $passwordEncoder->encodePassword($participant, $participant->getMotDePasse());
+            $participant->setMotDePasse($motDePasse);
+            $em->persist($participant);
+            $em->flush();
 
             return $this->redirectToRoute('sortie_index');
         }
