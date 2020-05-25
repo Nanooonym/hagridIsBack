@@ -142,5 +142,54 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('sortie_index');
     }
 
+    /**
+     * @Route("/{id}/inscrire", name="sortie_inscrire", methods={"GET","POST"})
+     */
+    public function inscrire(EntityManagerInterface $em, Request $request, Sortie $sortie, $id): Response
+    {
 
+        $date = new \DateTime("now");
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->find($id);
+        $user = $this->getUser();
+
+        if ($sortie->getDateCloture() < $date
+            && $sortie->getParticipants()->length < $sortie->getNbInscriptionsMax()
+            && $sortie->getOrganisateur() != $user) {
+
+            $sortie->addParticipant($user);
+            $em->flush();
+        }
+        return $this->redirectToRoute('sortie_index');
+
+    }
+
+    public function updateEtat (EntityManagerInterface $em, Sortie $sortie) {
+        $etat = $sortie->getEtat();
+        $dateDebut = new \DateTime($sortie->getDateDebut());
+        $dateCloture = $sortie->getDateCloture();
+        $dateNow = new \DateTime("now");
+
+        $duree = 0;
+        if($sortie->getDuree()){
+            $duree = $sortie->getDuree();
+        }
+        $dateFin = $dateDebut->add(new \DateInterval('PT' . $duree . 'M'));
+
+        if($dateCloture > $dateNow && $dateDebut < $dateNow){
+            $this->etat = "Clôturée";
+            $sortie->setEtat($etat);
+            $em->flush();
+        }
+        if($dateDebut > $dateNow){
+            $this->etat = "Activité en cours";
+            $sortie->setEtat($etat);
+            $em->flush();
+        }
+        if($dateFin > $dateNow){
+            $this->etat = "Passée";
+            $sortie->setEtat($etat);
+            $em->flush();
+        }
+    }
 }

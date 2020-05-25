@@ -27,27 +27,16 @@ th{
 #btn-maRecherche{
     box-shadow: 5px 5px grey;
 }
-body{
-    height: 100%;
-}
-header{
-    height: 10%;
-}
-nav{
-    height: 5%;
-}
-main{
-    height: 80%;
-    grid-area: auto;
-    display: block;
-    overflow: auto;
 
-}
 
 footer{
-    height: 5%;
     text-align: center;
     font-size: small;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
 }
 
 #form-line, #form-campus, #form-ville, #ville-form-line{
@@ -59,3 +48,23 @@ footer{
 .table td{
     vertical-align: center !important;
 }
+
+main
+{
+    padding-bottom : 30px;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table-scroll > thead th {
+position: sticky; top: 0;
+}
+

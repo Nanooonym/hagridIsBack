@@ -1,0 +1,12 @@
+<div>
+    {{ form_start(participantForm) }}
+    {{ form_widget(participantForm) }}
+    {{ form_row(participantForm.motDePasse.first) }}
+    {{ form_row(participantForm.motDePasse.second) }}
+
+    <div>
+        <button type="submit">Enregistré</button>
+        <button type="reset"> Annuler</button>
+    </div>
+    {{ form_end(participantForm) }}
+</div>

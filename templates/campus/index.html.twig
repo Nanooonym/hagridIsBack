@@ -31,8 +31,8 @@
             </div>
 
         </div>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table id="table-campus" class="table table-striped table-bordered">
+{#        <div class="table-wrapper-scroll-y my-custom-scrollbar">#}
+            <table class="table table-bordered table-striped mb-0">
                 <thead>
                 <tr>
                     <th>Campus</th>
@@ -53,15 +53,15 @@
                         <td colspan="2">no records found</td>
                     </tr>
                 {% endfor %}
-
-                <tr id="form-line">
-                    <div id="form-campus" class="row align-items-center">
-             {{ include('campus/_form.html.twig') }}
-                    </div>
-
-                </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+{#                        <div id="form-campus" class="row align-items-center">#}
+                 {{ include('campus/_form.html.twig') }}
+{#                        </div>#}
+                    </tr>
+                </tfoot>
             </table>
         </div>
-    </div>
+{#    </div>#}
 {% endblock %}
