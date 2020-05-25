@@ -43,6 +43,35 @@ class ParticipantController extends AbstractController
         return $this->render('participant/profile.html.twig', ["participant" => $participant]);
     }
 
+    /**
+     * @Route("/participant/new", name="participant_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function new(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $participant = new Participant();
+        $participantForm = $this->createForm(ParticipantType::class, $participant);
+        $participantForm->handleRequest($request);
+
+        if ($participantForm->isSubmitted() && $participantForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $participant->setAdministrateur(false);
+            $participant->setActif(true);
+            $motDePasse = $passwordEncoder->encodePassword($participant, $participant->getMotDePasse());
+            $participant->setMotDePasse($motDePasse);
+            $em->persist($participant);
+            $em->flush();
+
+            return $this->redirectToRoute('sortie_index');
+        }
+
+        return $this->render('participant/new.html.twig', [
+            'participant' => $participant,
+            'participantForm' => $participantForm->createView(),
+        ]);
+    }
+
 
     /**
      * @Route("/unParticipant", name="unParticipant")

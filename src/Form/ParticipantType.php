@@ -32,7 +32,7 @@ class ParticipantType extends AbstractType
             ->add('mail', TextType::class, [
                 'label'=> "Email:"
             ])
-            ->add('password', RepeatedType::class, [
+            ->add('motDePasse', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Entrée votre mot de passe.',
                 'options' => ['attr' => ['class' => 'password-field']],

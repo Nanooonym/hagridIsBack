@@ -130,15 +130,5 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('sortie_index');
     }
 
-    /**
-     * @Route("/{id}/annuler", name="annuler_sortie")
-     *
-     */
-    public function annuler(int $id, EntityManagerInterface $em): Response
-    {
-        $repo = $em->getRepository(sortie::class);
-
-    }
-
 
 }
