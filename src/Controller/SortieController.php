@@ -74,9 +74,9 @@ class SortieController extends AbstractController
             $etat = new Etat();
             $submit = $_POST['button'];
 
-            if($submit == "enregistrer") {
+            if ($submit == "enregistrer") {
                 $etat->setLibelle("En création");
-            } else if($submit == "publier"){
+            } else if ($submit == "publier") {
                 $etat->setLibelle("Ouvert");
             }
 
@@ -117,15 +117,14 @@ class SortieController extends AbstractController
         $codePostal->getCodePostal();
         $longitude = $lieu->getLongitude();
         $latitude = $lieu->getLatitude();
+        $participants = $this->getDoctrine()->getRepository(Participant::class);
         $em->persist($sortie);
-        $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
-
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
+            'participants' => $participants,
             'form' => $form->createView(),
         ]);
 
@@ -159,7 +158,7 @@ class SortieController extends AbstractController
      */
     public function delete(Request $request, Sortie $sortie): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($sortie);
             $entityManager->flush();
