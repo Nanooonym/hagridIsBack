@@ -1,20 +1,22 @@
+
 {% extends 'layout.html.twig' %}
 
-
-
 {% block main %}
-    <div class="container">
+
+    <h1>Annuler une sortie</h1>
+
+    <p><label>Nom de la sortie:      </label>{{ sortie.nom }}</p>
+    <p><label>Date de la sortie:      </label>{{ sortie.dateDebut|date('d/m/Y')}}</p>
+    <p><label>Campus:      </label>{{ sortie.campus.nom }}</p>
+    <p><label>Lieu:      </label>{{ sortie.lieu.nom }}</p>
+
+    {{ form_start(form) }}
+    {{ form_label(form.descriptionInfos) }}
+    {{ form_errors (form.descriptionInfos)}}
+    {{ form_widget(form.descriptionInfos) }}
+    <button class="btn btn-primary btn-lg float" type="submit">Enregistrer</button>
+    <a class="btn btn-primary btn-lg float" href="{{ path('sortie_index') }}">Annuler</a>
+    {{ form_end (form) }}
 
 
-        <h1>Annuler une sortie</h1>
-
-        <p><label>Nom de la sortie:      </label>{{  }}</p>
-        <p><label>Date de la sortie:      </label>{{  }}</p>
-        <p><label>Campus:      </label>{{  }}</p>
-        <p><label>Lieu:      </label>{{  }}</p>
-        <p type="textarea"><label>Motif:    </label></p>
-
-        <button type="back">Enregistrer</button>
-        <button type="reset">Annuler</button>
-    </div>
 {% endblock %}

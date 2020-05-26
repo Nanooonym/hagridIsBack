@@ -68,3 +68,7 @@ main
 position: sticky; top: 0;
 }
 
+.hidden-row {
+    display:none;
+}
+

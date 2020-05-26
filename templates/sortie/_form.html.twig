@@ -20,7 +20,11 @@
 
     <div class="row justify-content-around">
             <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
+        {% if sortie.etat.libelle == 'Ouverte' %}
+            <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="annuler">{{ button_label|default('Annuler Sortie') }}</button>
+        {% else %}
             <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
+        {% endif %}
         {% block buttons %}
         {% endblock buttons %}
     </div>

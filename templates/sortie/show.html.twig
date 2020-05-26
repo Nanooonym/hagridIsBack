@@ -32,8 +32,12 @@
                 <td>{{ sortie.nbInscriptionsMax }}</td>
             </tr>
             <tr>
-                <th>DescriptionInfos</th>
-                <td>{{ sortie.descriptionInfos }}</td>
+                {% if sortie.etat.libelle == 'Annulée'%}
+                    <th>Motif d'annulation</th>
+                {% else %}
+                    <th>Description Infos</th>
+                {% endif %}
+                    <td>{{ sortie.descriptionInfos }}</td>
             </tr>
             <tr>
                 <th>UrlPhoto</th>
