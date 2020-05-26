@@ -70,7 +70,7 @@
     </div>
 
     <div>
-        <p class="ml-4">Liste des participants inscrits:</p>
+        <p class="ml-4 mt-4">Liste des participants inscrits:</p>
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-bordered table-striped mb-0 table-scroll-liste-participants ml-4">
             <thead>
@@ -79,13 +79,6 @@
                 </th>
                 <th scope="col">Nom
                 </th>
-                {% if sortie.etat.libelle == 'Annulée'%}
-                    <th>Motif d'annulation</th>
-                {% else %}
-                    <th>Description Infos</th>
-                {% endif %}
-                    <td>{{ sortie.descriptionInfos }}</td>
-            </tr>
             </thead>
             <tbody>
            {% for participant in sortie.participants %}
