@@ -1,6 +1,10 @@
 <?php
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
 class SortieFilter {
 
     /**
@@ -14,12 +18,13 @@ class SortieFilter {
     private $name;
 
     /**
-     * @var datetime|null
+     * @ORM\Column(type="datetime")
      */
     private $dateDebut;
 
     /**
-     * @var datetime|null
+     * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="dateDebut", message="La date de fin doit être supérieure à la date de début")
      */
     private $dateFin;
 
@@ -46,24 +51,6 @@ class SortieFilter {
     /**
      * @return string|null
      */
-    public function getCampus(): ?string
-    {
-        return $this->campus;
-    }
-
-    /**
-     * @param string|null $campus
-     * @return SortieFilter
-     */
-    public function setCampus(?string $campus): SortieFilter
-    {
-        $this->campus = $campus;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
@@ -76,42 +63,6 @@ class SortieFilter {
     public function setName(?string $name): SortieFilter
     {
         $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return datetime|null
-     */
-    public function getDateDebut(): ?datetime
-    {
-        return $this->dateDebut;
-    }
-
-    /**
-     * @param datetime|null $dateDebut
-     * @return SortieFilter
-     */
-    public function setDateDebut(?datetime $dateDebut): SortieFilter
-    {
-        $this->dateDebut = $dateDebut;
-        return $this;
-    }
-
-    /**
-     * @return datetime|null
-     */
-    public function getDateFin(): ?datetime
-    {
-        return $this->dateFin;
-    }
-
-    /**
-     * @param datetime|null $dateFin
-     * @return SortieFilter
-     */
-    public function setDateFin(?datetime $dateFin): SortieFilter
-    {
-        $this->dateFin = $dateFin;
         return $this;
     }
 
@@ -186,5 +137,42 @@ class SortieFilter {
         $this->passee = $passee;
         return $this;
     }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $dateFin): self
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
 
 }

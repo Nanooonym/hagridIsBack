@@ -72,11 +72,21 @@ class SortieController extends AbstractController
                 $etat->setLibelle("Ouvert");
             }
 
+            if($sortie->getDuree() == null){
+                $sortie->setDuree(0);
+            }
+
             $entityManager->persist($etat);
             $sortie->setEtat($etat);
 
             $entityManager->persist($sortie);
             $entityManager->flush();
+
+            if($submit == "enregistrer"){
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant enregistrée');
+            }else if($submit == "publier"){
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
+            }
 
             return $this->redirectToRoute('sortie_index');
         }
@@ -107,8 +117,9 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
             return $this->redirectToRoute('sortie_index');
+
         }
 
         return $this->render('sortie/edit.html.twig', [
@@ -143,7 +154,7 @@ class SortieController extends AbstractController
         $sortie = $sortieRepo->find($id);
         $user = $this->getUser();
 
-        if ($sortie->getDateCloture() < $date
+        if ($sortie->getDateCloture() > $date
             && count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax()
             && $sortie->getOrganisateur() != $user) {
 
@@ -167,7 +178,7 @@ class SortieController extends AbstractController
         $sortie = $sortieRepo->find($id);
         $user = $this->getUser();
 
-        if ($sortie->getDateCloture() < $date
+        if ($sortie->getDateCloture() > $date
             && count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax()
             && $sortie->getOrganisateur() != $user) {
 
@@ -222,6 +233,7 @@ class SortieController extends AbstractController
             $em->flush();
         }
     }
+
     /**
      * @Route("/{id}/annuler", name="annuler", methods={"GET","POST"})
      *

@@ -55,7 +55,7 @@ let $campus = $('#sortie_campus');
                 }
 
                 document.getElementById("codePostal").innerHTML = html;
-                $(document.body).remove('onChangeLieu').append('<script id="onChangeLieu" src="../JS/onChangeLieu.js"></script>')*!/
+                $(document.body).remove('onChangeLieu').append('<script id="onChangeLieu" src="../JS/onChangeLieu.js"></script>')
             }
 
         }*/
@@ -63,7 +63,7 @@ let $campus = $('#sortie_campus');
 
 );
 
-function createCookie(name, value, days) {
+/*function createCookie(name, value, days) {
     var expires;
 
     if (days) {
@@ -78,4 +78,4 @@ function createCookie(name, value, days) {
     document.cookie = escape(name) + "=" +
         escape(value) + expires + "; path=/";
 
-}
+}*/
