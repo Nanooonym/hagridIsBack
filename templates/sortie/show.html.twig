@@ -47,7 +47,11 @@
                     <td class="col-3">{{ sortie.lieu.latitude }}</td>
                 </tr>
                 <tr class="row">
-                    <td class="col-4 sortir-attribut">Description et infos:</td>
+                    {% if sortie.etat.libelle == 'Annulée'%}
+                        <td class="col-4 sortir-attribut">Motif d'annulation:</td>
+                    {% else %}
+                        <td class="col-4 sortir-attribut">Description et infos:</td>
+                    {% endif %}
                     <td class="col-3">{{ sortie.descriptionInfos }}</td>
                     <td class="col-2 sortir-attribut">Longitude:</td>
                     <td class="col-3">{{ sortie.lieu.longitude }}</td>
