@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     fields={"pseudo", "mail"})
  * @Vich\Uploadable()
  */
-class Participant implements UserInterface
+class Participant implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -359,5 +359,23 @@ class Participant implements UserInterface
         $this->updated_at = $updated_at;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->pseudo,
+            $this->motDePasse,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->pseudo,
+            $this->motDePasse,
+            )=unserialize($serialized);
     }
 }
