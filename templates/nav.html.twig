@@ -1,21 +1,36 @@
-<nav class="navbar navbar-expand">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav" id="row justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('ville_index') }}">Villes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('campus_index') }}">Campus</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('sortie_index') }}">Accueil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('participant_edit', {'id': app.user.id}) }}">Mon Profil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{ path('app_logout') }}">Se déconnecter</a>
-            </li>
-        </ul>
+<div class="row justify-content-between">
+    <div>
+        <a class="navbar-brand" href="#"><img src="{{ asset('images/logo.jpeg') }}" id="logo"></a>
     </div>
-</nav>
+    <div class="mt-3 float-right">
+        <nav class="navbar navbar-expand-sm navbar-light">
+            <div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav" id="navbar">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('ville_index') }}">Villes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('campus_index') }}">Campus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('sortie_index') }}">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('participant_edit', {'id': app.user.id}) }}">Mon
+                                Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
