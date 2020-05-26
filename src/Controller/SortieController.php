@@ -252,6 +252,6 @@ class SortieController extends AbstractController
         }
 
 
-        return $this->render('sortie/annulerSortie', ["sortie" => $sortie, "form"=> $form->createView()]);
+        return $this->render('annulerSortie.html.twig', ["sortie" => $sortie, "form"=> $form->createView()]);
     }
 }
