@@ -75,6 +75,12 @@
                 </th>
                 <th scope="col">Nom
                 </th>
+                {% if sortie.etat.libelle == 'Annulée'%}
+                    <th>Motif d'annulation</th>
+                {% else %}
+                    <th>Description Infos</th>
+                {% endif %}
+                    <td>{{ sortie.descriptionInfos }}</td>
             </tr>
             </thead>
             <tbody>
