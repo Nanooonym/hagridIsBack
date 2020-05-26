@@ -1,3 +1,5 @@
+public/images
+public/media
 
 # Created by https://www.gitignore.io/api/symfony,phpstorm
 # Edit at https://www.gitignore.io/?templates=symfony,phpstorm
@@ -149,3 +151,6 @@ fabric.properties
 /web/js/
 
 # End of https://www.gitignore.io/api/symfony,phpstorm
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

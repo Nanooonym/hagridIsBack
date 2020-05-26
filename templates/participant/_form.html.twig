@@ -1,5 +1,9 @@
 <div>
+
     {{ form_start(participantForm) }}
+    <div>
+        {{ include('participant/_image_profil.html.twig') }}
+    </div>
     {{ form_widget(participantForm) }}
     {{ form_row(participantForm.motDePasse.first) }}
     {{ form_row(participantForm.motDePasse.second) }}
