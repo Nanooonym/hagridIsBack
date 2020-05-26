@@ -31,7 +31,8 @@ class SortieRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('s');
         $user = $this->security->getUser();
-
+        $qb->andWhere("DATE_ADD(DATE_ADD(s.dateDebut, s.duree, 'minute'), 1, 'month') > :now")
+            ->setParameter('now', new \DateTime("now"));
 
         if($filter->getCampus() || $filter->getCampus() != null){
             $qb->andWhere('s.campus = :campus')
@@ -91,6 +92,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         $query = $qb->getQuery();
+        dump($query);
         return new Paginator($query);
     }
 }

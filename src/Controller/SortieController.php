@@ -70,6 +70,10 @@ class SortieController extends AbstractController
                 $etat->setLibelle("Ouvert");
             }
 
+            if($sortie->getDuree() == null){
+                $sortie->setDuree(0);
+            }
+
             $entityManager->persist($etat);
             $sortie->setEtat($etat);
 
