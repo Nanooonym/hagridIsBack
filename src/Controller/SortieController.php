@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
+use App\Entity\Ville;
 use App\Form\SortieFilterType;
 use App\Form\SortieType;
+use App\Form\AnnulerSortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,9 +117,9 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
             return $this->redirectToRoute('sortie_index');
+
         }
 
         return $this->render('sortie/edit.html.twig', [
@@ -152,7 +154,7 @@ class SortieController extends AbstractController
         $sortie = $sortieRepo->find($id);
         $user = $this->getUser();
 
-        if ($sortie->getDateCloture() < $date
+        if ($sortie->getDateCloture() > $date
             && count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax()
             && $sortie->getOrganisateur() != $user) {
 
@@ -176,7 +178,7 @@ class SortieController extends AbstractController
         $sortie = $sortieRepo->find($id);
         $user = $this->getUser();
 
-        if ($sortie->getDateCloture() < $date
+        if ($sortie->getDateCloture() > $date
             && count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax()
             && $sortie->getOrganisateur() != $user) {
 
@@ -230,5 +232,26 @@ class SortieController extends AbstractController
             $sortie->setEtat($etat);
             $em->flush();
         }
+    }
+
+    /**
+     * @Route("/{id}/annuler", name="annuler", methods={"GET","POST"})
+     *
+     */
+    public function annuler(Sortie $sortie, EntityManagerInterface $em, Request $request):Response
+    {
+        $form = $this->createForm(AnnulerSortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->getEtat()->setLibelle("Annulée");
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant annulée');
+
+            return $this->redirectToRoute('sortie_index');
+        }
+
+
+        return $this->render('annulerSortie.html.twig', ["sortie" => $sortie, "form"=> $form->createView()]);
     }
 }

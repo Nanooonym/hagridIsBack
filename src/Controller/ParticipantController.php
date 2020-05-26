@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\ImportCSVType;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,7 +36,6 @@ class ParticipantController extends AbstractController
      * @param int $id
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/participant/{id}", name="profile", requirements={"id": "\d+"})
      */
     public function profile(int $id, EntityManagerInterface $em)
     {
@@ -138,5 +138,6 @@ class ParticipantController extends AbstractController
                 "participantForm" => $participantForm->createView(),
             ]);
     }
+
 
 }

@@ -30,7 +30,7 @@ class Participant implements UserInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
@@ -98,9 +98,12 @@ class Participant implements UserInterface
     private $organisateur;
 
     /**
+     * @var datetime|null
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+
 
     /**
      * @return string|null
@@ -138,15 +141,11 @@ class Participant implements UserInterface
         }
     }
 
-
-
-
-
-
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
         $this->organisateur = new ArrayCollection();
+        $this->updated_at = new \DateTime("now");
     }
 
     public function getId(): ?int
@@ -354,7 +353,7 @@ class Participant implements UserInterface
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
