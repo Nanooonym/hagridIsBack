@@ -11,12 +11,13 @@
 <body>
 <header class="container">
     <div>
-        <h1 class="row">Logo Sortir.com</h1>
-        <nav class="text-right">
+        <h1 class="row mt-4">Logo Sortir.com</h1>
+
+        <div class="container">
             {% block nav %}
                 {{ include('nav.html.twig') }}
             {% endblock %}
-        </nav>
+        </div>
     </div>
     <div class="row justify-content-end">
         {% block user %}{% endblock %}

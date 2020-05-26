@@ -30,7 +30,7 @@ class Participant implements UserInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
@@ -129,7 +129,7 @@ class Participant implements UserInterface
     /**
      * @param File|null $imageFile
      */
-    public function setImageFile(?File $imageFile=null): void
+    public function setImageFile(?File $imageFile): void
     {
         $this->imageFile = $imageFile;
         if($this->imageFile instanceof UploadedFile)

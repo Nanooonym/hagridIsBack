@@ -2,7 +2,7 @@
 {% block title 'Connexion' %}
 {% block nav %}{% endblock %}
 {% block main %}
-    <div class="container mt-4">
+    <div class="container mt-4 form-login">
 
         {% if error %}
             <div class="alert alert-danger">
@@ -10,7 +10,7 @@
             </div>
         {% endif %}
 
-        <form action="{{ path('app_login') }}" method="post" >
+        <form action="{{ path('app_login') }}" method="post">
             <div class="form-group">
                 <label for="pseudo">Identifiant:</label>
                 <input type="text" id="pseudo" name="_pseudo" class="form-control" value="{{ last_username }}" required autofocus>
