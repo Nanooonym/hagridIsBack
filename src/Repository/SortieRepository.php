@@ -9,6 +9,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,6 +32,13 @@ class SortieRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('s');
         $user = $this->security->getUser();
+
+        $qb->leftJoin('s.participants', 'p');
+        $qb->addSelect('p');
+        $qb->leftjoin('s.organisateur', 'o');
+        $qb->addSelect('o');
+
+
         $qb->andWhere("DATE_ADD(DATE_ADD(s.dateDebut, s.duree, 'minute'), 1, 'month') > :now")
             ->setParameter('now', new \DateTime("now"));
 
@@ -45,24 +53,25 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($filter->getDateDebut() || $filter->getDateDebut() != null){
-            $qb->andWhere('s.dateDebut < :dateDebut')
+            $qb->andWhere('s.dateDebut > :dateDebut')
                 ->setParameter('dateDebut', $filter->getDateDebut());
         }
 
         if($filter->getDateFin() || $filter->getDateFin() != null){
-            $qb->andWhere('s.dateDebut > :dateCloture')
+            $qb->andWhere('s.dateDebut < :dateCloture')
                 ->setParameter('dateCloture', $filter->getDateFin());
         }
 
-        if($filter->getIsInscrit() == true){
+      /*  if($filter->getIsInscrit() == true){
             $qb->leftJoin('s.participants', 'p');
             $qb->addSelect('p');
 
-            $qb->orWhere('p.pseudo LIKE :user')
+            $qb->add('p.pseudo LIKE :user')
                 ->setParameter('user', $user->getPseudo());
-        }
+        }*/
 
-        if($filter->getIsNotInscrit()){
+
+   /*     if($filter->getIsNotInscrit()){
 
             $qb->orWhere('s.participants is EMPTY');
 
@@ -73,23 +82,52 @@ class SortieRepository extends ServiceEntityRepository
 
             $qb->orWhere('p.pseudo NOT LIKE :user')
                 ->setParameter('user', $user->getPseudo());
-        }
+        }*/
+
+        $orQuery = new Expr\Orx();
 
         if($filter->getIsOrganisateur()) {
-            $qb->leftJoin('s.organisateur', 'o');
+            $orQuery->add('o.pseudo LIKE :user');
+        }
+
+        if($filter->getIsInscrit()) {
+            $orQuery->add('p.pseudo LIKE :user');
+        }
+
+        if($filter->getIsNotInscrit()){
+            $orQuery->add('p.pseudo NOT LIKE :user');
+        }
+
+
+        if($filter->getPassee()){
+            $orQuery->add('s.dateCloture < :dateDuJour');
+        }
+
+        $qb->andWhere($orQuery);
+            if($orQuery && $filter->getPassee()) {
+                $qb->setParameter('dateDuJour', $date = new \DateTime());
+            };
+            if($filter->getIsOrganisateur() || $filter->getIsInscrit() || $filter->getIsNotInscrit()){
+                $qb->setParameter('user', $user->getPseudo());
+            }
+
+
+
+/*        if($filter->getIsOrganisateur()) {
+            $qb->join('s.organisateur', 'o');
             $qb->addSelect('o');
 
             $qb->orWhere('o.pseudo LIKE :user')
                 ->setParameter('user', $user->getPseudo());
 
-        }
+        }*/
 
-        if($filter->getPassee()) {
+       /* if($filter->getPassee()) {
 
-            $qb->orWhere('s.dateCloture < :dateDuJour')
+            $qb->andWhere('s.dateCloture < :dateDuJour')
                 ->setParameter('dateDuJour', $date = new \DateTime());
 
-        }
+        }*/
 
         $query = $qb->getQuery();
         dump($query);

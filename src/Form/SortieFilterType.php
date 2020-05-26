@@ -31,7 +31,6 @@ class SortieFilterType extends AbstractType
                 'label' => 'Le nom de la sortie contient :'
             ])
             ->add('dateDebut', DateTimeType::class, [
-
                 'label' => 'Entre',
                 'date_widget' => 'single_text',
                 'required' => false,
