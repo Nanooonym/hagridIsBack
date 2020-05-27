@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +58,28 @@ class VilleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ville);
             $entityManager->flush();
+
+            dump("avant check session");
+            //Création de ville en passant par la création de sortie
+            if($this->container->get('session')->get('sortie')){
+
+                $sortie = $this->container->get('session')->get('sortie');
+                $form = $this->createForm(SortieType::class, $sortie);
+                $form->handleRequest($request);
+                $sortie = $this->container->get('session')->remove('sortie');
+
+              /*  if($sortie->getId()){
+                    return $this->render('sortie/edit.html.twig', [
+                        'sortie' => $sortie,
+                        'form' => $form->createView(),
+                    ]);
+                }else{*/
+                    return $this->render('sortie/new.html.twig', [
+                        'sortie' => $sortie,
+                        'form' => $form->createView(),
+                    ]);
+/*                }*/
+            }
 
             return $this->redirectToRoute('ville_index');
         }

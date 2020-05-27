@@ -64,43 +64,36 @@
             </table>
         </div>
         <div class="row justify-content-center">
+            {% if sortie.etat.libelle == "Ouverte"
+                and app.user not in sortie.participants %}
             <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}" class="btn btn-primary btn-lg float">S'inscrire</a>
-            <a href="{{ path('sortie_index') }}" class="btn btn-primary btn-lg float ml-4">Retourner</a>
+            {% endif %}
+
+            <a href="{{ path('sortie_index') }}" class="btn btn-primary btn-lg float ml-4">Retour</a>
         </div>
     </div>
 
     <div>
-        <p class="ml-4">Liste des participants inscrits:</p>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table table-bordered table-striped mb-0 table-scroll-liste-participants ml-4">
+    <p class="ml-4">Liste des participants inscrits:</p>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-striped mb-0 table-scroll-liste-participants ml-4">
             <thead>
             <tr>
                 <th scope="col">Pseudo
                 </th>
                 <th scope="col">Nom
                 </th>
-                {% if sortie.etat.libelle == 'Annulée'%}
-                    <th>Motif d'annulation</th>
-                {% else %}
-                    <th>Description Infos</th>
-                {% endif %}
-                    <td>{{ sortie.descriptionInfos }}</td>
             </tr>
             </thead>
             <tbody>
-           {% for participant in sortie.participants %}
+            {% for participant in sortie.participants %}
             <tr>
-                <td>{{ participant.pseudo }}</td>
+                <td><a href="{{ path('profile', {'id': participant.id}) }}">{{ participant.pseudo }}</a></td>
                 <td>{{ participant.nom }}</td>
             </tr>
             </tbody>
             {% endfor %}
         </table>
-
-    </div>
-
-    <div class="m-4">
-        {{ include('sortie/_inscription.html.twig') }}
     </div>
 
 {% endblock %}

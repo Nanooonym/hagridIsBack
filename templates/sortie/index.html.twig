@@ -60,7 +60,7 @@
                     {% if app.user in sortie.participants %}
                     X
                      {% endif %}
-                <td>{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|upper|first }}.</td>
+                <td><a href="{{ path('profile', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|upper|first }}.</a></td>
                 <td>
                     {{ include('sortie/_actions.html.twig') }}
                 </td>

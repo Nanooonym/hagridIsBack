@@ -10,7 +10,11 @@
             {{ form_row(form.descriptionInfos) }}
         </div>
         <div class="col-lg-5">
-            {{ form_rest(form) }}
+            {{ form_row(form.campus) }}
+            {{ form_row(form.ville) }}
+            {{ form_row(form.newVille) }}
+            {{ form_row(form.lieu) }}
+            {{ form_row(form.newLieu) }}
 {#            <a id="rue">Rue : </a></br>
             <a>Code postal : </a><a id="codePostal"></a></br>
             <a id="latitude">Latitiude : </a></br>
@@ -19,16 +23,20 @@
     </div>
 
     <div class="row justify-content-around">
-            <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
+            <button class="btn btn-primary btn-lg float" name ="button" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
+
         {% if sortie.etat %}
             {% if sortie.etat.libelle == 'Ouverte' %}
-                <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="annuler">{{ button_label|default('Annuler Sortie') }}</button>
+                <button class="btn btn-primary btn-lg float" name ="button" value="annuler">{{ button_label|default('Annuler Sortie') }}</button>
             {% else %}
-                <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
+                <button class="btn btn-primary btn-lg float" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
             {% endif %}
         {% else %}
-            <button class="btn btn-primary btn-lg float" name ="button" type="submit" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
+            <button class="btn btn-primary btn-lg float" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
         {% endif %}
+
+
+      {#  <a class="btn btn-primary btn-lg float" href="{{ path('sortie_index') }}">Retour</a>#}
 
         {% block buttons %}
         {% endblock buttons %}

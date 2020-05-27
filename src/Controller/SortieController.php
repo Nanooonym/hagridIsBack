@@ -56,6 +56,17 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
+        if ($form->get('newVille')->isClicked()) {
+
+            $this->container->get('session')->set('sortie', $sortie);
+            return $this->redirectToRoute('ville_new');
+
+        } elseif ($form->get('newLieu')->isClicked()) {
+
+            $this->container->get('session')->set('sortie', $sortie);
+            return $this->redirectToRoute('lieu_new');
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -115,6 +126,18 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
+        /*if ($form->get('newVille')->isClicked()) {
+
+               $this->getDoctrine()->getManager()->flush();
+               $this->container->get('session')->set('sortie', $sortie);
+               return $this->redirectToRoute('ville_new');
+
+           } elseif ($form->get('newLieu')->isClicked()) {
+
+               $this->container->get('session')->set('sortie', $sortie);
+               return $this->redirectToRoute('lieu_new');
+           }*/
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
@@ -128,16 +151,20 @@ class SortieController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="sortie_delete", methods={"DELETE"})
+     * @Route("/{id}", name="sortie_delete", methods={"POST"})
      */
     public function delete(Request $request, Sortie $sortie): Response
     {
         if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($sortie);
-            $entityManager->flush();
-            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est a été supprimée');
+            $sortie = $entityManager->getRepository()->findOneBy($sortie.id);
+            if ($sortie){
+                $entityManager->remove($sortie);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est a été supprimée');
+            }
         }
 
         return $this->redirectToRoute('sortie_index');
@@ -197,7 +224,7 @@ class SortieController extends AbstractController
     {
         $etat = $sortie->getEtat();
         if($sortie->getEtat()->getLibelle() == 'En création'){
-            $etat->setLibelle('Ouvert');
+            $etat->setLibelle('Ouverte');
             $sortie->setEtat($etat);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
@@ -236,7 +263,6 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/{id}/annuler", name="annuler", methods={"GET","POST"})
-     *
      */
     public function annuler(Sortie $sortie, EntityManagerInterface $em, Request $request):Response
     {
@@ -252,6 +278,6 @@ class SortieController extends AbstractController
         }
 
 
-        return $this->render('annulerSortie.html.twig', ["sortie" => $sortie, "form"=> $form->createView()]);
+        return $this->render('sortie/annulerSortie.html.twig', ["sortie" => $sortie, "form"=> $form->createView()]);
     }
 }

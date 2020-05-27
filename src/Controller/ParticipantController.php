@@ -73,32 +73,6 @@ class ParticipantController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/unParticipant", name="unParticipant")
-     * @param EntityManagerInterface $em
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     */
-    public function unParticipant(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $participant = new Participant();
-        $participant->setPseudo('loulou');
-        $participant->setNom('Lou');
-        $participant->setPrenom('loulou');
-        $participant->setTelephone('06 02 03 04 05');
-        $participant->setMail('loulou@toto.com');
-        $motDePasse = $passwordEncoder->encodePassword($participant, 'loulou');
-        $participant->setMotDePasse($motDePasse);
-        $participant->setAdministrateur(true);
-        $participant->setActif(true);
-        $campus = new Campus();
-        $campus->setNom('Chartre-de-Bretagne');
-        $em->persist($campus);
-        $participant->setCampus($campus);
-        $em->persist($participant);
-        $em->flush();
-
-    }
     /**
      * @Route("/participant", name="participant.home")
      * @param EntityManagerInterface $em
@@ -108,7 +82,9 @@ class ParticipantController extends AbstractController
     {
         $repository = $em->getRepository(Participant::class);
         $participants=$repository->findAll();
-        return $this->render('user/home.html.twig');
+        return $this->render('user/home.html.twig', [
+            'participants' => $participants
+        ]);
     }
 
     /**
