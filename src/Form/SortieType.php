@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,22 +28,26 @@ class SortieType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => "Nom de la sortie :",
+                'required' => false,
             ])
 
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date et heure de la sortie :",
                 'date_widget' => 'single_text',
                 'format' => 'yyyy/MM/dd HH:mm',
+                'required' => false,
             ])
             ->add('dateCloture', DateTimeType::class, [
                 'label' => "Date limite d'inscription :",
                 'date_widget' => 'single_text',
                 'empty_data' => '',
                 'format' => 'yyyy/MM/dd HH:mm',
+                'required' => false,
             ])
 
             ->add('nbInscriptionsMax', IntegerType::class, [
-                'label' => "Nombre de places :"
+                'label' => "Nombre de places :",
+                'required' => false,
             ])
             ->add('duree', IntegerType::class, [
                 'label' => "Durée :",
@@ -55,7 +60,8 @@ class SortieType extends AbstractType
 
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                'required' => false,
             ])
 
             ->add('ville', EntityType::class, [
@@ -63,7 +69,17 @@ class SortieType extends AbstractType
                 'placeholder' => 'Selectionner une ville',
                 'mapped' => false,
                 'required' => false,
+            ])
+            ->add('newVille', SubmitType::class, [
+                'label'=>'Créer une ville',
+                'validation_groups' => false
+            ])
+
+            ->add('newLieu', SubmitType::class, [
+                'label'=>'Créer un lieu',
+                'validation_groups' => false
             ]);
+
             $builder->get('ville')->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event){
@@ -72,6 +88,8 @@ class SortieType extends AbstractType
                     $this->addLieuField($form->getParent(), $form->getData());
                 }
             );
+
+
             $builder->addEventListener(
                 FormEvents::POST_SET_DATA,
                 function (FormEvent $event){
@@ -88,6 +106,7 @@ class SortieType extends AbstractType
                     }
                 }
             );
+
     }
 
     private function addLieuField (FormInterface $form, ?Ville $ville){

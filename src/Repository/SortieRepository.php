@@ -62,28 +62,6 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateCloture', $filter->getDateFin());
         }
 
-      /*  if($filter->getIsInscrit() == true){
-            $qb->leftJoin('s.participants', 'p');
-            $qb->addSelect('p');
-
-            $qb->add('p.pseudo LIKE :user')
-                ->setParameter('user', $user->getPseudo());
-        }*/
-
-
-   /*     if($filter->getIsNotInscrit()){
-
-            $qb->orWhere('s.participants is EMPTY');
-
-            if(!$filter->getIsInscrit()){
-                $qb->leftJoin('s.participants', 'p');
-                $qb->addSelect('p');
-            }
-
-            $qb->orWhere('p.pseudo NOT LIKE :user')
-                ->setParameter('user', $user->getPseudo());
-        }*/
-
         $orQuery = new Expr\Orx();
 
         if($filter->getIsOrganisateur()) {
@@ -111,23 +89,6 @@ class SortieRepository extends ServiceEntityRepository
                 $qb->setParameter('user', $user->getPseudo());
             }
 
-
-
-/*        if($filter->getIsOrganisateur()) {
-            $qb->join('s.organisateur', 'o');
-            $qb->addSelect('o');
-
-            $qb->orWhere('o.pseudo LIKE :user')
-                ->setParameter('user', $user->getPseudo());
-
-        }*/
-
-       /* if($filter->getPassee()) {
-
-            $qb->andWhere('s.dateCloture < :dateDuJour')
-                ->setParameter('dateDuJour', $date = new \DateTime());
-
-        }*/
 
         $query = $qb->getQuery();
         dump($query);

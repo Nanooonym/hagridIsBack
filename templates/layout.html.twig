@@ -5,14 +5,15 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
         <link rel="stylesheet" href="{{ asset("css/app.css") }}">
+        <link rel="icon" type="image/png" href="{{ asset("images/favicon.png") }}" />
     {% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <header class="container">
     <div>
-        <h1 class="row">Logo Sortir.com</h1>
-        <nav>
+        <img src="{{ asset("images/sortie_com_logo.jpg")}}" atl="Sortie.com" style="width: 350px; height: auto">
+        <nav class="text-right">
             {% block nav %}
                 {{ include('nav.html.twig') }}
             {% endblock %}

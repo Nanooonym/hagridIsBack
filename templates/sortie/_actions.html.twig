@@ -17,7 +17,8 @@
 <!-- S'inscrire -->
 {% if app.user not in sortie.participants
     and sortie.participants|length < sortie.nbInscriptionsMax
-    and sortie.dateCloture > "now" %}
+    and sortie.dateCloture > "now"
+    and sortie.etat.libelle == "Ouverte"%}
         - <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}">S'inscrire</a>
 {% endif %}
 

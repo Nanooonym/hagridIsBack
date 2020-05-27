@@ -1,7 +1,84 @@
 {% extends 'layout.html.twig' %}
-{% block nav %}
- {{ include('nav.html.twig') }}
-{% endblock %}
+
+{% block title %}Gérer les participants{% endblock %}
+
 {% block main %}
-    <h1>Home</h1>
+
+    <div class="container mt-4">
+
+        <h3 class="text-center">Gérer les participants</h3>
+
+        {% for message in app.flashes('success') %}
+
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+        <div>
+            <h4>Filtrer les sites</h4>
+            <div class="row">
+                <div class="m-4">Le nom contient:</div>
+                <form>
+                    <div>
+                        <span class="glyphicon glyphicon-search"></span>
+                        <input type="search" id="maRecherche" class="mt-4">
+                        <button id="btn-maRecherche" class="btn btn-primary btn-lg float">Rechercher</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        {#        <div class="table-wrapper-scroll-y my-custom-scrollbar">#}
+        <table class="table table-bordered table-striped mb-0">
+            <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Telephone</th>
+                <th>Administrateur</th>
+                <th>Actif</th>
+                <th>Campus</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for participant in participants %}
+                <tr>
+                    <td>{{ participant.pseudo }}</td>
+                    <td>{{ participant.nom }}</td>
+                    <td>{{ participant.prenom }}</td>
+                    <td>{{ participant.telephone }}</td>
+
+                    <td>
+                    {% if participant.administrateur == 1 %}
+                    Oui
+                    {% else %}
+                        Non
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if participant.actif == 1 %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                    </td>
+                    <td>{{ participant.campus.nom }}</td>
+                    <td class="row ml-0 mr-0">
+                        <a href="{{ path('participant_edit', {'id': participant.id}) }}" class="btn btn-primary btn-lg float">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {#    </div>#}
 {% endblock %}

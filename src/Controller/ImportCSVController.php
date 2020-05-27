@@ -7,6 +7,7 @@ use App\Entity\ImportCSV;
 use App\Entity\Participant;
 use App\Form\ImportCSVType;
 use App\Form\ParticipantType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -35,18 +36,23 @@ class ImportCSVController extends AbstractController
 
             $string = str_replace('",', '', file_get_contents($file));
                 $datas = explode('"', $string);
-                $i = 0;
+
 
                 $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
                 $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+
+                $i = 0;
+                $entity = 0;
                 do {
-                    $i = $i + 2;
+                    $i = $i + 2;                                 //Blank offset
                     $participant = new Participant();
 
                     $campus = $campusRepo->find($datas[$i]);
                     $participant->setCampus($campus);
                     $i++;
 
+                    $participant->setFilename($datas[$i]);
+                    $i++;
                     $participant->setPseudo($datas[$i]);
                     $i++;
                     $participant->setNom($datas[$i]);
@@ -78,15 +84,22 @@ class ImportCSVController extends AbstractController
                     }
 
                     $participantExist = $participantRepo->findOneBy(array('pseudo' => $participant->getPseudo()));
+                    dump($participantExist);
+
                     if (!$participantExist) {
                         $em->persist($participant);
+                        $em->flush();
+                        $entity++;
                     }
 
-                } while ($i <= count($datas) - 2);
-                $em->flush();
+                } while (count($datas) > ($i + 12));         //Check if next entity is full (10 datas + 2 blanks)
+
+                $this->addFlash('success', $entity . ' participants ont été ajoutés en base de données.');
 
             } catch (Exception $e) {
                 $this->addFlash('error', 'Erreur dans la prise en charge du fichier');
+            } finally {
+                return $this->redirectToRoute('sortie_index');
             }
         }
 

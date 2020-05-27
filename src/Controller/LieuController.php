@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Lieu;
 use App\Form\LieuType;
+use App\Form\SortieType;
 use App\Repository\LieuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +39,18 @@ class LieuController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieu);
             $entityManager->flush();
+
+            //Création de ville en passant par la création de sortie
+            if($this->container->get('session')->get('sortie')){
+                $sortie = $this->container->get('session')->get('sortie');
+                $form = $this->createForm(SortieType::class, $sortie);
+                $form->handleRequest($request);
+                $sortie = $this->container->get('session')->remove('sortie');
+                return $this->render('sortie/new.html.twig', [
+                    'sortie' => $sortie,
+                    'form' => $form->createView(),
+                ]);
+            }
 
             return $this->redirectToRoute('lieu_index');
         }

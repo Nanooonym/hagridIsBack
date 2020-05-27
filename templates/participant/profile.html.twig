@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-
-
 {% block main %}
     <div class="container">
 
@@ -13,6 +11,6 @@
         <p><label>Téléphone:      </label>{{ participant.telephone }}</p>
         <p><label>Email:      </label>{{ participant.mail }}</p>
 
-        <button type="back">Retour</button>
+        <a class="btn btn-primary btn-lg float" href="{{ path('sortie_index') }}">Retour</a>
     </div>
 {% endblock %}
