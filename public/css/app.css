@@ -84,3 +84,24 @@ position: sticky; top: 0;
 header{
     padding-top:10px;
 }
+
+.btn-primary{
+    background-color: #356299;
+}
+
+th{
+    background-color: #356299;
+}
+
+.jumbotron{
+    margin-top : 0px;
+    margin-bottom : 0px;
+}
+.jumbotron > div {
+    margin-top : 0px;
+    margin-bottom : 0px;
+}
+
+.alert{
+    margin-bottom : 0px;
+}

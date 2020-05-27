@@ -24,6 +24,6 @@
 
 <!-- Annuler -->
 {% if app.user.id == sortie.organisateur.id
-    and sortie.etat.libelle == 'Ouvert' %}
+    and sortie.etat.libelle == 'Ouverte' %}
         -  <a href="{{ path('annuler', {'id': sortie.id}) }}">S'inscrire</a>
 {% endif %}
