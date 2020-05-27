@@ -59,7 +59,7 @@ class VilleController extends AbstractController
             $entityManager->persist($ville);
             $entityManager->flush();
 
-            dump("avant check session");
+
             //Création de ville en passant par la création de sortie
             if($this->container->get('session')->get('sortie')){
 

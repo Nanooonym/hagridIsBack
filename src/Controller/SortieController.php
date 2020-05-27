@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
@@ -73,7 +74,6 @@ class SortieController extends AbstractController
             $sortie->setOrganisateur($this->security->getUser());
             $sortie->addParticipant($this->security->getUser());
 
-
             $etat = new Etat();
             $submit = $_POST['button'];
 
@@ -126,7 +126,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
-        /*if ($form->get('newVille')->isClicked()) {
+        if ($form->get('newVille')->isClicked()) {
 
                $this->getDoctrine()->getManager()->flush();
                $this->container->get('session')->set('sortie', $sortie);
@@ -136,11 +136,26 @@ class SortieController extends AbstractController
 
                $this->container->get('session')->set('sortie', $sortie);
                return $this->redirectToRoute('lieu_new');
-           }*/
+           }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
+
+            $etat = $sortie->getEtat()->getLibelle();
+
+            if($request->get('button') == "publier" && $etat == 'En création'){
+                $etat = "Ouvert";
+                $sortie->getEtat()->setLibelle($etat);
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
+            }else if($request->get('button') == "enregistrer"){
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
+            }else if($request->get('button' == "annuler")){
+                $sortie->getEtat()->setLibelle("Annulée");
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant annulée');
+            }
+
             return $this->redirectToRoute('sortie_index');
 
         }

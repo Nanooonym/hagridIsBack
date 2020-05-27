@@ -33,8 +33,8 @@ class Sortie
     private $dateDebut;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(value=1, message="Une sortie ne peut pas durer moins d'une minute")
+     * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(value=0, message="Une sortie ne peut pas durer moins d'une minute=")
      */
     private $duree;
 
