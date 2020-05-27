@@ -23,16 +23,16 @@
     </div>
 
     <div class="row justify-content-around">
-            <button class="btn btn-primary btn-lg float" name ="button" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
+            <button class="btn btn-primary float" name ="button" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
 
         {% if sortie.etat %}
             {% if sortie.etat.libelle == 'Ouverte' %}
-                <button class="btn btn-primary btn-lg float" name ="button" value="annuler">{{ button_label|default('Annuler Sortie') }}</button>
+                <button class="btn btn-primary float" name ="button" value="annuler">{{ button_label|default('Annuler Sortie') }}</button>
             {% else %}
-                <button class="btn btn-primary btn-lg float" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
+                <button class="btn btn-primary float" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
             {% endif %}
         {% else %}
-            <button class="btn btn-primary btn-lg float" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
+            <button class="btn btn-primary float" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
         {% endif %}
 
 
@@ -40,7 +40,7 @@
 
         {% block buttons %}
         {% endblock buttons %}
-        <a class="btn btn-primary btn-lg float" href="{{ path('sortie_index') }}">Retour</a>
+        <a class="btn btn-primary float" href="{{ path('sortie_index') }}">Retour</a>
     </div>
 </div>
 

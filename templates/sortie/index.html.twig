@@ -4,7 +4,7 @@
 
 {% block main %}
 <div class="d-none d-md-block">
-    <div class="jumbotron">
+    <div class="jumbotron m-0 pt-2">
         <h3>Filtrer les sorties</h3>
         {{ form_start(form) }}
         <div class="d-flex justify-content-around align-items-center">
@@ -23,7 +23,7 @@
                     {{ form_row(form.isNotInscrit) }}
                     {{ form_row(form.passee) }}
                 </div>
-                <button type="submit" method="get" class="btn btn-primary btn-lg float">Rechercher</button>
+                <button type="submit" method="get" class="btn btn-primary float">Rechercher</button>
             {{ form_end(form) }}
         </div>
     </div>
@@ -35,7 +35,7 @@
     {% endfor %}
 
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-bordered table-striped mb-0 table-scroll">
+    <table class="table table-bordered table-striped m-0 p-0 table-scroll">
         <thead>
         <tr>
             <th scope="col">Nom de la sortie</th>
@@ -75,7 +75,7 @@
     </div>
 
 
-    <a class="btn btn-primary btn-lg float" href="{{ path('sortie_new') }}">Créer une sortie</a>
+    <a class="btn btn-primary float mt-4" href="{{ path('sortie_new') }}">Créer une sortie</a>
 
 </div>
 

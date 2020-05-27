@@ -67,14 +67,14 @@
         <div class="row justify-content-center">
             {% if sortie.etat.libelle == "Ouverte"
                 and app.user not in sortie.participants %}
-                        <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}" class="btn btn-primary btn-lg float">S'inscrire</a>
+                        <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}" class="btn btn-primary float">S'inscrire</a>
             {% elseif sortie.etat.libelle == "Ouverte"
                     and app.user in sortie.participants
                     and app.user != sortie.organisateur %}
-                        <a href="{{ path('sortie_desister', {'id': sortie.id}) }}" class="btn btn-primary btn-lg float">Se désister</a>
+                        <a href="{{ path('sortie_desister', {'id': sortie.id}) }}" class="btn btn-primary float">Se désister</a>
             {% endif %}
 
-            <a href="{{ path('sortie_index') }}" class="btn btn-primary btn-lg float ml-4">Retour</a>
+            <a href="{{ path('sortie_index') }}" class="btn btn-primary float ml-4">Retour</a>
         </div>
     </div>
 
