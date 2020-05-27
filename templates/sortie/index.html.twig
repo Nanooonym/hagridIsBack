@@ -3,9 +3,9 @@
 {% block title %}Les sorties{% endblock %}
 
 {% block main %}
-
+<div class="d-none d-md-block">
     <div class="jumbotron">
-        <h2>Filtrer les sorties</h2>
+        <h3>Filtrer les sorties</h3>
         {{ form_start(form) }}
         <div class="d-flex justify-content-around align-items-center">
 
@@ -76,4 +76,36 @@
 
 
     <a class="btn btn-primary btn-lg float" href="{{ path('sortie_new') }}">Créer une sortie</a>
+
+</div>
+
+<div class="d-block d-md-none">
+    <h3 class="ml-3">Mes Sorties</h3>
+    <div class="container mt-4">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar" id="table-sortie-responsive">
+            <table class="table table-bordered table-striped mb-0 table-scroll">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Lieu</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H\\Hi') : '' }}</td>
+                        <td>{{ sortie.lieu.nom }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucune sortie correspondante</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

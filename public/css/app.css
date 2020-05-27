@@ -1,43 +1,34 @@
-.inner-form-col
-{
+<!-- --------------BASE---------------- -->
+body{margin: 0; padding:0; width: 100%}
+
+header{margin: 0; padding:0; width: 100%; height: 100px}
+
+main{margin-left: 0; width: 100%; display: block}
+
+
+<!-- --------------HEADER---------------- -->
+#block-navbar{
+    padding: 0;
+    margin-top: 0;
+    margin-left: 0;
+    display: inline;
     justify-content: space-between;
 }
-
-.inner-form-col
-{
-    padding-right: 30px;
-    padding-left: 30px;
+#block-navbar a{
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    justify-content: right;
 }
 
-nav > a {
-    margin-left: 20px;
-    margin-right: 20px;
+#logo{
+    margin-left: 0;
+    padding: 0;
+
 }
 
-#maRecherche {
-    border: 2px solid black;
-    border-radius: 15px;
-}
-
-th{
-    background-color:#6c757d;
-}
-
-#btn-maRecherche{
-    box-shadow: 5px 5px grey;
-}
-
-
-footer{
-    text-align: center;
-    font-size: small;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #f5f5f5;
-}
-
+<!-- --------------MAIN---------------- -->
 #form-line, #form-campus, #form-ville, #ville-form-line{
     height: 1rem;
     margin: 0;
@@ -67,7 +58,7 @@ footer{
 }
 
 .table-scroll > thead th {
-position: sticky; top: 0;
+    position: sticky; top: 0;
 }
 
 .table-scroll-liste-participants {
@@ -87,6 +78,45 @@ header{
 
 .btn-primary{
     background-color: #356299;
+}
+.inner-form-col
+{
+    justify-content: space-between;
+}
+
+.inner-form-col
+{
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+nav > a {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#maRecherche {
+    border: 2px solid black;
+    border-radius: 15px;
+}
+
+th{
+    background-color:#6c757d;
+}
+
+#table-sortie-responsive{
+    height: 50%;
+}
+<!-- --------------FOOTER---------------- -->
+
+footer{
+    text-align: center;
+    font-size: small;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
 }
 
 th{

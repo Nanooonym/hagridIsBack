@@ -10,18 +10,13 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<header class="container">
-    <div>
-        <img src="{{ asset("images/sortie_com_logo.jpg")}}" atl="Sortie.com" style="width: 350px; height: auto">
-        <nav class="text-right">
+<header>
             {% block nav %}
                 {{ include('nav.html.twig') }}
             {% endblock %}
-        </nav>
-    </div>
-    <div class="row justify-content-end">
+<div>
         {% block user %}{% endblock %}
-    </div>
+</div>
 </header>
 <main>
     {% block main %}
