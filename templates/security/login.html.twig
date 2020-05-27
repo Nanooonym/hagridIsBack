@@ -1,9 +1,16 @@
 {% extends 'layout.html.twig' %}
 {% block title 'Connexion' %}
-{% block nav %}<div><img src="{{ asset('images/logo.jpeg') }}" id="logo" class="ml-0"></div>{% endblock %}
+{% block nav %}
+    <div style="float: left">
+        <img class="d-none d-md-block" src="{{ asset('images/logo.jpg') }}" style="width: auto; height: 100px" id="logo"></a>
+    </div>
+    <div style="float: left">
+        <img class="d-block d-md-none" src="{{ asset('images/logo.jpg') }}" style="width: auto; height: 70px" id="logo"></a>
+    </div>
+{% endblock %}
 {% block main %}
-    <div class="container mt-4">
-
+<div style="margin-top: 100px">
+    <div class="container">
         {% if error %}
             <div class="alert alert-danger">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
@@ -22,11 +29,12 @@
             <div>
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
-            <button type="submit" class="btn btn-primary btn-lg float">Connexion</button>
+            <button type="submit" class="btn btn-primary float">Connexion</button>
             <input class="ml-4" type="checkbox" id="remember_me" name="_remember_me" checked/>
             <label for="remember_me">Se souvenir de moi</label>
             <a class="ml-4" href="#">Mot de passe oublié</a>
             </div>
         </form>
     </div>
+</div>
 {% endblock %}
