@@ -10,18 +10,14 @@
         <div>
             <h4>Filtrer les villes</h4>
             <div class="row">
-                <div class="m-4">Le nom contient:</div>
-                <form>
-                    <div>
-                        <input type="search" id="maRecherche" class="mt-4">
-                        <button id="btn-maRecherche" class="btn btn-primary float">Rechercher</button>
-                    </div>
-                </form>
-
+                {{form_start(formFilter)}}
+                {{form_widget(formFilter)}}
+                <button type="submit">Rechercher</button>
+                {{form_end(formFilter)}}
             </div>
 
         </div>
-
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-striped mb-0">
             <thead>
             <tr>
@@ -45,12 +41,15 @@
                     <td colspan="4">no records found</td>
                 </tr>
             {% endfor %}
-            <tr id="form-line">
-                <div id="ville-form-line" class="row">
-                {{ include('ville/_form.html.twig') }}
-                </div>
-            </tr>
             </tbody>
+            <tfoot>
+                <tr id="form-line">
+                    <div id="ville-form-line" class="row">
+                    {{ include('ville/_form.html.twig') }}
+                    </div>
+                </tr>
+            </tfoot>
         </table>
+    </div>
     </div>
 {% endblock %}

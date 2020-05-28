@@ -1,41 +1,57 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Lieu index{% endblock %}
+{% block title %}Gérer les lieux{% endblock %}
 
 {% block main %}
-    <h1>Lieu index</h1>
+<div class="container mt-4">
+    <h3 class="text-center">Gérer les lieux</h3>
 
-    <table class="table">
+    <div>
+        <h4>Filtrer les lieux</h4>
+        <div class="row">
+            {{form_start(formFilter)}}
+            {{form_widget(formFilter)}}
+            <button type="submit">Rechercher</button>
+            {{form_end(formFilter)}}
+        </div>
+
+    </div>
+
+    <table class="table table-bordered table-striped mb-0">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Rue</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Nom</th>
+            <th>Rue</th>
+            <th>Ville</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-        {% for lieu in lieus %}
+        {% for lieu in lieux %}
             <tr>
-                <td>{{ lieu.id }}</td>
                 <td>{{ lieu.nom }}</td>
                 <td>{{ lieu.rue }}</td>
+                <td>{{ lieu.ville.nom }}</td>
                 <td>{{ lieu.latitude }}</td>
                 <td>{{ lieu.longitude }}</td>
-                <td>
-                    <a href="{{ path('lieu_show', {'id': lieu.id}) }}">show</a>
-                    <a href="{{ path('lieu_edit', {'id': lieu.id}) }}">edit</a>
+                <td class="row ml-0 mr-0">
+                    <a href="{{ path('lieu_edit', {'id': lieu.id}) }}" class="btn btn-primary float">Modifier</a>
+                    {{ include('lieu/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
+        <tr id="form-line">
+            <div id="ville-form-line" class="row">
+                {{ include('lieu/_form.html.twig') }}
+            </div>
+        </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('lieu_new') }}">Create new</a>
+</div>
 {% endblock %}

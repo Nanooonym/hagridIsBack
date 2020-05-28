@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Filter;
 use App\Entity\Lieu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,18 @@ class LieuRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Lieu::class);
+    }
+
+    public function findByName(Filter $filter){
+        $qb = $this->createQueryBuilder('l');
+
+            if($filter->getNom() && $filter->getNom() != null){
+                $qb->andWhere('l.nom LIKE :nom')
+                    ->setParameter('nom', "%" . $filter->getNom() . "%");
+            }
+
+        $query = $qb->getQuery();
+        return new Paginator($query);
     }
 
     // /**

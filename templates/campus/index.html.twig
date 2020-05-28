@@ -17,21 +17,16 @@
         {% endfor %}
 
         <div>
-            <h4>Filtrer les sites</h4>
+            <h4>Filtrer les campus</h4>
             <div class="row">
-                <div class="m-4">Le nom contient:</div>
-                <form>
-                    <div>
-                        <span class="glyphicon glyphicon-search"></span>
-                        <input type="search" id="maRecherche" class="mt-4">
-                        <button id="btn-maRecherche" class="btn btn-primary float">Rechercher</button>
-                    </div>
-                </form>
-
+                {{form_start(formFilter)}}
+                {{form_widget(formFilter)}}
+                <button type="submit">Rechercher</button>
+                {{form_end(formFilter)}}
             </div>
 
         </div>
-{#        <div class="table-wrapper-scroll-y my-custom-scrollbar">#}
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-bordered table-striped mb-0">
                 <thead>
                 <tr>
@@ -57,11 +52,17 @@
                 <tfoot>
                     <tr>
 {#                        <div id="form-campus" class="row align-items-center">#}
-                 {{ include('campus/_form.html.twig') }}
+{#                 {{ include('campus/_form.html.twig') }}#}
 {#                        </div>#}
                     </tr>
                 </tfoot>
             </table>
         </div>
+        <table class="table table-bordered table-striped mb-0">
+            <tr></tr>
+            <tr></tr>
+            {{ include('campus/_form.html.twig') }}
+        </table>
+    </div>
 {#    </div>#}
 {% endblock %}

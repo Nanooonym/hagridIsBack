@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Campus;
+use App\Entity\Filter;
 use App\Form\CampusType;
+use App\Form\FilterType;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/campus")
+ * @Route("/campus/admin")
  */
 class CampusController extends AbstractController
 {
@@ -25,8 +27,11 @@ class CampusController extends AbstractController
     public function index(CampusRepository $campusRepository, Request $request): Response
     {
         $campu = new Campus();
+        $filter = new Filter();
         $form = $this->createForm(CampusType::class, $campu);
+        $formFilter = $this->createForm(FilterType::class, $filter);
         $form->handleRequest($request);
+        $formFilter->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -36,7 +41,8 @@ class CampusController extends AbstractController
             return $this->redirectToRoute('campus_index');
         }
         return $this->render('campus/index.html.twig', [
-            'campuses' => $campusRepository->findAll(),
+            'campuses' => $campusRepository->findByName($filter),
+            'formFilter' => $formFilter->createView(),
             'form' => $form->createView(),
         ]);
     }

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Filter;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\FilterType;
 use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
@@ -27,18 +29,22 @@ class VilleController extends AbstractController
     public function index(VilleRepository $villeRepository, Request $request): Response
     {
         $ville = new Ville();
+        $filter = new Filter();
         $form = $this->createForm(VilleType::class, $ville);
+        $formFilter = $this->createForm(FilterType::class, $filter);
         $form->handleRequest($request);
+        $formFilter->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ville);
-            $entityManager->flush();
+            $entityManager->flush($ville);
 
             return $this->redirectToRoute('ville_index');
         }
         return $this->render('ville/index.html.twig', [
-            'villes' => $villeRepository->findAll(),
+            'villes' => $villeRepository->findByName($filter),
+            'formFilter' => $formFilter->createView(),
             'form' => $form->createView(),
         ]);
     }
@@ -61,6 +67,16 @@ class VilleController extends AbstractController
 
 
             //Création de ville en passant par la création de sortie
+            if($this->container->get('session')->get('user')){
+                $this->container->get('session')->remove('user');
+
+                if($request->get('creerLieu')){
+                    return $this->redirectToRoute('lieu_new');
+                }
+                return $this->redirectToRoute('sortie_new');
+            }
+
+            /*//Création de ville en passant par la création de sortie
             if($this->container->get('session')->get('sortie')){
 
                 $sortie = $this->container->get('session')->get('sortie');
@@ -68,18 +84,12 @@ class VilleController extends AbstractController
                 $form->handleRequest($request);
                 $sortie = $this->container->get('session')->remove('sortie');
 
-              /*  if($sortie->getId()){
-                    return $this->render('sortie/edit.html.twig', [
-                        'sortie' => $sortie,
-                        'form' => $form->createView(),
-                    ]);
-                }else{*/
-                    return $this->render('sortie/new.html.twig', [
-                        'sortie' => $sortie,
-                        'form' => $form->createView(),
-                    ]);
-/*                }*/
-            }
+
+                return $this->render('sortie/new.html.twig', [
+                    'sortie' => $sortie,
+                    'form' => $form->createView(),
+                ]);
+            }*/
 
             return $this->redirectToRoute('ville_index');
         }

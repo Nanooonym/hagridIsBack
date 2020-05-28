@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
+use App\Entity\Filter;
 use App\Entity\Lieu;
+use App\Form\FilterType;
 use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\LieuRepository;
@@ -19,10 +22,27 @@ class LieuController extends AbstractController
     /**
      * @Route("/admin/", name="lieu_index", methods={"GET"})
      */
-    public function index(LieuRepository $lieuRepository): Response
+    public function index(LieuRepository $lieuRepository, Request $request): Response
     {
+        $lieu = new Lieu();
+        $filter = new Filter();
+        $form = $this->createForm(LieuType::class, $lieu);
+        $formFilter = $this->createForm(FilterType::class, $filter);
+        $form->handleRequest($request);
+        $formFilter->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('lieu_index');
+        }
+
         return $this->render('lieu/index.html.twig', [
-            'lieus' => $lieuRepository->findAll(),
+            'lieux' => $lieuRepository->findByName($filter),
+            'formFilter' => $formFilter->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -40,7 +60,12 @@ class LieuController extends AbstractController
             $entityManager->persist($lieu);
             $entityManager->flush();
 
-            //Création de ville en passant par la création de sortie
+            if($this->container->get('session')->get('user')){
+                $sortie = $this->container->get('session')->remove('user');
+                return $this->redirectToRoute('sortie_new');
+            }
+
+            /*//Création de ville en passant par la création de sortie
             if($this->container->get('session')->get('sortie')){
                 $sortie = $this->container->get('session')->get('sortie');
                 $form = $this->createForm(SortieType::class, $sortie);
@@ -50,7 +75,7 @@ class LieuController extends AbstractController
                     'sortie' => $sortie,
                     'form' => $form->createView(),
                 ]);
-            }
+            }*/
 
             return $this->redirectToRoute('lieu_index');
         }

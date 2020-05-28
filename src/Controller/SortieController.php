@@ -57,12 +57,14 @@ class SortieController extends AbstractController
 
         if ($form->get('newVille')->isClicked()) {
 
-            $this->container->get('session')->set('sortie', $sortie);
+            $this->container->get('session')->set('user', true);
+/*            $this->container->get('session')->set('sortie', $sortie);*/
             return $this->redirectToRoute('ville_new');
 
         } elseif ($form->get('newLieu')->isClicked()) {
 
-            $this->container->get('session')->set('sortie', $sortie);
+            $this->container->get('session')->set('user', true);
+/*            $this->container->get('session')->set('sortie', $sortie);*/
             return $this->redirectToRoute('lieu_new');
         }
 
