@@ -3,17 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
-use App\Form\ImportCSVType;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
+/**
+ * @Route("/participant")
+ */
 class ParticipantController extends AbstractController
 {
     /**
@@ -32,20 +34,20 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/participant/{id}", name="profile", requirements={"id": "\d+"})
+     * @Route("/{id}", name="participant_show", requirements={"id": "\d+"})
      * @param int $id
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function profile(int $id, EntityManagerInterface $em)
+    public function show(int $id, EntityManagerInterface $em)
     {
         $repo = $em->getRepository(Participant::class);
         $participant = $repo->find($id);
-        return $this->render('participant/profile.html.twig', ["participant" => $participant]);
+        return $this->render('participant/show.html.twig', ["participant" => $participant]);
     }
 
     /**
-     * @Route("/participant/new", name="participant_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="participant_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -57,10 +59,10 @@ class ParticipantController extends AbstractController
 
         if ($participantForm->isSubmitted() && $participantForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $participant->setAdministrateur(false);
             $participant->setActif(true);
             $motDePasse = $passwordEncoder->encodePassword($participant, $participant->getMotDePasse());
             $participant->setMotDePasse($motDePasse);
+
             $em->persist($participant);
             $em->flush();
 
@@ -74,22 +76,23 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/participant", name="participant.home")
+     * @Route("/admin", name="participant_index")
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function home(EntityManagerInterface $em)
+    public function index(EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Participant::class);
         $participants=$repository->findAll();
-        return $this->render('user/home.html.twig', [
+        return $this->render('participant/index.html.twig', [
             'participants' => $participants
         ]);
     }
 
     /**
-     * @Route("/participant/{id}/edit", name="participant_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="participant_edit", methods={"GET","POST"})
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return Response
      */
     public function edit(EntityManagerInterface $em, Request $request, Participant $participant, $id,UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -116,7 +119,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/desactiver", name="participant_desactiver", methods={"GET","POST"})
+     * @Route("/admin/{id}/desactiver", name="participant_desactiver", methods={"GET","POST"})
      */
     public function desactiver(Request $request, Participant $participant): Response
     {
@@ -134,17 +137,20 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/admin", name="participant_admin", methods={"GET","POST"})
+     * @Route("/admin/{id}/role", name="participant_role", methods={"GET","POST"})
      */
-    public function admin(Request $request, Participant $participant): Response
+    public function role(Request $request, Participant $participant): Response
     {
-        $administrateur = $participant->getAdministrateur();
-        if($administrateur){
-            $participant->setAdministrateur(false);
-            $this->addFlash('success', $participant->getPseudo() . '" n\'est plus administrateur');
+/*        dump(in_array('ROLE_ADMIN', $participant->checkRoles()));
+        die();*/
+
+
+        if(in_array('ROLE_ADMIN', $participant->checkRoles())){
+            $participant->setRoles(array('ROLE_USER'));
+            $this->addFlash('success', $participant->getPseudo() . ' n\'est plus administrateur');
         }else{
-            $participant->setAdministrateur(true);
-            $this->addFlash('success', $participant->getPseudo() . '" est maintenant administrateur');
+            $participant->setRoles(array('ROLE_ADMIN'));
+            $this->addFlash('success', $participant->getPseudo() . ' est maintenant administrateur');
         }
 
         $this->getDoctrine()->getManager()->flush();

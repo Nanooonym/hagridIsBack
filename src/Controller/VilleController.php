@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VilleController extends AbstractController
 {
     /**
-     * @Route("/", name="ville_index", methods={"GET", "POST"})
+     * @Route("/admin", name="ville_index", methods={"GET", "POST"})
      * @param VilleRepository $villeRepository
      * @param Request $request
      * @return Response
@@ -101,7 +101,7 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="ville_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="ville_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Ville $ville
      * @param EntityManagerInterface $em
@@ -136,7 +136,7 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="ville_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="ville_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Ville $ville): Response
     {

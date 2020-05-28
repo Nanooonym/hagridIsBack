@@ -72,9 +72,9 @@ class Participant implements UserInterface, \Serializable
     private $motDePasse;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="json")
      */
-    private $administrateur;
+    private $roles = array();
 
     /**
      * @ORM\Column(type="boolean")
@@ -225,17 +225,7 @@ class Participant implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getAdministrateur(): ?bool
-    {
-        return $this->administrateur;
-    }
 
-    public function setAdministrateur(bool $administrateur): self
-    {
-        $this->administrateur = $administrateur;
-
-        return $this;
-    }
 
     public function getActif(): ?bool
     {
@@ -328,9 +318,39 @@ class Participant implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
-        return ['ROLE_ADMIN'];
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function checkRoles()
+    {
+        return $this->roles;
+    }
+
+    public function addRole($string): self
+    {
+        if (!$this->roles->contains($string)) {
+            $this->roles->add($string);
+        }
+
+        return $this;
+    }
+
+    public function removeRole($string): self
+    {
+        if ($this->roles->contains($string)) {
+            $this->roles->removeElement($string);
+        }
+        return $this;
     }
 
     public function getSalt()

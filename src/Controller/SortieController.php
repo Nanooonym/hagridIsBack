@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
-use App\Entity\Ville;
 use App\Form\SortieFilterType;
 use App\Form\SortieType;
 use App\Form\AnnulerSortieType;

@@ -25,7 +25,8 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /
-
+           # access_denied_handler: App\Security\AccessDeniedHandler
+            access_denied_url: access_denied
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -36,7 +37,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         #- { path: ^/, roles: ROLE_ADMIN }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
 
+         #- { path: ^/, roles: ROLE_ADMIN }
+         - { path: /admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/sortie, roles: ROLE_USER }

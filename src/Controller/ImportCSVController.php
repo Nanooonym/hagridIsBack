@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/importCSV")
+ * @Route("/admin/importCSV")
  */
 class ImportCSVController extends AbstractController
 {

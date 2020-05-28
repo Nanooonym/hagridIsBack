@@ -9,6 +9,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return $this->redirectToRoute('sortie_index');
+    }
+
     /**
      * @Route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
@@ -37,4 +46,14 @@ class SecurityController extends AbstractController
 
         //throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    /**
+     * @Route("/accessDenied", name="access_denied")
+     * @return Response
+     */
+    public function accessDenied(): Response
+    {
+        return $this->render('security/accessDenied.html.twig');
+    }
+
 }

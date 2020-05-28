@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LieuController extends AbstractController
 {
     /**
-     * @Route("/", name="lieu_index", methods={"GET"})
+     * @Route("/admin/", name="lieu_index", methods={"GET"})
      */
     public function index(LieuRepository $lieuRepository): Response
     {
@@ -72,7 +72,7 @@ class LieuController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="lieu_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="lieu_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Lieu $lieu): Response
     {
@@ -92,7 +92,7 @@ class LieuController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="lieu_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="lieu_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Lieu $lieu): Response
     {

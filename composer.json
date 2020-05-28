@@ -23,6 +23,7 @@
         "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
+        "symfony/twig-pack": "^1.0",
         "symfony/validator": "4.4.*",
         "symfony/yaml": "4.4.*",
         "vich/uploader-bundle": "^1.13"

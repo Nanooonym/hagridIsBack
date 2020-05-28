@@ -91,7 +91,6 @@ class SortieRepository extends ServiceEntityRepository
 
 
         $query = $qb->getQuery();
-        dump($query);
         return new Paginator($query);
     }
 }
