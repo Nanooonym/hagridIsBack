@@ -56,4 +56,12 @@ class SecurityController extends AbstractController
         return $this->render('security/accessDenied.html.twig');
     }
 
-}
+
+    /**
+     * @Route("/admin", name="admin_home")
+     * @return Response
+     */
+    public function adminHome(): Response
+    {
+        return $this->render('security/adminHome.html.twig');
+    }}

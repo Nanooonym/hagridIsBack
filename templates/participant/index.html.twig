@@ -70,8 +70,10 @@
                     <td>{{ participant.campus.nom }}</td>
                     <td class="row ml-0 mr-0">
                         <a href="{{ path('participant_edit', {'id': participant.id}) }}" class="btn btn-primary btn-lg float">Modifier</a>
+                        {% if participant.id != app.user.id %}
                         <a href="{{ path('participant_role', {'id': participant.id}) }}" class="btn btn-primary btn-lg float">Rendre Administrateur</a>
                         <a href="{{ path('participant_desactiver', {'id': participant.id}) }}" class="btn btn-primary btn-lg float">Activer - Désactiver</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}
