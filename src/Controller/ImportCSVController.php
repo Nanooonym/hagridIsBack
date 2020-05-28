@@ -68,13 +68,8 @@ class ImportCSVController extends AbstractController
                     $participant->setMotDePasse($motDePasse);
                     $i++;
 
-                    if ($datas[$i] == 1) {
-                        $participant->setAdministrateur(true);
-                        $i++;
-                    } else {
-                        $participant->setAdministrateur(false);
-                        $i++;
-                    }
+                    $participant->setRoles($datas[$i]);
+
                     if ($datas[$i] == 1) {
                         $participant->setActif(true);
                         $i++;
