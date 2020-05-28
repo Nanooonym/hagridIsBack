@@ -92,6 +92,10 @@ th{
 .jumbotron{
     margin-top : 0px;
     margin-bottom : 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    opacity: 0.9;
+    background-color: white;
 }
 .jumbotron > div {
     margin-top : 0px;
@@ -100,6 +104,25 @@ th{
 
 .alert{
     margin-bottom : 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+body{
+
+    background-image: url("../images/background_image.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-size: auto;
+    width: auto;
+}
+
+
+
+td {
+    background-color: rgba(221, 237, 240, 0.6);
 }
 
 nav > a {

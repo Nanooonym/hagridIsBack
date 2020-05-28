@@ -115,5 +115,41 @@ class ParticipantController extends AbstractController
             ]);
     }
 
+    /**
+     * @Route("/{id}/desactiver", name="participant_desactiver", methods={"GET","POST"})
+     */
+    public function desactiver(Request $request, Participant $participant): Response
+    {
+        $actif = $participant->getActif();
+        if($actif){
+            $participant->setActif(false);
+            $this->addFlash('success', $participant->getPseudo() . '" est maintenant inactif');
+        }else{
+            $participant->setActif(true);
+            $this->addFlash('success', $participant->getPseudo() . '" est maintenant actif');
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('participant.home');
+    }
+
+    /**
+     * @Route("/{id}/admin", name="participant_admin", methods={"GET","POST"})
+     */
+    public function admin(Request $request, Participant $participant): Response
+    {
+        $administrateur = $participant->getAdministrateur();
+        if($administrateur){
+            $participant->setAdministrateur(false);
+            $this->addFlash('success', $participant->getPseudo() . '" n\'est plus administrateur');
+        }else{
+            $participant->setAdministrateur(true);
+            $this->addFlash('success', $participant->getPseudo() . '" est maintenant administrateur');
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('participant.home');
+    }
+
 
 }
