@@ -5,16 +5,15 @@
 {% endblock %}
 {% block main %}
 <div style="margin-top: 100px">
-    <div class="container">
-            <div class="form-group">
-                <h1> Admin</h1>
+    <div class="d-flex flex-column align-items-center menu-admin">
+            <div class="flex-row">
+                <h1>Administration du site</h1>
             </div>
         <a class="btn btn-primary float" href="{{ path('sortie_index') }}">Accueil</a>
         <a class="btn btn-primary float" href="{{ path('ville_index') }}">Administrer les Villes</a>
         <a class="btn btn-primary float" href="{{ path('lieu_index') }}">Administrer les Lieux</a>
         <a class="btn btn-primary float" href="{{ path('campus_index') }}">Administrer les Campus</a>
         <a class="btn btn-primary float" href="{{ path('participant_index') }}">Administrer les Participants</a>
-
     </div>
 </div>
 {% endblock %}

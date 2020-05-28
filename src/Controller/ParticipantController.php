@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Filter;
 use App\Entity\Participant;
+use App\Form\FilterType;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -63,6 +65,7 @@ class ParticipantController extends AbstractController
             $motDePasse = $passwordEncoder->encodePassword($participant, $participant->getMotDePasse());
             $participant->setMotDePasse($motDePasse);
 
+            $em->persist($participant->getCampus());
             $em->persist($participant);
             $em->flush();
 
@@ -76,16 +79,20 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/admin", name="participant_index")
+     * @Route("/admin", name="participant_index", methods={"GET"})
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function index(EntityManagerInterface $em)
+    public function index(ParticipantRepository $participantRepository, EntityManagerInterface $em, Request $request)
     {
-        $repository = $em->getRepository(Participant::class);
-        $participants=$repository->findAll();
+        $participant = new Participant();
+        $filter = new Filter();
+        $form = $this->createForm(FilterType::class, $filter);
+        $form->handleRequest($request);
+
         return $this->render('participant/index.html.twig', [
-            'participants' => $participants
+            'formFilter' => $form->createView(),
+            'participants' => $participantRepository->findByName($filter),
         ]);
     }
 
@@ -133,7 +140,7 @@ class ParticipantController extends AbstractController
         }
 
         $this->getDoctrine()->getManager()->flush();
-        return $this->redirectToRoute('participant.home');
+        return $this->redirectToRoute('participant_index');
     }
 
     /**
@@ -154,7 +161,7 @@ class ParticipantController extends AbstractController
         }
 
         $this->getDoctrine()->getManager()->flush();
-        return $this->redirectToRoute('participant.home');
+        return $this->redirectToRoute('participant_index');
     }
 
 

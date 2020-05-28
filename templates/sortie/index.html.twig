@@ -3,11 +3,11 @@
 {% block title %}Les sorties{% endblock %}
 
 {% block main %}
-<div class="d-none d-md-block">
-    <div class="jumbotron m-0 pt-2">
-        <h3>Filtrer les sorties</h3>
-        {{ form_start(form) }}
-        <div class="d-flex justify-content-around align-items-center">
+    <div class="d-none d-md-block">
+        <div class="jumbotron m-0 pt-2">
+            <h3>Filtrer les sorties</h3>
+            {{ form_start(form) }}
+            <div class="d-flex justify-content-around align-items-center">
 
                 <div class="form-col inner-form-col">
                     {{ form_row(form.campus) }}
@@ -24,71 +24,28 @@
                     {{ form_row(form.passee) }}
                 </div>
                 <button type="submit" method="get" class="btn btn-primary float">Rechercher</button>
-            {{ form_end(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
-    </div>
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-bordered table-striped m-0 p-0 table-scroll">
-        <thead>
-        <tr>
-            <th scope="col">Nom de la sortie</th>
-            <th scope="col">Date de la sortie</th>
-            <th scope="col">Clôture</th>
-            <th scope="col">Inscrits/places</th>
-            <th scope="col">Etat</th>
-            <th scope="col">Inscrit</th>
-            <th scope="col">Organisateur</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sorties %}
-            <tr>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H\\Hi') : '' }}</td>
-                <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
-                <td>{{ sortie.participants|length }} / {{ sortie.nbInscriptionsMax }}</td>
-                <td>{{ sortie.etat.libelle }}</td>
-                <td style="text-align:center">
-                    {% if app.user in sortie.participants %}
-                    X
-                     {% endif %}
-                <td><a href="{{ path('profile', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|upper|first }}.</a></td>
-                <td>
-                    {{ include('sortie/_actions.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">Aucune sortie correspondante</td>
-            </tr>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-    </div>
 
-
-    <a class="btn btn-primary float mt-4" href="{{ path('sortie_new') }}">Créer une sortie</a>
-
-</div>
-
-<div class="d-block d-md-none">
-    <h3 class="ml-3">Mes Sorties</h3>
-    <div class="container mt-4">
-        <div class="table-wrapper-scroll-y my-custom-scrollbar" id="table-sortie-responsive">
-            <table class="table table-bordered table-striped mb-0 table-scroll">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped m-0 p-0 table-scroll">
                 <thead>
                 <tr>
                     <th scope="col">Nom de la sortie</th>
                     <th scope="col">Date de la sortie</th>
-                    <th scope="col">Lieu</th>
+                    <th scope="col">Clôture</th>
+                    <th scope="col">Inscrits/places</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,16 +53,61 @@
                     <tr>
                         <td>{{ sortie.nom }}</td>
                         <td>{{ sortie.dateDebut ? sortie.dateDebut|date('d/m/Y H\\Hi') : '' }}</td>
-                        <td>{{ sortie.lieu.nom }}</td>
+                        <td>{{ sortie.dateCloture ? sortie.dateCloture|date('d/m/Y') : '' }}</td>
+                        <td>{{ sortie.participants|length }} / {{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td style="text-align:center">
+                            {% if app.user in sortie.participants %}
+                                X
+                            {% endif %}
+                        <td>
+                            <a href="{{ path('participant_show', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|upper|first }}
+                                .</a></td>
+                        <td>
+                            {{ include('sortie/_actions.html.twig') }}
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3">Aucune sortie correspondante</td>
+                        <td colspan="9">Aucune sortie correspondante</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+
+
+        <a class="btn btn-primary float mt-4 creerSortie" href="{{ path('sortie_new') }}">Créer une sortie</a>
+
     </div>
-</div>
+
+    <div class="d-block d-md-none">
+        <h3 class="ml-3">Mes Sorties</h3>
+        <div class="container mt-4">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar" id="table-sortie-responsive">
+                <table class="table table-bordered table-striped mb-0 table-scroll">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom de la sortie</th>
+                        <th scope="col">Date de la sortie</th>
+                        <th scope="col">Lieu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for sortie in sorties_campus %}
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateDebut|date('d/m/Y H\\Hi') }}</td>
+                            <td>{{ sortie.lieu.nom }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Aucune sortie correspondante</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

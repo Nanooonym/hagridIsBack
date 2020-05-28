@@ -1,16 +1,20 @@
-<div>
 
     {{ form_start(participantForm) }}
-    <div>
-        {{ include('participant/_image_profil.html.twig') }}
+<div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-column mr-4 col-3">
+
+    {{ form_row(participantForm.pseudo) }}
+    {{ form_row(participantForm.prenom) }}
+    {{ form_row(participantForm.nom) }}
+    {{ form_row(participantForm.telephone) }}
+    {{ form_row(participantForm.mail) }}
     </div>
-    {{ form_widget(participantForm) }}
+    <div class="d-flex flex-column mr-4 col-3">
     {{ form_row(participantForm.motDePasse.first) }}
     {{ form_row(participantForm.motDePasse.second) }}
+    {{ form_row(participantForm.campus) }}
+    {{ form_row(participantForm.imageFile) }}
 
-    <div>
-        <button type="submit">Enregistré</button>
-        <a class="btn btn-primary float" href="{{ path('sortie_index') }}">Annuler</a>
     </div>
-    {{ form_end(participantForm) }}
 </div>
+{{ form_end(participantForm) }}

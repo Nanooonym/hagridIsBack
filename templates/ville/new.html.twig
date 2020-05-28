@@ -1,11 +1,17 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}New Ville{% endblock %}
+{% block title %}Nouvelle ville{% endblock %}
 
 {% block main %}
-    <h1>Create new Ville</h1>
+    <div class="container w-25">
+        <div class="d-none d-md-block">
+            <h3 class="text-center mb-5">Créer une ville</h3>
 
-    {{ include('ville/_form.html.twig') }}
-
-    <a href="{{ path('ville_index') }}">back to list</a>
+            {% embed 'ville/_form.html.twig' %}
+                {% block buttons %}
+                    <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
 {% endblock %}

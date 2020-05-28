@@ -1,16 +1,19 @@
 {{ form_start(form) }}
 <td>
-    <div>{{ form_row(form.nom) }}</div>
+    {{ form_row(form.nom) }}
 </td>
 <td>
-    <div>{{ form_row(form.codePostal) }}</div>
+    {{ form_row(form.codePostal) }}
 </td>
-<td class="align-items-center">
+<td>
     <button class="btn btn-primary float">{{ button_label|default('Ajouter') }}</button>
 
 {% if app.session.get('user') %}
 
-    <input type="checkbox" class="checkbox" name="creerLieu">Créer un lieu</input>
+    <button class="btn btn-primary float">{{ button_label|default('Ajouter et Créer un Lieu') }}</button>
+    <input type="hidden" name="creerLieu" value="creerLieu">
+    {% block buttons %}
+    {% endblock buttons %}
 </td>
 {% endif %}
 {{ form_end(form) }}

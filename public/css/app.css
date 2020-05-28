@@ -22,10 +22,6 @@ main{margin-left: 0; width: 100%; display: block}
     justify-content: right;
 }
 
-#logo{
-    padding-left: 14px;
-}
-
 
 header{
     margin-bottom : 38px;
@@ -35,12 +31,26 @@ header{
     padding-left: 10px;
 }
 
+.user > div{
+    margin-left : 20px;
+    margin-right : 20px;
+    font-style: italic;
+    font-size : 13px;
+}
+
+.nav-link{
+    font-size: 19px;
+}
+
 <!-- --------------MAIN---------------- -->
 
 #form-line, #form-campus, #form-ville, #ville-form-line{
     height: 1rem;
     margin: 0;
     vertical-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .table{
@@ -83,6 +93,12 @@ header{
 .btn-primary{
     background-color: #356299;
 }
+
+.btn-primary:hover{
+
+}
+
+
 .inner-form-col
 {
     justify-content: space-between;
@@ -127,19 +143,14 @@ body{
     width: auto;
 }
 
-
-
 td {
-    background-color: rgba(221, 237, 240, 0.6);
+    background-color: rgba(221, 237, 240, 0.8);
+    vertical-align: middle;
 }
 
 nav > a {
     margin-left: 20px;
     margin-right: 20px;
-}
-
-.nav-link{
-    font-size: 18px;
 }
 
 #maRecherche {
@@ -154,6 +165,14 @@ nav > a {
 .formPart{
     margin-left:20px;
 }
+
+.menu-admin > a {
+    margin-top: 30px;
+    width: 370px;
+    height: 50px;
+    font-size: 25px;
+}
+
 <!-- --------------FOOTER---------------- -->
 
 footer{
@@ -168,4 +187,25 @@ footer{
 
 .checkbox{
 margin-right: 10px;
+}
+
+/*--------------SortieIndex---------------*/
+
+.creerSortie{
+margin-left : 30px;
+}
+
+.rechercher{
+    display:flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom : 20px;
+}
+
+.rechercher > *{
+    margin-right : 20px;
+}
+
+.image-profil{
+    margin-left : 130px;
 }

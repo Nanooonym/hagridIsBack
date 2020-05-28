@@ -34,11 +34,25 @@ class SortieFilterType extends AbstractType
                 'label' => 'Entre',
                 'date_widget' => 'single_text',
                 'required' => false,
+                'minutes' => array(
+                    0  => '00',
+                    15 => '15',
+                    30 => '30',
+                    45 => '45',
+                ),
+                'placeholder' => ['hour' => 'hh', 'minute' => 'mm'],
             ])
             ->add('dateFin', DateTimeType::class, [
                 'required' => false,
                 'label' => 'et',
-                'date_widget' => 'single_text'
+                'date_widget' => 'single_text',
+                'minutes' => array(
+                    0  => '00',
+                    15 => '15',
+                    30 => '30',
+                    45 => '45',
+                ),
+                'placeholder' => ['hour' => 'hh', 'minute' => 'mm'],
             ])
             ->add('isOrganisateur', CheckboxType::class, [
                 'required' => false,

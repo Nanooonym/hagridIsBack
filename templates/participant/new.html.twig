@@ -3,10 +3,14 @@
 {% block title %}Nouveau participant{% endblock %}
 
 {% block main %}
-    <h1>Créer un participant</h1>
+    <div class="d-none d-md-block">
+        <h3 class="text-center mb-5">Créer un participant</h3>
 
-    {{ include('participant/_form.html.twig') }}
+        {{ include('participant/_form.html.twig') }}
 
-    <a class="btn btn-primary float" href="{{ path('importCSV') }}">Import CSV</a>
-    <a href="{{ path('sortie_index') }}">back to list</a>
+        <div class="d-flex flex-row justify-content-center">
+        <a class="btn btn-primary float" href="{{ path('importCSV') }}">Importer CSV</a>
+        <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a>
+        </div>
+    </div>
 {% endblock %}

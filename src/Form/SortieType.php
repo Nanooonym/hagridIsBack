@@ -36,6 +36,13 @@ class SortieType extends AbstractType
                 'date_widget' => 'single_text',
                 'format' => 'yyyy/MM/dd HH:mm',
                 'required' => false,
+                'minutes' => array(
+                    0  => '00',
+                    15 => '15',
+                    30 => '30',
+                    45 => '45',
+                ),
+                'placeholder' => ['hour' => 'hh', 'minute' => 'mm'],
             ])
             ->add('dateCloture', DateTimeType::class, [
                 'label' => "Date limite d'inscription :",
@@ -43,6 +50,13 @@ class SortieType extends AbstractType
                 'empty_data' => '',
                 'format' => 'yyyy/MM/dd HH:mm',
                 'required' => false,
+                'minutes' => array(
+                    0  => '00',
+                    15 => '15',
+                    30 => '30',
+                    45 => '45',
+                ),
+                'placeholder' => ['hour' => 'hh', 'minute' => 'mm'],
             ])
 
             ->add('nbInscriptionsMax', IntegerType::class, [
@@ -61,6 +75,7 @@ class SortieType extends AbstractType
 
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
+                'placeholder' => 'Selectionner un campus',
                 'choice_label' => 'nom',
                 'required' => false,
             ])

@@ -19,22 +19,23 @@ class ParticipantType extends AbstractType
     {
         $builder
              ->add('imageFile', FileType::class, [
-                'required'=>false
+                'required'=>false,
+                 'label' => "Ma photo : "
             ])
             ->add('pseudo',TextType::class, [
-                'label' => "Pseudo:"
+                'label' => "Pseudo :"
             ])
             ->add('prenom', TextType::class, [
-                'label'=> "Prénom:"
+                'label'=> "Prénom :"
             ])
             ->add('nom', TextType::class, [
-                'label'=> "Nom:"
+                'label'=> "Nom :"
             ])
             ->add('telephone', TextType::class, [
-                'label' => "Téléphone:"
+                'label' => "Téléphone :"
             ])
             ->add('mail', TextType::class, [
-                'label'=> "Email:"
+                'label'=> "Email :"
             ])
             ->add('motDePasse', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -46,10 +47,9 @@ class ParticipantType extends AbstractType
             ])
 
             ->add('campus', EntityType::class, [
-                'label' => false,
+                'label' => "Campus :",
                'choice_label' => "nom",
                 'class'=> Campus::class
-
             ])
         ;
     }

@@ -37,9 +37,14 @@ class SortieController extends AbstractController
         $filter = new SortieFilter();
         $form = $this->createForm(SortieFilterType::class, $filter);
         $form->handleRequest($request);
+        $sorties = $sortieRepository->findSorties($filter);
+        foreach ($sorties as $sortie){
+            $this->updateEtat($em, $sortie);
+        }
 
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findSorties($filter),
+            'sorties_campus' => $sortieRepository->findSortiesByCampus(),
             'form' => $form->createView()
         ]);
 
@@ -245,8 +250,8 @@ class SortieController extends AbstractController
     }
 
     public function updateEtat (EntityManagerInterface $em, Sortie $sortie) {
-        $etat = $sortie->getEtat();
-        $dateDebut = new \DateTime($sortie->getDateDebut());
+
+        $dateDebut = $sortie->getDateDebut();
         $dateCloture = $sortie->getDateCloture();
         $dateNow = new \DateTime("now");
 
@@ -256,20 +261,21 @@ class SortieController extends AbstractController
         }
         $dateFin = $dateDebut->add(new \DateInterval('PT' . $duree . 'M'));
 
-        if($dateCloture > $dateNow && $dateDebut < $dateNow){
-            $this->etat = "Clôturée";
-            $sortie->setEtat($etat);
-            $em->flush();
-        }
-        if($dateDebut > $dateNow){
-            $this->etat = "Activité en cours";
-            $sortie->setEtat($etat);
-            $em->flush();
-        }
-        if($dateFin > $dateNow){
-            $this->etat = "Passée";
-            $sortie->setEtat($etat);
-            $em->flush();
+        if($sortie->getEtat()->getLibelle() != 'Annulée'){
+            if($dateCloture < $dateNow && $dateDebut > $dateNow){
+                $sortie->getEtat()->setLibelle('Clôturée');
+                $em->flush();
+            }
+
+            if($dateDebut < $dateNow){
+                $sortie->getEtat()->setLibelle('Activité en cours');
+                $em->flush();
+            }
+
+            if($dateFin < $dateNow){
+                $sortie->getEtat()->setLibelle('Passée');
+                $em->flush();
+            }
         }
     }
 

@@ -6,7 +6,7 @@
 
     <div class="container mt-4">
 
-        <h3 class="text-center">Gérer les campus</h3>
+        <h3 class="text-center mb-5">Gérer les campus</h3>
 
         {% for message in app.flashes('success') %}
 
@@ -18,16 +18,21 @@
 
         <div>
             <h4>Filtrer les campus</h4>
-            <div class="row">
-                {{form_start(formFilter)}}
-                {{form_widget(formFilter)}}
-                <button type="submit">Rechercher</button>
-                {{form_end(formFilter)}}
+            <div class="rechercher">
+                <div>
+                    {{ form_start(formFilter) }}
+                    {{ form_label(formFilter.nom) }}
+                </div>
+                <div>
+                    {{ form_widget(formFilter.nom) }}
+                </div>
+                <button class="btn btn-primary float" type="submit">Rechercher</button>
+                {{ form_end(formFilter) }}
             </div>
 
         </div>
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table table-bordered table-striped mb-0">
+            <table class="table table-bordered table-striped mb-0 table-scroll">
                 <thead>
                 <tr>
                     <th>Campus</th>
@@ -39,7 +44,8 @@
                     <tr>
                         <td>{{ campu.nom }}</td>
                         <td class="row ml-0 mr-0">
-                            <a href="{{ path('campus_edit', {'id': campu.id}) }}" class="btn btn-primary float">Modifier</a>
+                            <a href="{{ path('campus_edit', {'id': campu.id}) }}"
+                               class="btn btn-primary float">Modifier</a>
                             {{ include('campus/_delete_form.html.twig') }}
                         </td>
                     </tr>
@@ -49,20 +55,10 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-                <tfoot>
-                    <tr>
-{#                        <div id="form-campus" class="row align-items-center">#}
-{#                 {{ include('campus/_form.html.twig') }}#}
-{#                        </div>#}
-                    </tr>
-                </tfoot>
             </table>
         </div>
         <table class="table table-bordered table-striped mb-0">
-            <tr></tr>
-            <tr></tr>
             {{ include('campus/_form.html.twig') }}
         </table>
     </div>
-{#    </div>#}
 {% endblock %}

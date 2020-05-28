@@ -38,7 +38,7 @@ class VilleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ville);
-            $entityManager->flush($ville);
+            $entityManager->flush();
 
             return $this->redirectToRoute('ville_index');
         }
@@ -60,7 +60,10 @@ class VilleController extends AbstractController
         $form = $this->createForm(VilleType::class, $ville);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ville);
             $entityManager->flush();
@@ -69,6 +72,8 @@ class VilleController extends AbstractController
             //Création de ville en passant par la création de sortie
             if($this->container->get('session')->get('user')){
                 $this->container->get('session')->remove('user');
+
+
 
                 if($request->get('creerLieu')){
                     return $this->redirectToRoute('lieu_new');

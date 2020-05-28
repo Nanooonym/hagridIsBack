@@ -79,7 +79,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new CustomUserMessageAuthenticationException('Pseudo non trouvé.');
         }
 
-
         return $user;
     }
 

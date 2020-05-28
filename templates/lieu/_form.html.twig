@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary float">{{ button_label|default('Save') }}</button>
+<td>
+    <div>{{ form_row(form.nom) }}</div>
+</td>
+<td>
+    <div>{{ form_row(form.rue) }}</div>
+</td>
+<td>
+    <div>{{ form_row(form.ville) }}</div>
+</td>
+<td>
+    <div>{{ form_row(form.latitude) }}</div>
+</td>
+<td>
+    <div>{{ form_row(form.longitude) }}</div>
+</td>
+
+<td class="align-items-center">
+    <button class="btn btn-primary float">{{ button_label|default('Ajouter') }}</button>
+    {% block buttons %}
+    {% endblock buttons %}
+</td>
 {{ form_end(form) }}

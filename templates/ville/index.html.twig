@@ -5,51 +5,52 @@
 {% block main %}
     <div class="container mt-4">
 
-        <h3 class="text-center">Gérer les villes</h3>
+        <h3 class="text-center mb-5">Gérer les villes</h3>
 
         <div>
             <h4>Filtrer les villes</h4>
-            <div class="row">
-                {{form_start(formFilter)}}
-                {{form_widget(formFilter)}}
-                <button type="submit">Rechercher</button>
-                {{form_end(formFilter)}}
+            <div class="rechercher">
+                <div>
+                    {{ form_start(formFilter) }}
+                    {{ form_label(formFilter.nom) }}
+                </div>
+                <div>
+                    {{ form_widget(formFilter.nom) }}
+                </div>
+                <button class="btn btn-primary float" type="submit">Rechercher</button>
+                {{ form_end(formFilter) }}
             </div>
-
         </div>
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table table-bordered table-striped mb-0">
-            <thead>
-            <tr>
-                <th>Ville</th>
-                <th>Code postal</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for ville in villes %}
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped mb-0">
+                <thead>
                 <tr>
-                    <td>{{ ville.nom }}</td>
-                    <td>{{ ville.codePostal }}</td>
-                    <td class="row ml-0 mr-0">
-                        <a href="{{ path('ville_edit', {'id': ville.id}) }}" class="btn btn-primary float">Modifier</a>
-                        {{ include('ville/_delete_form.html.twig') }}
-                    </td>
+                    <th>Ville</th>
+                    <th>Code postal</th>
+                    <th>Actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr id="form-line">
-                    <div id="ville-form-line" class="row">
-                    {{ include('ville/_form.html.twig') }}
-                    </div>
-                </tr>
-            </tfoot>
+                </thead>
+                <tbody>
+                {% for ville in villes %}
+                    <tr>
+                        <td>{{ ville.nom }}</td>
+                        <td>{{ ville.codePostal }}</td>
+                        <td class="d-flex flex-row">
+                            <a href="{{ path('ville_edit', {'id': ville.id}) }}"
+                               class="btn btn-primary float">Modifier</a>
+                            {{ include('ville/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <table class="table table-bordered table-striped mt-3">
+            {{ include('ville/_form.html.twig') }}
         </table>
-    </div>
     </div>
 {% endblock %}

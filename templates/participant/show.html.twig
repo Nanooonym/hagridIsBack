@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <div class="d-none d-md-block">
+
+        <div class="flex-row justify-content-center">
+            <div class="text-center">
+                {{ include('participant/_image_profil.html.twig') }}
+            </div>
+            <h3 class="m-4 text-center">{{ participant.pseudo }}</h3>
+            <div class="container show-participant w-25">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar mt-4 p-0">
+                    <table class="table table-bordered table-striped m-0 p-0 table-scroll">
+                        <tr scope="col">
+                            <td style="font-weight: bold">Prénom:</td>
+                            <td>{{ participant.prenom }}</td>
+                        </tr>
+                        <tr scope="col">
+                            <td style="font-weight: bold">Nom:</td>
+                            <td>{{ participant.nom }}</td>
+                        </tr>
+                        <tr scope="col">
+                            <td style="font-weight: bold">Téléphone:</td>
+                            <td>{{ participant.telephone }}</td>
+                        </tr>
+                        <tr scope="col">
+                            <td style="font-weight: bold">Email:</td>
+                            <td>{{ participant.mail }}</td>
+                        </tr>
+                        <tr scope="col">
+                            <td style="font-weight: bold">Campus:</td>
+                            <td>{{ participant.campus.nom }}</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <a class="btn btn-primary float" href="{{ path('sortie_index') }}">Retourner</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

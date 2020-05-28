@@ -3,55 +3,66 @@
 {% block title %}Gérer les lieux{% endblock %}
 
 {% block main %}
-<div class="container mt-4">
-    <h3 class="text-center">Gérer les lieux</h3>
+    <div class="container mt-4">
+        <h3 class="text-center mb-5">Gérer les lieux</h3>
 
-    <div>
-        <h4>Filtrer les lieux</h4>
-        <div class="row">
-            {{form_start(formFilter)}}
-            {{form_widget(formFilter)}}
-            <button type="submit">Rechercher</button>
-            {{form_end(formFilter)}}
+        <div>
+            <h4>Filtrer les lieux</h4>
+            <div class="rechercher">
+                <div>
+                    {{ form_start(formFilter) }}
+                    {{ form_label(formFilter.nom) }}
+                </div>
+                <div>
+                    {{ form_widget(formFilter.nom) }}
+                </div>
+                    <button class="btn btn-primary float" type="submit">Rechercher</button>
+                {{ form_end(formFilter) }}
+            </div>
+
         </div>
 
-    </div>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped m-0 p-0 table-scroll">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Rue</th>
+                    <th>Ville</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for lieu in lieux %}
+                    <tr>
+                        <td>{{ lieu.nom }}</td>
+                        <td>{{ lieu.rue }}</td>
+                        <td>{{ lieu.ville.nom }}</td>
+                        <td>{{ lieu.latitude }}</td>
+                        <td>{{ lieu.longitude }}</td>
+                        <td class="row ml-0 mr-0">
+                            <a href="{{ path('lieu_edit', {'id': lieu.id}) }}"
+                               class="btn btn-primary float mr-4">Modifier</a>
+                            {{ include('lieu/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun lieu correspondant</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
 
-    <table class="table table-bordered table-striped mb-0">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Rue</th>
-            <th>Ville</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for lieu in lieux %}
-            <tr>
-                <td>{{ lieu.nom }}</td>
-                <td>{{ lieu.rue }}</td>
-                <td>{{ lieu.ville.nom }}</td>
-                <td>{{ lieu.latitude }}</td>
-                <td>{{ lieu.longitude }}</td>
-                <td class="row ml-0 mr-0">
-                    <a href="{{ path('lieu_edit', {'id': lieu.id}) }}" class="btn btn-primary float">Modifier</a>
-                    {{ include('lieu/_delete_form.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        <tr id="form-line">
-            <div id="ville-form-line" class="row">
-                {{ include('lieu/_form.html.twig') }}
-            </div>
-        </tr>
-        </tbody>
-    </table>
-</div>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <table class="table table-bordered table-striped mb-0">
+            {{ include('lieu/_form.html.twig') }}
+        </table>
+    </div>
 {% endblock %}

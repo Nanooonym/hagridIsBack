@@ -20,7 +20,7 @@ class FilterType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'required' => false,
-                'label' => 'Le nom de la sortie contient :'
+                'label' => 'Le nom contient :'
             ]);
     }
 

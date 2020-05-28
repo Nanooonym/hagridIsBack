@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +39,15 @@ class SortieRepository extends ServiceEntityRepository
         $qb->addSelect('p');
         $qb->leftjoin('s.organisateur', 'o');
         $qb->addSelect('o');
+        $qb->join('s.campus', 'c');
+        $qb->addSelect('c');
+        $qb->join('s.etat', 'e');
+        $qb->addSelect('e');
+        $qb->join('s.lieu', 'l');
+        $qb->addSelect('l');
+        $qb->join('l.ville', 'v');
+        $qb->addSelect('v');
+
 
 
         $qb->andWhere("DATE_ADD(DATE_ADD(s.dateDebut, s.duree, 'minute'), 1, 'month') > :now")
@@ -84,11 +95,26 @@ class SortieRepository extends ServiceEntityRepository
         $qb->andWhere($orQuery);
             if($orQuery && $filter->getPassee()) {
                 $qb->setParameter('dateDuJour', $date = new \DateTime());
-            };
+            }
             if($filter->getIsOrganisateur() || $filter->getIsInscrit() || $filter->getIsNotInscrit()){
                 $qb->setParameter('user', $user->getPseudo());
             }
 
+
+        $query = $qb->getQuery();
+        return new Paginator($query);
+    }
+
+    public function findSortiesByCampus()
+    {
+        $qb = $this->createQueryBuilder('s');
+        $user = $this->security->getUser();
+
+        $qb->leftJoin('s.campus', 'c');
+        $qb->addSelect('c');
+
+        $qb->andWhere('s.campus = :campus')
+            ->setParameter('campus', $this->security->getUser()->getCampus()->getId());
 
         $query = $qb->getQuery();
         return new Paginator($query);
