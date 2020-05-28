@@ -23,12 +23,21 @@ main{margin-left: 0; width: 100%; display: block}
 }
 
 #logo{
-    margin-left: 0;
-    padding: 0;
+    padding-left: 14px;
 
 }
 
+
+header{
+    margin-bottom : 38px;
+}
+
+.user{
+    padding-left: 10px;
+}
+
 <!-- --------------MAIN---------------- -->
+
 #form-line, #form-campus, #form-ville, #ville-form-line{
     height: 1rem;
     margin: 0;
@@ -128,6 +137,10 @@ td {
 nav > a {
     margin-left: 20px;
     margin-right: 20px;
+}
+
+.nav-link{
+    font-size: 18px;
 }
 
 #maRecherche {
