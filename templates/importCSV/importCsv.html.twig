@@ -3,10 +3,11 @@
 {% block title %}ImportCsv{% endblock %}
 
 {% block main %}
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary float">Send</button>
-    {{ form_end(form) }}
+    <div class="container-fluid w-25">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary float">Charger</button>
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

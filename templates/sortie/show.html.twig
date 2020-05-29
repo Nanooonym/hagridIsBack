@@ -4,93 +4,98 @@
 
 {% block main %}
     <div class="d-none d-md-block">
-    <h3 class="m-3 text-center">Afficher une sortie</h3>
+        <h3 class="m-3 text-center">Afficher une sortie</h3>
 
-    {% for message in app.flashes('success') %}
+        {% for message in app.flashes('success') %}
 
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
 
-    {% endfor %}
-    <div class="container">
-        <div class="table">
-            <table class="table">
-                <tbody>
-                <tr class="row">
-                    <td class="col-4 sortir-attribut">Nom de la sortie:</td>
-                    <td class="col-3">{{ sortie.nom }}</td>
-                    <td class="col-2 sortir-attribut">Campus:</td>
-                    <td class="col-3">{{ sortie.campus }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-4 sortir-attribut">Date et heure de la sortie:</td>
-                    <td class="col-3">{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
-                    <td class="col-2 sortir-attribut">Lieu:</td>
-                    <td class="col-3">{{ sortie.lieu }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-4 sortir-attribut">Date limite d'inscription:</td>
-                    <td class="col-3">{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
-                    <td class="col-2 sortir-attribut">Rue:</td>
-                    <td class="col-3">{{ sortie.lieu.rue }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-4 sortir-attribut">Nombre de places:</td>
-                    <td class="col-3">{{ sortie.nbInscriptionsMax }}</td>
-                    <td class="col-2 sortir-attribut">Code postal:</td>
-                    <td class="col-3">{{ sortie.lieu.ville.codePostal }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-4 sortir-attribut">Duree:</td>
-                    {% if sortie.duree == 0 or sortie.duree == null %}
-                    <td class="col-3"></td>
-                    {% else %}
-                    <td class="col-3">{{ sortie.duree }} minutes</td>
-                    {% endif %}
-                    <td class="col-2 sortir-attribut">Ville :</td>
-                    <td class="col-3">{{ sortie.lieu.ville.nom }}</td>
-                </tr>
-                <tr class="row">
+        {% endfor %}
+        <div class="container">
+            <div class="table">
+                <table class="table">
+                    <tbody>
+                    <tr class="row">
+                        <td class="col-4 sortir-attribut">Nom de la sortie:</td>
+                        <td class="col-3">{{ sortie.nom }}</td>
+                        <td class="col-2 sortir-attribut">Campus:</td>
+                        <td class="col-3">{{ sortie.campus }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-4 sortir-attribut">Date et heure de la sortie:</td>
+                        <td class="col-3">{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
+                        <td class="col-2 sortir-attribut">Lieu:</td>
+                        <td class="col-3">{{ sortie.lieu }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-4 sortir-attribut">Date limite d'inscription:</td>
+                        <td class="col-3">{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
+                        <td class="col-2 sortir-attribut">Rue:</td>
+                        <td class="col-3">{{ sortie.lieu.rue }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-4 sortir-attribut">Nombre de places:</td>
+                        <td class="col-3">{{ sortie.nbInscriptionsMax }}</td>
+                        <td class="col-2 sortir-attribut">Code postal:</td>
+                        <td class="col-3">{{ sortie.lieu.ville.codePostal }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-4 sortir-attribut">Duree:</td>
+                        {% if sortie.duree == 0 or sortie.duree == null %}
+                            <td class="col-3"></td>
+                        {% else %}
+                            <td class="col-3">{{ sortie.duree }} minutes</td>
+                        {% endif %}
+                        <td class="col-2 sortir-attribut">Ville :</td>
+                        <td class="col-3">{{ sortie.lieu.ville.nom }}</td>
+                    </tr>
+                    <tr class="row">
 
-                    {% if sortie.etat.libelle == 'Annulée' %}
-                        <td class="col-4 sortir-attribut">Motif d'annulation:</td>
-                    {% else %}
-                        <td class="col-4 sortir-attribut">Description et infos:</td>
-                    {% endif %}
-                    <td class="col-3">{{ sortie.descriptionInfos }}</td>
+                        {% if sortie.etat.libelle == 'Annulée' %}
+                            <td class="col-4 sortir-attribut">Motif d'annulation:</td>
+                        {% else %}
+                            <td class="col-4 sortir-attribut">Description et infos:</td>
+                        {% endif %}
+                        <td class="col-3">{{ sortie.descriptionInfos }}</td>
 
-                    <td class="col-2 sortir-attribut">Latitude:</td>
-                    <td class="col-3">{{ sortie.lieu.latitude }}</td>
+                        <td class="col-2 sortir-attribut">Latitude:</td>
+                        <td class="col-3">{{ sortie.lieu.latitude }}</td>
 
 
-                </tr>
-                <tr class="row">
-                    <td class="col-4"></td>
-                    <td class="col-3"></td>
-                    <td class="col-2 sortir-attribut">Longitude:</td>
-                    <td class="col-3">{{ sortie.lieu.longitude }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row justify-content-center">
-            {% if sortie.etat.libelle == "Ouverte"
-                and app.user not in sortie.participants %}
+                    </tr>
+                    <tr class="row">
+                        <td class="col-4"></td>
+                        <td class="col-3"></td>
+                        <td class="col-2 sortir-attribut">Longitude:</td>
+                        <td class="col-3">{{ sortie.lieu.longitude }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar-liste-part">
+                <table class="table table-bordered table-striped mb-0 table-scroll ml-4">
+                    {% if sortie.etat.libelle == "Ouverte"
+                        and app.user not in sortie.participants %}
                         <a href="{{ path('sortie_inscrire', {'id': sortie.id}) }}" class="btn btn-primary float">S'inscrire</a>
-            {% elseif sortie.etat.libelle == "Ouverte"
-                    and app.user in sortie.participants
-                    and app.user != sortie.organisateur %}
-                        <a href="{{ path('sortie_desister', {'id': sortie.id}) }}" class="btn btn-primary float">Se désister</a>
-            {% endif %}
+                    {% elseif sortie.etat.libelle == "Ouverte"
+                        and app.user in sortie.participants
+                        and app.user != sortie.organisateur %}
+                        <a href="{{ path('sortie_desister', {'id': sortie.id}) }}" class="btn btn-primary float">Se
+                            désister</a>
+                    {% endif %}
 
-            <a href="{{ path('sortie_index') }}" class="btn btn-primary float ml-4">Retour</a>
+                    <a href="{{ path('sortie_index') }}" class="btn btn-primary float ml-4">Retour</a>
+                </table>
+            </div>
         </div>
     </div>
 
     <div>
-        <p class="ml-4 mt-4">Liste des participants inscrits (Places restantes : {{ sortie.nbInscriptionsMax - sortie.participants.count }})</p>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <p class="ml-4 mt-4">Liste des participants inscrits (Places restantes
+            : {{ sortie.nbInscriptionsMax - sortie.participants.count }})</p>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar-liste-part">
             <table class="table table-bordered table-striped mb-0 table-scroll-liste-participants ml-4">
                 <thead>
                 <tr>
@@ -112,87 +117,88 @@
     </div>
     </div>
     <div class="d-block d-md-none">
-    <div class="container mt-4">
-        <div class="table">
-            <table class="table ml-2">
-                <tbody>
-                <tr class="row">
-                    <td class="col-5">Nom:</td>
-                    <td class="col-7">{{ sortie.nom }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Date et heure de la sortie:</td>
-                    <td class="col-7">{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Ville:</td>
-                    <td class="col-7">{{ sortie.lieu.ville }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Lieu:</td>
-                    <td class="col-7">{{ sortie.lieu }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Rue:</td>
-                    <td class="col-7">{{ sortie.lieu.rue }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Code postal:</td>
-                    <td class="col-7">{{ sortie.lieu.ville.codePostal }}</td>
-                </tr>
-                <tr class="row">
-                <td class="col-5">Latitude:</td>
-                <td class="col-7">{{ sortie.lieu.latitude }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Longitude:</td>
-                    <td class="col-7">{{ sortie.lieu.longitude }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Clôture:</td>
-                    <td class="col-7">{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Nombre de places:</td>
-                    <td class="col-7">{{ sortie.nbInscriptionsMax }}</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Duree:</td>
-                    <td class="col-7">{{ sortie.duree }} minutes</td>
-                </tr>
-                <tr class="row">
-                    <td class="col-5">Description et infos:</td>
-                    <td class="col-7">{{ sortie.descriptionInfos }}</td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="container mt-4">
+            <div class="table">
+                <table class="table ml-2">
+                    <tbody>
+                    <tr class="row">
+                        <td class="col-5">Nom:</td>
+                        <td class="col-7">{{ sortie.nom }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Date et heure de la sortie:</td>
+                        <td class="col-7">{{ sortie.dateDebut ? sortie.dateDebut|date('Y-m-d H:i') : '' }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Ville:</td>
+                        <td class="col-7">{{ sortie.lieu.ville }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Lieu:</td>
+                        <td class="col-7">{{ sortie.lieu }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Rue:</td>
+                        <td class="col-7">{{ sortie.lieu.rue }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Code postal:</td>
+                        <td class="col-7">{{ sortie.lieu.ville.codePostal }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Latitude:</td>
+                        <td class="col-7">{{ sortie.lieu.latitude }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Longitude:</td>
+                        <td class="col-7">{{ sortie.lieu.longitude }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Clôture:</td>
+                        <td class="col-7">{{ sortie.dateCloture ? sortie.dateCloture|date('Y-m-d H:i') : '' }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Nombre de places:</td>
+                        <td class="col-7">{{ sortie.nbInscriptionsMax }}</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Duree:</td>
+                        <td class="col-7">{{ sortie.duree }} minutes</td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-5">Description et infos:</td>
+                        <td class="col-7">{{ sortie.descriptionInfos }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="ml-2 mr-2">
-        <p class="mt-4 ml-2" style="font-weight: bold">Liste des participants inscrits ({{ sortie.nbInscriptionsMax - sortie.participants.count }} restantes :</p>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Nom
-                    </th>
-                    <th scope="col">Campus
-                    </th>
+        <div class="ml-2 mr-2">
+            <p class="mt-4 ml-2" style="font-weight: bold">Liste des participants inscrits
+                ({{ sortie.nbInscriptionsMax - sortie.participants.count }} restantes :</p>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom
+                        </th>
+                        <th scope="col">Campus
+                        </th>
 
-                </thead>
-                <tbody>
-                {% for participant in sortie.participants %}
-                <tr>
-                    <td>{{ participant.prenom|capitalize }} {{ participant.nom|upper }}</td>
-                    <td>{{ participant.campus }}</td>
-                </tr>
-                </tbody>
-                {% endfor %}
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for participant in sortie.participants %}
+                    <tr>
+                        <td>{{ participant.prenom|capitalize }} {{ participant.nom|upper }}</td>
+                        <td>{{ participant.campus }}</td>
+                    </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
 
+            </div>
         </div>
-    </div>
     </div>
 
 {% endblock %}

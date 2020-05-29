@@ -12,6 +12,7 @@
                     {% embed 'participant/_form.html.twig' %}
                         {% block buttons %}
                             <button type="submit" class="btn btn-primary float ml-4">Modifier</button>
+                            <td><a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a></td>
                             <a href="{{ path('participant_show', {'id': participant.id}) }}"
                         {% endblock %}
                     {% endembed %}

@@ -34,8 +34,8 @@ class ImportCSVController extends AbstractController
 
             $file = $form->get('file')->getData();
 
-            $string = str_replace('",', '', file_get_contents($file));
-                $datas = explode('"', $string);
+            $string = str_replace('"', '', file_get_contents($file));
+                $datas = explode(',', $string);
 
 
                 $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
@@ -44,7 +44,7 @@ class ImportCSVController extends AbstractController
                 $i = 0;
                 $entity = 0;
                 do {
-                    $i = $i + 2;                                 //Blank offset
+                    $i = $i + 1;                                 //Blank offset
                     $participant = new Participant();
 
                     $campus = $campusRepo->find($datas[$i]);
@@ -68,8 +68,10 @@ class ImportCSVController extends AbstractController
                     $participant->setMotDePasse($motDePasse);
                     $i++;
 
-                    $role = '"' . $datas[$i] . '"';
+/*                    $role = '"' . $datas[$i] . '"';*/
                     $participant->setRoles($role);
+
+                    $i++;
 
                     if ($datas[$i] == 1) {
                         $participant->setActif(true);
@@ -79,8 +81,10 @@ class ImportCSVController extends AbstractController
                         $i++;
                     }
 
+                    $participant->getUpdatedAt($datas[$i]);
+                    $i++;
+
                     $participantExist = $participantRepo->findOneBy(array('pseudo' => $participant->getPseudo()));
-                    dump($participantExist);
 
                     if (!$participantExist) {
                         $em->persist($participant);
@@ -89,6 +93,7 @@ class ImportCSVController extends AbstractController
                     }
 
                 } while (count($datas) > ($i + 12));         //Check if next entity is full (10 datas + 2 blanks)
+
 
                 $this->addFlash('success', $entity . ' participants ont été ajoutés en base de données.');
 
