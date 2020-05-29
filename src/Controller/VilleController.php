@@ -60,8 +60,6 @@ class VilleController extends AbstractController
         $form = $this->createForm(VilleType::class, $ville);
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -73,28 +71,11 @@ class VilleController extends AbstractController
             if($this->container->get('session')->get('user')){
                 $this->container->get('session')->remove('user');
 
-
-
                 if($request->get('creerLieu')){
                     return $this->redirectToRoute('lieu_new');
                 }
                 return $this->redirectToRoute('sortie_new');
             }
-
-            /*//Création de ville en passant par la création de sortie
-            if($this->container->get('session')->get('sortie')){
-
-                $sortie = $this->container->get('session')->get('sortie');
-                $form = $this->createForm(SortieType::class, $sortie);
-                $form->handleRequest($request);
-                $sortie = $this->container->get('session')->remove('sortie');
-
-
-                return $this->render('sortie/new.html.twig', [
-                    'sortie' => $sortie,
-                    'form' => $form->createView(),
-                ]);
-            }*/
 
             return $this->redirectToRoute('ville_index');
         }

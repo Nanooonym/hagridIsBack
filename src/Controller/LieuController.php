@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LieuController extends AbstractController
 {
     /**
-     * @Route("/admin/", name="lieu_index", methods={"GET"})
+     * @Route("/admin/", name="lieu_index", methods={"GET", "POST"})
      */
     public function index(LieuRepository $lieuRepository, Request $request): Response
     {
@@ -48,6 +48,8 @@ class LieuController extends AbstractController
 
     /**
      * @Route("/new", name="lieu_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -61,21 +63,10 @@ class LieuController extends AbstractController
             $entityManager->flush();
 
             if($this->container->get('session')->get('user')){
-                $sortie = $this->container->get('session')->remove('user');
+
+                $this->container->get('session')->remove('user');
                 return $this->redirectToRoute('sortie_new');
             }
-
-            /*//Création de ville en passant par la création de sortie
-            if($this->container->get('session')->get('sortie')){
-                $sortie = $this->container->get('session')->get('sortie');
-                $form = $this->createForm(SortieType::class, $sortie);
-                $form->handleRequest($request);
-                $sortie = $this->container->get('session')->remove('sortie');
-                return $this->render('sortie/new.html.twig', [
-                    'sortie' => $sortie,
-                    'form' => $form->createView(),
-                ]);
-            }*/
 
             return $this->redirectToRoute('lieu_index');
         }

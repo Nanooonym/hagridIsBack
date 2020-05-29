@@ -4,17 +4,14 @@
 
     {% block main %}
         <div class="d-none d-md-block">
-            <h3 class="m-4 text-center">Mon profil</h3>
+
             <div class="flex-column">
-                <div class="text-left image-profil">
+                <div class="text-center">
                     {{ include('participant/_image_profil.html.twig') }}
                 </div>
+                <h3 class="m-4 text-center">Mon profil</h3>
                 <div>
                     {{ include('participant/_form.html.twig') }}
-                </div>
-                <div class="text-center mt-2">
-                    <a class="btn btn-primary float" href="{{ path('sortie_index') }}">Enregistrer</a>
-                    <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Annuler</a>
                 </div>
             </div>
         </div>

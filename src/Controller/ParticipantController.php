@@ -64,6 +64,7 @@ class ParticipantController extends AbstractController
             $participant->setActif(true);
             $motDePasse = $passwordEncoder->encodePassword($participant, $participant->getMotDePasse());
             $participant->setMotDePasse($motDePasse);
+            $participant->setRoles(array('ROLE_USER'));
 
             $em->persist($participant->getCampus());
             $em->persist($participant);
