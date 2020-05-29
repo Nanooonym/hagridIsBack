@@ -5,7 +5,11 @@
         <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
     -
         <a href="{{ path('sortie_publier', {'id': sortie.id}) }}">Publier</a>
-{% else %}
+{% elseif app.user.id == sortie.organisateur.id
+    and sortie.etat.libelle == 'Ouverte'
+    and app.user.actif == true %}
+    <a href="{{ path('sortie_edit', {'id': sortie.id}) }}">Modifier</a>
+    {% else %}
         <a href="{{ path('sortie_show', {'id': sortie.id}) }}">Afficher</a>
 {% endif %}
 

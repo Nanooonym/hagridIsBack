@@ -23,13 +23,15 @@
     </div>
 
     <div class="row justify-content-center">
-        <button class="btn btn-primary float m-4" name ="button" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
+
 
         {% if sortie.etat %}
             {% if sortie.etat.libelle == 'Ouverte' %}
                 <button class="btn btn-primary float m-4" name ="button" value="annuler">{{ button_label|default('Annuler') }}</button>
             {% else %}
+                <button class="btn btn-primary float m-4" name ="button" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
                 <button class="btn btn-primary float m-4" name ="button" value="publier">{{ button_label|default('Publier') }}</button>
+                    {{ include('sortie/_delete_form.html.twig') }}
             {% endif %}
         {% else %}
             <button class="btn btn-primary float m-4" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>

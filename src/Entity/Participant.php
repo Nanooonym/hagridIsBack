@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity(
- *     fields={"pseudo", "mail"})
+ * @UniqueEntity("mail")
+ * @UniqueEntity("pseudo")
  * @Vich\Uploadable()
  */
 class Participant implements UserInterface, \Serializable
@@ -42,7 +42,7 @@ class Participant implements UserInterface, \Serializable
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $pseudo;
 
@@ -62,7 +62,7 @@ class Participant implements UserInterface, \Serializable
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $mail;
 
@@ -102,8 +102,6 @@ class Participant implements UserInterface, \Serializable
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
-
-
 
     /**
      * @return string|null
