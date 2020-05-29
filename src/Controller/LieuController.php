@@ -9,6 +9,7 @@ use App\Form\FilterType;
 use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\LieuRepository;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,8 +115,13 @@ class LieuController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$lieu->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($lieu);
-            $entityManager->flush();
+            try{
+                $entityManager->remove($lieu);
+                $entityManager->flush();
+                $this->addFlash('success', 'Bien supprimé avec succès');
+            }catch (ForeignKeyConstraintViolationException $e){
+                $this->addFlash('error', 'Impossible de supprimer ce lieu, il est associé à au moins une sortie');
+            }
         }
 
         return $this->redirectToRoute('lieu_index');

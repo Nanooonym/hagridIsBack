@@ -9,6 +9,7 @@ use App\Form\FilterType;
 use App\Form\SortieType;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -138,9 +139,13 @@ class VilleController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($ville);
-            $entityManager->flush();
-            $this->addFlash('success', 'Bien supprimé avec succès');
+            try{
+                $entityManager->remove($ville);
+                $entityManager->flush();
+                $this->addFlash('success', 'Bien supprimé avec succès');
+            }catch (ForeignKeyConstraintViolationException $e){
+                $this->addFlash('error', 'Impossible de supprimer cette ville, elle est associée à au moins un lieu');
+            }
         }
 
         return $this->redirectToRoute('ville_index');

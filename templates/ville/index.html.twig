@@ -21,6 +21,19 @@
                 {{ form_end(formFilter) }}
             </div>
         </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-bordered table-striped mb-0">
                 <thead>
@@ -51,6 +64,9 @@
         </div>
         <table class="table table-bordered table-striped mt-3">
             {{ include('ville/_form.html.twig') }}
+            <td>
+                <button type="submit" form="ville" class="btn btn-primary float ml-4">Ajouter</button>
+            </td>
         </table>
     </div>
 {% endblock %}

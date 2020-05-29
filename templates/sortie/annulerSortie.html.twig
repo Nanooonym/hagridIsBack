@@ -28,14 +28,14 @@
                         {{ form_errors (form.descriptionInfos) }}
                         {{ form_widget(form.descriptionInfos) }}</td>
                 </tr>
-
-                {{ form_end (form) }}
-
             </table>
             <div class="text-center">
-                <button class="btn btn-primary float" type="submit">Enregistrer</button>
-                <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Annuler</a>
+                <button class="btn btn-primary float" type="submit">Annuler la sortie</button>
+                <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a>
             </div>
+            {{ form_end (form) }}
+
+
         </div>
     </div>
 {% endblock %}

@@ -16,6 +16,12 @@
 
         {% endfor %}
 
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div>
             <h4>Filtrer les campus</h4>
             <div class="rechercher">

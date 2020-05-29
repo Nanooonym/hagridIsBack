@@ -22,6 +22,18 @@
 
         </div>
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-bordered table-striped m-0 p-0 table-scroll">
                 <thead>
@@ -63,6 +75,9 @@
         </div>
         <table class="table table-bordered table-striped mb-0">
             {{ include('lieu/_form.html.twig') }}
+            <td>
+                <button type="submit" form="lieu_id" class="btn btn-primary float ml-4">Ajouter</button>
+            </td>
         </table>
     </div>
 {% endblock %}

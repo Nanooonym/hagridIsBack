@@ -7,8 +7,10 @@ use App\Entity\Participant;
 use App\Form\FilterType;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -136,9 +138,13 @@ class ParticipantController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$participant->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($participant);
-            $entityManager->flush();
-            $this->addFlash('success', 'Bien supprimé avec succès');
+            try{
+                $entityManager->remove($participant);
+                $entityManager->flush();
+                $this->addFlash('success', 'Bien supprimé avec succès');
+            }catch (ForeignKeyConstraintViolationException $e){
+                $this->addFlash('error', 'Impossible de supprimer ce participant, il est organisateur d\'au moins une sortie');
+            }
         }
 
         return $this->redirectToRoute('participant_index');

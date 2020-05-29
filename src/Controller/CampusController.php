@@ -7,8 +7,10 @@ use App\Entity\Filter;
 use App\Form\CampusType;
 use App\Form\FilterType;
 use App\Repository\CampusRepository;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -120,9 +122,15 @@ class CampusController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$campu->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($campu);
-            $entityManager->flush();
-            $this->addFlash('success', 'Bien supprimé avec succès');
+            try{
+                $entityManager->remove($campu);
+                $entityManager->flush();
+                $this->addFlash('success', 'Bien supprimé avec succès');
+            }catch (ForeignKeyConstraintViolationException $e){
+                $this->addFlash('error', 'Impossible de supprimer ce campus, il est associé à au moins une sortie ou au moins un participant');
+            }
+
+
         }
 
         return $this->redirectToRoute('campus_index');
