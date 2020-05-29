@@ -78,6 +78,7 @@
                                    class="btn btn-primary float mr-4 mb-2">Rendre Administrateur</a>
                                 <a href="{{ path('participant_desactiver', {'id': participant.id}) }}"
                                    class="btn btn-primary float mr-4 mb-2">Activer - Désactiver</a>
+                                {{ include('participant/_delete_form.html.twig') }}
                             {% endif %}
                         </td>
                     </tr>

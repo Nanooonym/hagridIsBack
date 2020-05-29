@@ -43,7 +43,11 @@
                 </tr>
                 <tr class="row">
                     <td class="col-4 sortir-attribut">Duree:</td>
+                    {% if sortie.duree == 0 or sortie.duree == null %}
+                    <td class="col-3"></td>
+                    {% else %}
                     <td class="col-3">{{ sortie.duree }} minutes</td>
+                    {% endif %}
                     <td class="col-2 sortir-attribut">Latitude:</td>
                     <td class="col-3">{{ sortie.lieu.latitude }}</td>
                 </tr>
@@ -57,10 +61,6 @@
                     <td class="col-2 sortir-attribut">Longitude:</td>
                     <td class="col-3">{{ sortie.lieu.longitude }}</td>
                 </tr>
-               {# <tr class="row">
-                    <td class="col-4 sortir-attribut">Photo:</td>
-                    <td class="col-3 " id="photoURL"><a href="{{ sortie.urlPhoto }}">Voir la photo</a></td>
-                </tr>#}
                 </tbody>
             </table>
         </div>
@@ -160,7 +160,7 @@
     </div>
 
     <div class="ml-2 mr-2">
-        <p class="mt-4 ml-2" style="font-weight: bold">Liste des participants inscrits:</p>
+        <p class="mt-4 ml-2" style="font-weight: bold">Liste des participants inscrits ({{ sortie.nbInscriptionsMax - sortie.participants.count }} restantes :</p>
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-bordered table-striped">
                 <thead>

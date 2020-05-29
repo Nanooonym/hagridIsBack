@@ -1,20 +1,25 @@
-
-    {{ form_start(participantForm) }}
+{{ form_start(participantForm) }}
 <div class="d-flex flex-row justify-content-center">
     <div class="d-flex flex-column mr-4 col-3">
 
-    {{ form_row(participantForm.pseudo) }}
-    {{ form_row(participantForm.prenom) }}
-    {{ form_row(participantForm.nom) }}
-    {{ form_row(participantForm.telephone) }}
-    {{ form_row(participantForm.mail) }}
+        {{ form_row(participantForm.pseudo) }}
+        {{ form_row(participantForm.prenom) }}
+        {{ form_row(participantForm.nom) }}
+        {{ form_row(participantForm.telephone) }}
+        {{ form_row(participantForm.mail) }}
     </div>
     <div class="d-flex flex-column mr-4 col-3">
-    {{ form_row(participantForm.motDePasse.first) }}
-    {{ form_row(participantForm.motDePasse.second) }}
-    {{ form_row(participantForm.campus) }}
-    {{ form_row(participantForm.imageFile) }}
-
+        {{ form_row(participantForm.motDePasse.first) }}
+        {{ form_row(participantForm.motDePasse.second) }}
+        {{ form_row(participantForm.campus) }}
+        {{ form_row(participantForm.imageFile) }}
     </div>
+</div>
+<div class="container text-center">
+    <td>
+            <button type="submit" class="btn btn-primary float ml-4">Ajouter</button>
+            <a class="btn btn-primary float ml-4" href="{{ path('importCSV') }}">Importer CSV</a>
+            <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a>
+    </td>
 </div>
 {{ form_end(participantForm) }}
