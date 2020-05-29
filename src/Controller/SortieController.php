@@ -38,7 +38,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieFilterType::class, $filter);
         $form->handleRequest($request);
         $sorties = $sortieRepository->findSorties($filter);
-        foreach ($sorties as $sortie){
+        foreach ($sorties as $sortie) {
             $this->updateEtat($em, $sortie);
         }
 
@@ -63,13 +63,13 @@ class SortieController extends AbstractController
         if ($form->get('newVille')->isClicked()) {
 
             $this->container->get('session')->set('user', true);
-/*            $this->container->get('session')->set('sortie', $sortie);*/
+            /*            $this->container->get('session')->set('sortie', $sortie);*/
             return $this->redirectToRoute('ville_new');
 
         } elseif ($form->get('newLieu')->isClicked()) {
 
             $this->container->get('session')->set('user', true);
-/*            $this->container->get('session')->set('sortie', $sortie);*/
+            /*            $this->container->get('session')->set('sortie', $sortie);*/
             return $this->redirectToRoute('lieu_new');
         }
 
@@ -83,13 +83,13 @@ class SortieController extends AbstractController
             $etat = new Etat();
             $submit = $_POST['button'];
 
-            if($submit == "enregistrer") {
+            if ($submit == "enregistrer") {
                 $etat->setLibelle("En création");
-            } else if($submit == "publier"){
+            } else if ($submit == "publier") {
                 $etat->setLibelle("Ouverte");
             }
 
-            if($sortie->getDuree() == null){
+            if ($sortie->getDuree() == null) {
                 $sortie->setDuree(0);
             }
 
@@ -99,9 +99,9 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            if($submit == "enregistrer"){
+            if ($submit == "enregistrer") {
                 $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant enregistrée');
-            }else if($submit == "publier"){
+            } else if ($submit == "publier") {
                 $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
             }
 
@@ -134,29 +134,29 @@ class SortieController extends AbstractController
 
         if ($form->get('newVille')->isClicked()) {
 
-               $this->getDoctrine()->getManager()->flush();
-               $this->container->get('session')->set('sortie', $sortie);
-               return $this->redirectToRoute('ville_new');
+            $this->getDoctrine()->getManager()->flush();
+            $this->container->get('session')->set('sortie', $sortie);
+            return $this->redirectToRoute('ville_new');
 
-           } elseif ($form->get('newLieu')->isClicked()) {
+        } elseif ($form->get('newLieu')->isClicked()) {
 
-               $this->container->get('session')->set('sortie', $sortie);
-               return $this->redirectToRoute('lieu_new');
-           }
+            $this->container->get('session')->set('sortie', $sortie);
+            return $this->redirectToRoute('lieu_new');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $etat = $sortie->getEtat()->getLibelle();
 
-            if($request->get('button') == "publier" && $etat == 'En création'){
+            if ($request->get('button') == "publier" && $etat == 'En création') {
                 $etat = "Ouverte";
                 $sortie->getEtat()->setLibelle($etat);
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
-            }else if($request->get('button') == "enregistrer"){
+            } else if ($request->get('button') == "enregistrer") {
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" a été modifiée');
-            }else if($request->get('button' == "annuler")){
+            } else if ($request->get('button' == "annuler")) {
                 $sortie->getEtat()->setLibelle("Annulée");
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant annulée');
@@ -177,7 +177,7 @@ class SortieController extends AbstractController
      */
     public function delete(Request $request, Sortie $sortie): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($sortie);
             $entityManager->flush();
@@ -240,39 +240,40 @@ class SortieController extends AbstractController
     public function publier(Request $request, Sortie $sortie): Response
     {
         $etat = $sortie->getEtat();
-        if($sortie->getEtat()->getLibelle() == 'En création'){
+        if ($sortie->getEtat()->getLibelle() == 'En création') {
             $etat->setLibelle('Ouverte');
             $sortie->setEtat($etat);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
         }
-            return $this->redirectToRoute('sortie_index');
+        return $this->redirectToRoute('sortie_index');
     }
 
-    public function updateEtat (EntityManagerInterface $em, Sortie $sortie) {
+    public function updateEtat(EntityManagerInterface $em, Sortie $sortie)
+    {
 
         $dateDebut = $sortie->getDateDebut();
         $dateCloture = $sortie->getDateCloture();
         $dateNow = new \DateTime("now");
 
         $duree = 0;
-        if($sortie->getDuree()){
+        if ($sortie->getDuree()) {
             $duree = $sortie->getDuree();
         }
         $dateFin = $dateDebut->add(new \DateInterval('PT' . $duree . 'M'));
 
-        if($sortie->getEtat()->getLibelle() != 'Annulée'){
-            if($dateCloture < $dateNow && $dateDebut > $dateNow){
+        if ($sortie->getEtat()->getLibelle() != 'Annulée') {
+            if ($dateCloture < $dateNow && $dateDebut > $dateNow) {
                 $sortie->getEtat()->setLibelle('Clôturée');
                 $em->flush();
             }
 
-            if($dateDebut < $dateNow){
+            if ($dateDebut < $dateNow) {
                 $sortie->getEtat()->setLibelle('Activité en cours');
                 $em->flush();
             }
 
-            if($dateFin < $dateNow){
+            if ($dateFin < $dateNow) {
                 $sortie->getEtat()->setLibelle('Passée');
                 $em->flush();
             }
@@ -282,7 +283,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/{id}/annuler", name="annuler", methods={"GET","POST"})
      */
-    public function annuler(Sortie $sortie, EntityManagerInterface $em, Request $request):Response
+    public function annuler(Sortie $sortie, EntityManagerInterface $em, Request $request): Response
     {
         $form = $this->createForm(AnnulerSortieType::class, $sortie);
         $form->handleRequest($request);
@@ -296,6 +297,6 @@ class SortieController extends AbstractController
         }
 
 
-        return $this->render('sortie/annulerSortie.html.twig', ["sortie" => $sortie, "form"=> $form->createView()]);
+        return $this->render('sortie/annulerSortie.html.twig', ["sortie" => $sortie, "form" => $form->createView()]);
     }
 }

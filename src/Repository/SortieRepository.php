@@ -48,57 +48,55 @@ class SortieRepository extends ServiceEntityRepository
         $qb->join('l.ville', 'v');
         $qb->addSelect('v');
 
-
-
         $qb->andWhere("DATE_ADD(DATE_ADD(s.dateDebut, s.duree, 'minute'), 1, 'month') > :now")
             ->setParameter('now', new \DateTime("now"));
 
-        if($filter->getCampus() || $filter->getCampus() != null){
+        if ($filter->getCampus() || $filter->getCampus() != null) {
             $qb->andWhere('s.campus = :campus')
                 ->setParameter('campus', $filter->getCampus());
         }
 
-        if($filter->getName() || $filter->getName() != null){
+        if ($filter->getName() || $filter->getName() != null) {
             $qb->andWhere('s.nom LIKE :nom')
                 ->setParameter('nom', "%" . $filter->getName() . "%");
         }
 
-        if($filter->getDateDebut() || $filter->getDateDebut() != null){
+        if ($filter->getDateDebut() || $filter->getDateDebut() != null) {
             $qb->andWhere('s.dateDebut > :dateDebut')
                 ->setParameter('dateDebut', $filter->getDateDebut());
         }
 
-        if($filter->getDateFin() || $filter->getDateFin() != null){
+        if ($filter->getDateFin() || $filter->getDateFin() != null) {
             $qb->andWhere('s.dateDebut < :dateCloture')
                 ->setParameter('dateCloture', $filter->getDateFin());
         }
 
         $orQuery = new Expr\Orx();
 
-        if($filter->getIsOrganisateur()) {
+        if ($filter->getIsOrganisateur()) {
             $orQuery->add('o.pseudo LIKE :user');
         }
 
-        if($filter->getIsInscrit()) {
+        if ($filter->getIsInscrit()) {
             $orQuery->add('p.pseudo LIKE :user');
         }
 
-        if($filter->getIsNotInscrit()){
+        if ($filter->getIsNotInscrit()) {
             $orQuery->add('p.pseudo NOT LIKE :user');
         }
 
 
-        if($filter->getPassee()){
+        if ($filter->getPassee()) {
             $orQuery->add('s.dateCloture < :dateDuJour');
         }
 
         $qb->andWhere($orQuery);
-            if($orQuery && $filter->getPassee()) {
-                $qb->setParameter('dateDuJour', $date = new \DateTime());
-            }
-            if($filter->getIsOrganisateur() || $filter->getIsInscrit() || $filter->getIsNotInscrit()){
-                $qb->setParameter('user', $user->getPseudo());
-            }
+        if ($orQuery && $filter->getPassee()) {
+            $qb->setParameter('dateDuJour', $date = new \DateTime());
+        }
+        if ($filter->getIsOrganisateur() || $filter->getIsInscrit() || $filter->getIsNotInscrit()) {
+            $qb->setParameter('user', $user->getPseudo());
+        }
 
 
         $query = $qb->getQuery();

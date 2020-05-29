@@ -27,13 +27,13 @@
             {% else %}
                 <button class="btn btn-primary float m-4" name ="button" value="enregistrer">{{ button_label|default('Enregistrer') }}</button>
                 <button class="btn btn-primary float m-4" name ="button" value="publier">{{ button_label|default('Publier') }}</button>
-                    {{ include('sortie/_delete_form.html.twig') }}
             {% endif %}
         {% else %}
             <button class="btn btn-primary float m-4" name ="button" value="publier">{{ button_label|default('Publier la Sortie') }}</button>
         {% endif %}
 
         {{ form_end(form) }}
+        {{ include('sortie/_delete_form.html.twig') }}
         {% block buttons %}
         {% endblock buttons %}
         <a class="btn btn-primary float m-4" href="{{ path('sortie_index') }}">Retour</a>
