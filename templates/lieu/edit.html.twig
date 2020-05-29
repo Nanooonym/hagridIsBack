@@ -3,13 +3,12 @@
 {% block title %}Modifier le lieu{% endblock %}
 
 {% block main %}
-    <div class="d-none d-md-block">
-        <h3>Modifier le lieu</h3>
-
-        {{ include('lieu/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-        <a href="{{ path('lieu_index') }}" class="btn btn-primary float m-4">Retour</a>
-
-        {{ include('lieu/_delete_form.html.twig') }}
+    <div class="flex-column">
+        <h3 class="m-4 text-center">Modifier lieu</h3>
+        {% embed 'lieu/_form.html.twig' %}
+            {% block buttons %}
+                <button type="submit" class="btn btn-primary float ml-4">Modifier</button>
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endblock %}

@@ -76,8 +76,9 @@
             </table>
         </div>
 
-
-        <a class="btn btn-primary float mt-4 creerSortie" href="{{ path('sortie_new') }}">Créer une sortie</a>
+        {% if app.user.actif == true %}
+            <a class="btn btn-primary float mt-4 creerSortie" href="{{ path('sortie_new') }}">Créer une sortie</a>
+        {% endif %}
 
     </div>
 

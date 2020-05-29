@@ -1,19 +1,21 @@
 {{ form_start(form) }}
-<td>
-    {{ form_row(form.nom) }}
-</td>
-<td>
-    {{ form_row(form.codePostal) }}
-</td>
-<td>
-    <button class="btn btn-primary float">{{ button_label|default('Ajouter') }}</button>
+<div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-column mr-4 col-3">
+        <td>
+            <div>{{ form_row(form.nom) }}</div>
+        </td>
+        <td>
+            <div>{{ form_row(form.codePostal) }}</div>
+        </td>
+        <td>
+            <div class="text-center">
+                {% block buttons %}
+                {% endblock %}
+                <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a>
+            </div>
+        </td>
+    </div>
 
-{% if app.session.get('user') %}
 
-    <button class="btn btn-primary float">{{ button_label|default('Ajouter et Créer un Lieu') }}</button>
-    <input type="hidden" name="creerLieu" value="creerLieu">
-    {% block buttons %}
-    {% endblock buttons %}
-</td>
-{% endif %}
+</div>
 {{ form_end(form) }}

@@ -71,6 +71,12 @@ header{
     overflow: auto;
 }
 
+.my-custom-scrollbar-p-index {
+    position: relative;
+    height: 500px;          /*50px = une ligne*/
+    overflow: auto;
+}
+
 .table-wrapper-scroll-y {
     display: block;
 }

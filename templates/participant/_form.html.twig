@@ -15,9 +15,8 @@
         {{ form_row(participantForm.imageFile) }}
     </div>
 </div>
-<div class="container text-center">
-    <button type="submit" class="btn btn-primary float ml-4">Ajouter</button>
-    <a class="btn btn-primary float ml-4" href="{{ path('importCSV') }}">Importer CSV</a>
-    <a class="btn btn-primary float ml-4" href="{{ path('participant_index') }}">Retour</a>
-</div>
+    <div class="flex-row">
+    {% block buttons %}
+    {% endblock %}
+    </div>
 {{ form_end(participantForm) }}

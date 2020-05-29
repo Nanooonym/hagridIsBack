@@ -1,23 +1,30 @@
 {{ form_start(form) }}
-<td>
-    <div>{{ form_row(form.nom) }}</div>
-</td>
-<td>
-    <div>{{ form_row(form.rue) }}</div>
-</td>
-<td>
-    <div>{{ form_row(form.ville) }}</div>
-</td>
-<td>
-    <div>{{ form_row(form.latitude) }}</div>
-</td>
-<td>
-    <div>{{ form_row(form.longitude) }}</div>
-</td>
+<div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-column mr-4 col-3">
+        <td>
+            <div>{{ form_row(form.nom) }}</div>
+        </td>
+        <td>
+            <div>{{ form_row(form.rue) }}</div>
+        </td>
+        <td>
+            <div>{{ form_row(form.ville) }}</div>
+        </td>
+        <td>
+            <div>{{ form_row(form.latitude) }}</div>
+        </td>
+        <td>
+            <div>{{ form_row(form.longitude) }}</div>
+        </td>
+        <td>
+            <div class="text-center">
+                {% block buttons %}
+                {% endblock %}
+                <a class="btn btn-primary float ml-4" href="{{ path('sortie_index') }}">Retour</a>
+            </div>
+        </td>
+    </div>
 
-<td class="align-items-center">
-    <button type="submit" class="btn btn-primary float">{{ button_label|default('Ajouter') }}</button>
-    {% block buttons %}
-    {% endblock buttons %}
-</td>
+
+</div>
 {{ form_end(form) }}

@@ -121,7 +121,6 @@ class SortieType extends AbstractType
                     }
                 }
             );
-
     }
 
     private function addLieuField (FormInterface $form, ?Ville $ville){

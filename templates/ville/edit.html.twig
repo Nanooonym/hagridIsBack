@@ -1,15 +1,14 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Modifier la Ville{% endblock %}
+{% block title %}Modifier la ville{% endblock %}
 
 {% block main %}
-    <h3 class="text-center">Modifier la Ville</h3>
-    <div>
-        <div class="row m-4">
-            {{ include('ville/_form.html.twig', {'button_label': 'Modifier'}) }}
-        </div>
-        <div class="m-4">
-            <a href="{{ path('ville_index') }}" class="btn btn-primary float">Retourner</a>
-        </div>
+    <div class="flex-column">
+        <h3 class="m-4 text-center">Modifier la ville</h3>
+        {% embed 'ville/_form.html.twig' %}
+            {% block buttons %}
+                <button type="submit" class="btn btn-primary float ml-4">Modifier</button>
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endblock %}

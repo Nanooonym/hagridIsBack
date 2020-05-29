@@ -10,9 +10,12 @@
                     {{ include('participant/_image_profil.html.twig') }}
                 </div>
                 <h3 class="m-4 text-center">Mon profil</h3>
-                <div>
-                    {{ include('participant/_form.html.twig') }}
-                </div>
+                    {% embed 'participant/_form.html.twig' %}
+                        {% block buttons %}
+                            <button type="submit" class="btn btn-primary float ml-4">Modifier</button>
+                            <a class="btn btn-primary float ml-4" href="{{ path('participant_show') }}">Retour</a>
+                        {% endblock %}
+                    {% endembed %}
             </div>
         </div>
 

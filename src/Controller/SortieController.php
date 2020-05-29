@@ -86,7 +86,7 @@ class SortieController extends AbstractController
             if($submit == "enregistrer") {
                 $etat->setLibelle("En création");
             } else if($submit == "publier"){
-                $etat->setLibelle("Ouvert");
+                $etat->setLibelle("Ouverte");
             }
 
             if($sortie->getDuree() == null){
@@ -149,7 +149,7 @@ class SortieController extends AbstractController
             $etat = $sortie->getEtat()->getLibelle();
 
             if($request->get('button') == "publier" && $etat == 'En création'){
-                $etat = "Ouvert";
+                $etat = "Ouverte";
                 $sortie->getEtat()->setLibelle($etat);
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Votre sortie "' . $sortie->getNom() . '" est maintenant publiée');
